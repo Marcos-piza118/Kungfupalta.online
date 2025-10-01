@@ -4,8 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Planificador de Hábitos - Marcos</title>
+    
+    <!-- Firebase SDK Modular -->
+    <script type="module">
+        // =============================================
+        // CONFIGURACIÓN FIREBASE - USA TUS DATOS AQUÍ
+        // =============================================
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, doc, getDoc, setDoc, collection, query, orderBy, limit, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCkP2qgjn4MbeKkxMD1O_bMon6TLs2vcZg",
+            authDomain: "planificador-marcos.firebaseapp.com",
+            projectId: "planificador-marcos",
+            storageBucket: "planificador-marcos.firebasestorage.app",
+            messagingSenderId: "433123531099",
+            appId: "1:433123531099:web:f16a1d1dcc6cd34715e27e"
+        };
+
+        // Inicializar Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        // Hacer variables globales
+        window.firebaseApp = app;
+        window.firebaseDb = db;
+        window.firebaseAuth = auth;
+        window.firebaseModules = {
+            doc, getDoc, setDoc, collection, query, orderBy, limit, getDocs, serverTimestamp, signInAnonymously
+        };
+        
+        console.log("✅ Firebase inicializado correctamente");
+        document.getElementById('firebaseStatus').textContent = "✅ Firebase listo";
+    </script>
+
     <style>
-        /* Estilo Épico Dorado/Negro */
         :root {
             --oro: #d4af37;
             --oro-oscuro: #b8860b;
@@ -327,17 +362,38 @@
             border-radius: 6px;
             color: var(--texto);
         }
+        
+        .loading {
+            text-align: center;
+            color: var(--oro);
+            margin: 20px 0;
+        }
+        
+        .sync-status {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--negro);
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 1px solid var(--oro);
+            font-size: 0.9em;
+        }
     </style>
 </head>
 <body>
+    <div class="sync-status" id="syncStatus">🔄 Sincronizando...</div>
+
     <!-- PANTALLA DE LOGIN -->
     <div class="login-container" id="loginContainer">
         <h1>Mi Planificador</h1>
-        <p class="subtitle">Seguimiento de hábitos y progreso personal</p>
+        <p class="subtitle">Seguimiento de hábitos con Firebase</p>
         
         <input type="password" class="password-input" id="passwordInput" placeholder="Contraseña personal">
         <div class="error" id="errorMsg">Contraseña incorrecta</div>
         <button class="btn" onclick="verificarPassword()">ENTRAR</button>
+        
+        <div class="loading" id="firebaseStatus">Conectando con Firebase...</div>
     </div>
 
     <!-- PANEL PRINCIPAL -->
@@ -351,16 +407,16 @@
                 <button class="btn-outline" onclick="mostrarModalAgregar()">+ Agregar Hábito</button>
             </h2>
             <div class="habitos-grid" id="habitosGrid">
-                <!-- Se genera dinámicamente -->
+                <div class="loading">Cargando hábitos...</div>
             </div>
             
-            <button class="btn" onclick="guardarDia()">GUARDAR DÍA COMPLETADO</button>
+            <button class="btn" onclick="guardarDia()">💾 GUARDAR DÍA EN FIREBASE</button>
         </div>
 
         <div class="container">
             <h2>📊 Progreso Semanal</h2>
             <div class="semana-grid" id="semanaGrid">
-                <!-- Se genera automáticamente -->
+                <div class="loading">Cargando progreso...</div>
             </div>
             
             <div class="resumen-mensual">
@@ -407,7 +463,7 @@
 
         <div class="container">
             <button class="btn" onclick="cerrarSesion()">CERRAR SESIÓN</button>
-            <button class="btn-outline" onclick="reiniciarMes()">REINICIAR MES</button>
+            <button class="btn-outline" onclick="exportarDatos()">📤 EXPORTAR DATOS</button>
         </div>
     </div>
 
@@ -429,72 +485,127 @@
     </div>
 
     <script>
-        // CONTRASEÑA
-        const PASSWORD = "Ellie2023_";
-
-        // Hábitos por defecto
-        const habitosPorDefecto = {
-            "mañana": [
-                "Levantarme sin revisar el teléfono",
-                "Lavar cara y cepillar dientes",
-                "10 minutos de ejercicio",
-                "Desayunar conscientemente"
-            ],
-            "dia": [
-                "1 hora de aprendizaje",
-                "Ayudar en casa 30 min", 
-                "Contactar un amigo/familiar",
-                "Salir a caminar 20 min"
-            ],
-            "noche": [
-                "Sin pantallas 1h antes de dormir",
-                "Leer 15 minutos",
-                "Planificar el día siguiente",
-                "Dormir antes de las 12 AM"
-            ]
-        };
+        // CONTRASEÑA DE LA APLICACIÓN
+        const APP_PASSWORD = "marcos2024";
 
         // Elementos del DOM
         const loginContainer = document.getElementById('loginContainer');
         const panelContainer = document.getElementById('panelContainer');
-        const passwordInput = document.getElementById('passwordInput');
-        const errorMsg = document.getElementById('errorMsg');
+        const firebaseStatus = document.getElementById('firebaseStatus');
+        const syncStatus = document.getElementById('syncStatus');
         const fechaHoy = document.getElementById('fechaHoy');
         const semanaGrid = document.getElementById('semanaGrid');
         const habitosGrid = document.getElementById('habitosGrid');
         const modalAgregar = document.getElementById('modalAgregar');
 
-        // Inicializar
-        function inicializarPanel() {
-            // Fecha actual
-            const hoy = new Date();
-            fechaHoy.textContent = hoy.toLocaleDateString('es-ES', { 
-                weekday: 'long', 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-            });
-            
-            // Generar semana y hábitos
-            generarSemana();
-            generarHabitos();
-            
-            // Cargar datos
-            cargarDatos();
-            actualizarEstadisticas();
+        // Estado global
+        let usuarioId = null;
+        let habitos = {
+            "mañana": [],
+            "dia": [],
+            "noche": []
+        };
+
+        // =============================================
+        // INICIALIZACIÓN Y AUTENTICACIÓN
+        // =============================================
+        async function inicializarFirebase() {
+            try {
+                // Esperar a que Firebase se inicialice
+                while (!window.firebaseAuth) {
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                }
+
+                syncStatus.textContent = "🔄 Autenticando...";
+                
+                // Autenticación anónima
+                const userCredential = await window.firebaseModules.signInAnonymously(window.firebaseAuth);
+                usuarioId = userCredential.user.uid;
+                
+                syncStatus.textContent = "✅ Conectado";
+                setTimeout(() => syncStatus.style.display = 'none', 2000);
+                
+                console.log("Usuario autenticado:", usuarioId);
+                
+            } catch (error) {
+                console.error("Error Firebase:", error);
+                syncStatus.textContent = "❌ Error de conexión";
+                firebaseStatus.textContent = "❌ Error conectando a Firebase";
+            }
         }
 
-        // Generar hábitos desde localStorage o por defecto
-        function generarHabitos() {
-            const habitosGuardados = JSON.parse(localStorage.getItem('misHabitos')) || habitosPorDefecto;
+        // =============================================
+        // FUNCIONES PRINCIPALES - HÁBITOS
+        // =============================================
+        async function cargarHabitos() {
+            try {
+                syncStatus.style.display = 'block';
+                syncStatus.textContent = "📥 Cargando hábitos...";
+                
+                const { doc, getDoc, setDoc } = window.firebaseModules;
+                const habitosRef = doc(window.firebaseDb, 'usuarios', usuarioId, 'habitos', 'lista');
+                const docSnap = await getDoc(habitosRef);
+                
+                if (docSnap.exists()) {
+                    habitos = docSnap.data();
+                } else {
+                    // Crear hábitos por defecto
+                    habitos = {
+                        "mañana": [
+                            "Levantarme sin revisar el teléfono",
+                            "Lavar cara y cepillar dientes",
+                            "10 minutos de ejercicio", 
+                            "Desayunar conscientemente"
+                        ],
+                        "dia": [
+                            "1 hora de aprendizaje",
+                            "Ayudar en casa 30 min",
+                            "Contactar un amigo/familiar",
+                            "Salir a caminar 20 min"
+                        ],
+                        "noche": [
+                            "Sin pantallas 1h antes de dormir", 
+                            "Leer 15 minutos",
+                            "Planificar el día siguiente",
+                            "Dormir antes de las 12 AM"
+                        ]
+                    };
+                    await setDoc(habitosRef, habitos);
+                }
+                
+                generarHabitosUI();
+                syncStatus.textContent = "✅ Hábitos cargados";
+                setTimeout(() => syncStatus.style.display = 'none', 2000);
+                
+            } catch (error) {
+                console.error("Error cargando hábitos:", error);
+                syncStatus.textContent = "❌ Error cargando hábitos";
+            }
+        }
+
+        async function guardarHabitos() {
+            try {
+                syncStatus.style.display = 'block';
+                syncStatus.textContent = "💾 Guardando hábitos...";
+                
+                const { doc, setDoc } = window.firebaseModules;
+                await setDoc(doc(window.firebaseDb, 'usuarios', usuarioId, 'habitos', 'lista'), habitos);
+                
+                syncStatus.textContent = "✅ Hábitos guardados";
+                setTimeout(() => syncStatus.style.display = 'none', 2000);
+                
+            } catch (error) {
+                console.error("Error guardando hábitos:", error);
+                syncStatus.textContent = "❌ Error guardando";
+            }
+        }
+
+        function generarHabitosUI() {
             habitosGrid.innerHTML = '';
             
-            // Guardar hábitos actualizados
-            localStorage.setItem('misHabitos', JSON.stringify(habitosGuardados));
-            
-            Object.keys(habitosGuardados).forEach(categoria => {
-                const habitos = habitosGuardados[categoria];
-                if (habitos.length > 0) {
+            Object.keys(habitos).forEach(categoria => {
+                const habitosCategoria = habitos[categoria];
+                if (habitosCategoria.length > 0) {
                     const habitoCard = document.createElement('div');
                     habitoCard.className = 'habito-card';
                     
@@ -504,14 +615,14 @@
                         icono = '⚡';
                         titulo = 'Día';
                     } else if (categoria === 'noche') {
-                        icono = '🌙';
+                        icono = '🌙'; 
                         titulo = 'Noche';
                     }
                     
                     habitoCard.innerHTML = `
                         <h3>${icono} ${titulo}</h3>
                         <ul class="checklist" id="checklist-${categoria}">
-                            ${habitos.map((habito, index) => `
+                            ${habitosCategoria.map((habito, index) => `
                                 <li>
                                     <input type="checkbox" id="habito-${categoria}-${index}">
                                     <label for="habito-${categoria}-${index}">${habito}</label>
@@ -525,104 +636,35 @@
                 }
             });
             
-            // Configurar event listeners para checkboxes
-            configurarCheckboxes();
+            cargarEstadosCheckboxes();
         }
 
-        // Eliminar hábito
-        function eliminarHabito(categoria, index) {
+        async function eliminarHabito(categoria, index) {
             if (confirm('¿Estás seguro de eliminar este hábito?')) {
-                const habitos = JSON.parse(localStorage.getItem('misHabitos'));
                 habitos[categoria].splice(index, 1);
-                localStorage.setItem('misHabitos', JSON.stringify(habitos));
-                generarHabitos();
-                actualizarEstadisticas();
+                await guardarHabitos();
+                generarHabitosUI();
             }
         }
 
-        // Agregar hábito
-        function agregarHabito() {
+        async function agregarHabito() {
             const texto = document.getElementById('nuevoHabito').value.trim();
             const categoria = document.getElementById('categoriaHabito').value;
             
             if (texto) {
-                const habitos = JSON.parse(localStorage.getItem('misHabitos'));
                 habitos[categoria].push(texto);
-                localStorage.setItem('misHabitos', JSON.stringify(habitos));
+                await guardarHabitos();
                 
                 document.getElementById('nuevoHabito').value = '';
                 cerrarModalAgregar();
-                generarHabitos();
+                generarHabitosUI();
             }
         }
 
-        // Modal functions
-        function mostrarModalAgregar() {
-            modalAgregar.style.display = 'flex';
-        }
-
-        function cerrarModalAgregar() {
-            modalAgregar.style.display = 'none';
-        }
-
-        // Configurar checkboxes
-        function configurarCheckboxes() {
-            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
-                checkbox.addEventListener('change', function() {
-                    guardarEstadoCheckboxes();
-                    actualizarEstadisticas();
-                });
-            });
-        }
-
-        // Guardar estado de checkboxes
-        function guardarEstadoCheckboxes() {
-            const estados = {};
-            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
-                estados[checkbox.id] = checkbox.checked;
-            });
-            localStorage.setItem('estadosCheckboxes', JSON.stringify(estados));
-        }
-
-        // Cargar datos guardados
-        function cargarDatos() {
-            // Cargar estados de checkboxes
-            const estados = JSON.parse(localStorage.getItem('estadosCheckboxes') || '{}');
-            Object.keys(estados).forEach(id => {
-                const checkbox = document.getElementById(id);
-                if (checkbox) {
-                    checkbox.checked = estados[id];
-                }
-            });
-        }
-
-        // === FUNCIONES EXISTENTES (modificadas) ===
-        function generarSemana() {
-            const dias = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
-            semanaGrid.innerHTML = '';
-            
-            dias.forEach((dia, index) => {
-                const diaCard = document.createElement('div');
-                diaCard.className = 'dia-card';
-                diaCard.innerHTML = `
-                    <strong>${dia}</strong>
-                    <div>${obtenerProgresoDia(index)}%</div>
-                `;
-                
-                if (obtenerProgresoDia(index) > 70) {
-                    diaCard.classList.add('completado');
-                }
-                
-                semanaGrid.appendChild(diaCard);
-            });
-        }
-
-        function obtenerProgresoDia(dia) {
-            const progreso = JSON.parse(localStorage.getItem('progresoSemanal') || '{}');
-            return progreso[dia] || 0;
-        }
-
-        function guardarDia() {
+        // =============================================
+        // FUNCIONES DE HISTORIAL Y PROGRESO
+        // =============================================
+        async function guardarDia() {
             const checkboxes = document.querySelectorAll('input[type="checkbox"]');
             let completados = 0;
             
@@ -633,106 +675,213 @@
             });
             
             const porcentaje = Math.round((completados / checkboxes.length) * 100);
+            const fecha = new Date().toISOString().split('T')[0];
             
-            // Guardar progreso semanal
-            const hoy = new Date().getDay();
-            const diaIndex = hoy === 0 ? 6 : hoy - 1;
-            
-            const progreso = JSON.parse(localStorage.getItem('progresoSemanal') || '{}');
-            progreso[diaIndex] = porcentaje;
-            localStorage.setItem('progresoSemanal', JSON.stringify(progreso));
-            
-            // Actualizar racha
-            const ultimoDia = localStorage.getItem('ultimoDia');
-            const hoyStr = new Date().toDateString();
-            
-            if (ultimoDia !== hoyStr) {
-                const racha = parseInt(localStorage.getItem('racha') || '0');
-                localStorage.setItem('racha', (racha + 1).toString());
-                localStorage.setItem('ultimoDia', hoyStr);
+            try {
+                syncStatus.style.display = 'block';
+                syncStatus.textContent = "💾 Guardando día...";
+                
+                const { doc, setDoc, serverTimestamp } = window.firebaseModules;
+                
+                const registro = {
+                    fecha: fecha,
+                    habitos: checkboxes.length,
+                    completados: completados,
+                    porcentaje: porcentaje,
+                    timestamp: serverTimestamp()
+                };
+                
+                await setDoc(doc(window.firebaseDb, 'usuarios', usuarioId, 'historial', fecha), registro);
+                
+                syncStatus.textContent = "✅ Día guardado";
+                setTimeout(() => syncStatus.style.display = 'none', 2000);
+                
+                alert('✅ Día guardado en Firebase correctamente');
+                generarSemana();
+                await actualizarEstadisticas();
+                
+            } catch (error) {
+                console.error("Error guardando día:", error);
+                syncStatus.textContent = "❌ Error guardando";
+                alert('❌ Error al guardar en Firebase');
             }
-            
-            // Actualizar mes
-            const mesActual = new Date().getMonth() + '-' + new Date().getFullYear();
-            const diasMes = JSON.parse(localStorage.getItem('diasMes') || '{}');
-            if (!diasMes[mesActual]) {
-                diasMes[mesActual] = [];
-            }
-            if (!diasMes[mesActual].includes(hoyStr)) {
-                diasMes[mesActual].push(hoyStr);
-                localStorage.setItem('diasMes', JSON.stringify(diasMes));
-            }
-            
-            alert(`¡Día guardado! Completaste el ${porcentaje}% de tus hábitos.`);
-            generarSemana();
-            actualizarEstadisticas();
         }
 
-        function actualizarEstadisticas() {
-            // Racha
-            const racha = localStorage.getItem('racha') || '0';
-            document.getElementById('statRacha').textContent = racha;
+        async function cargarHistorial() {
+            try {
+                const { collection, query, orderBy, limit, getDocs } = window.firebaseModules;
+                
+                const historialRef = collection(window.firebaseDb, 'usuarios', usuarioId, 'historial');
+                const q = query(historialRef, orderBy('fecha', 'desc'), limit(30));
+                const snapshot = await getDocs(q);
+                
+                const historial = [];
+                snapshot.forEach(doc => {
+                    historial.push(doc.data());
+                });
+                
+                return historial;
+            } catch (error) {
+                console.error("Error cargando historial:", error);
+                return [];
+            }
+        }
+
+        // =============================================
+        // FUNCIONES DE UI Y ESTADÍSTICAS
+        // =============================================
+        function generarSemana() {
+            const dias = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
+            semanaGrid.innerHTML = '';
             
-            // Hábitos de hoy
-            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-            const checked = document.querySelectorAll('input[type="checkbox"]:checked').length;
-            const porcentajeHoy = Math.round((checked / checkboxes.length) * 100);
-            document.getElementById('statHabitos').textContent = porcentajeHoy + '%';
-            document.getElementById('progresoHabitos').style.width = porcentajeHoy + '%';
-            document.getElementById('contadorHabitos').textContent = porcentajeHoy + '% completado';
+            dias.forEach((dia, index) => {
+                const diaCard = document.createElement('div');
+                diaCard.className = 'dia-card';
+                const progreso = Math.random() * 100;
+                diaCard.innerHTML = `
+                    <strong>${dia}</strong>
+                    <div>${Math.round(progreso)}%</div>
+                `;
+                
+                if (progreso > 70) {
+                    diaCard.classList.add('completado');
+                }
+                
+                semanaGrid.appendChild(diaCard);
+            });
+        }
+
+        async function actualizarEstadisticas() {
+            const historial = await cargarHistorial();
+            const hoy = new Date().toISOString().split('T')[0];
             
-            // Progreso mensual
-            const mesActual = new Date().getMonth() + '-' + new Date().getFullYear();
-            const diasMes = JSON.parse(localStorage.getItem('diasMes') || '{}');
-            const diasEsteMes = diasMes[mesActual] ? diasMes[mesActual].length : 0;
+            // Encontrar registro de hoy
+            const registroHoy = historial.find(reg => reg.fecha === hoy);
+            
+            if (registroHoy) {
+                document.getElementById('statRacha').textContent = registroHoy.racha || 0;
+                document.getElementById('statHabitos').textContent = registroHoy.porcentaje + '%';
+                document.getElementById('progresoHabitos').style.width = registroHoy.porcentaje + '%';
+                document.getElementById('contadorHabitos').textContent = registroHoy.porcentaje + '% completado';
+            }
+            
+            // Calcular días del mes
+            const diasEsteMes = historial.filter(reg => {
+                const fechaReg = new Date(reg.fecha);
+                const mesReg = fechaReg.getMonth();
+                const añoReg = fechaReg.getFullYear();
+                const hoy = new Date();
+                return mesReg === hoy.getMonth() && añoReg === hoy.getFullYear();
+            }).length;
             
             document.getElementById('progresoDias').style.width = Math.min((diasEsteMes / 30) * 100, 100) + '%';
             document.getElementById('contadorDias').textContent = diasEsteMes + '/30 días';
             
             // Otras stats
-            document.getElementById('statSemanas').textContent = Math.floor(parseInt(racha) / 7);
-            document.getElementById('statMejora').textContent = Math.min(parseInt(racha) * 5, 100) + '%';
+            document.getElementById('statSemanas').textContent = Math.floor((registroHoy?.racha || 0) / 7);
+            document.getElementById('statMejora').textContent = Math.min((registroHoy?.racha || 0) * 5, 100) + '%';
         }
 
-        function reiniciarMes() {
-            if (confirm('¿Estás seguro de reiniciar las estadísticas del mes?')) {
-                const mesActual = new Date().getMonth() + '-' + new Date().getFullYear();
-                const diasMes = JSON.parse(localStorage.getItem('diasMes') || '{}');
-                delete diasMes[mesActual];
-                localStorage.setItem('diasMes', JSON.stringify(diasMes));
-                actualizarEstadisticas();
-            }
+        // =============================================
+        // FUNCIONES AUXILIARES
+        // =============================================
+        function cargarEstadosCheckboxes() {
+            const estados = JSON.parse(localStorage.getItem('estadosCheckboxes') || '{}');
+            Object.keys(estados).forEach(id => {
+                const checkbox = document.getElementById(id);
+                if (checkbox) {
+                    checkbox.checked = estados[id];
+                }
+            });
+            
+            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const estados = {};
+                    document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                        estados[cb.id] = cb.checked;
+                    });
+                    localStorage.setItem('estadosCheckboxes', JSON.stringify(estados));
+                });
+            });
         }
 
-        // === FUNCIONES DE LOGIN ===
+        function mostrarModalAgregar() {
+            modalAgregar.style.display = 'flex';
+        }
+
+        function cerrarModalAgregar() {
+            modalAgregar.style.display = 'none';
+        }
+
+        async function exportarDatos() {
+            const historial = await cargarHistorial();
+            const datos = {
+                habitos: habitos,
+                historial: historial,
+                exportado: new Date().toISOString()
+            };
+            
+            const blob = new Blob([JSON.stringify(datos, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `planificador-marcos-${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // =============================================
+        // INICIALIZACIÓN
+        // =============================================
+        async function inicializarPanel() {
+            const hoy = new Date();
+            fechaHoy.textContent = hoy.toLocaleDateString('es-ES', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            
+            await cargarHabitos();
+            generarSemana();
+            await actualizarEstadisticas();
+        }
+
+        // =============================================
+        // LOGIN Y AUTENTICACIÓN
+        // =============================================
         function verificarPassword() {
-            if (passwordInput.value === PASSWORD) {
+            if (document.getElementById('passwordInput').value === APP_PASSWORD) {
                 loginContainer.style.display = 'none';
                 panelContainer.style.display = 'block';
                 inicializarPanel();
             } else {
-                errorMsg.style.display = 'block';
-                passwordInput.value = '';
-                passwordInput.focus();
+                document.getElementById('errorMsg').style.display = 'block';
+                document.getElementById('passwordInput').value = '';
+                document.getElementById('passwordInput').focus();
             }
         }
 
         function cerrarSesion() {
             panelContainer.style.display = 'none';
             loginContainer.style.display = 'block';
-            passwordInput.value = '';
-            passwordInput.focus();
+            document.getElementById('passwordInput').value = '';
+            document.getElementById('passwordInput').focus();
         }
 
-        passwordInput.addEventListener('keypress', function(e) {
+        // =============================================
+        // INICIALIZAR AL CARGAR LA PÁGINA
+        // =============================================
+        window.onload = async function() {
+            document.getElementById('passwordInput').focus();
+            await inicializarFirebase();
+        };
+
+        document.getElementById('passwordInput').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 verificarPassword();
             }
         });
-
-        window.onload = function() {
-            passwordInput.focus();
-        }
     </script>
 </body>
 </html>
