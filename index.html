@@ -3,343 +3,480 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fortaleza de Marcus</title>
+    <title>El Camino del Guerrero - Marcos</title>
     <style>
-        /* Estilo Romano Auténtico */
-        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=MedievalSharp&display=swap');
+        /* Estilo Guerrero - Solo CSS, sin imágenes externas */
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap');
+        
+        :root {
+            --oro: #d4af37;
+            --oro-oscuro: #b8860b;
+            --marron: #8b4513;
+            --marron-oscuro: #5d4037;
+            --negro: #0a0a0a;
+            --gris: #2d2d2d;
+            --texto: #e8e0c8;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         
         body {
-            font-family: 'Cinzel', 'Georgia', serif;
-            background: #0a0a0a url('https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');
-            background-size: cover;
-            background-attachment: fixed;
-            color: #d4c4a0;
-            margin: 0;
-            padding: 20px;
+            font-family: 'Cinzel', serif;
+            background: linear-gradient(135deg, var(--negro) 0%, var(--marron-oscuro) 100%);
+            color: var(--texto);
             min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
         }
-
+        
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(139, 69, 19, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(93, 64, 55, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+        
         .login-container {
-            max-width: 400px;
+            max-width: 500px;
             margin: 100px auto;
-            background: rgba(20, 20, 20, 0.95);
-            padding: 40px;
-            border-radius: 8px;
-            border: 3px solid #8b6b2d;
-            box-shadow: 0 0 30px rgba(139, 107, 45, 0.4);
+            background: rgba(10, 10, 10, 0.95);
+            padding: 50px 40px;
+            border-radius: 15px;
+            border: 3px solid var(--oro);
+            box-shadow: 0 0 40px rgba(212, 175, 55, 0.3);
             text-align: center;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
         }
-
+        
+        .login-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--oro), var(--oro-oscuro), var(--oro));
+        }
+        
         .panel-container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
             display: none;
         }
-
+        
         h1 {
-            color: #c8a85d;
+            color: var(--oro);
             text-align: center;
-            font-size: 2.8em;
-            margin-bottom: 10px;
+            font-size: 3em;
+            margin-bottom: 15px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
             font-weight: 700;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
+            position: relative;
         }
-
+        
+        h1::after {
+            content: "";
+            display: block;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--oro), transparent);
+            margin: 15px auto;
+        }
+        
         .subtitle {
             text-align: center;
-            color: #a89060;
+            color: var(--oro-oscuro);
             font-style: italic;
-            margin-bottom: 30px;
-            font-size: 1.1em;
+            margin-bottom: 40px;
+            font-size: 1.2em;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
         }
-
+        
         .container {
             background: rgba(15, 15, 15, 0.9);
-            border-radius: 8px;
-            padding: 30px;
-            margin-bottom: 25px;
-            border: 2px solid #5d4a2a;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.6);
-            backdrop-filter: blur(3px);
+            border-radius: 12px;
+            padding: 35px;
+            margin-bottom: 30px;
+            border: 2px solid var(--marron);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+            position: relative;
+            transition: all 0.3s ease;
         }
-
+        
+        .container:hover {
+            border-color: var(--oro);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(212, 175, 55, 0.2);
+        }
+        
         h2 {
-            color: #c8a85d;
-            border-bottom: 2px solid #5d4a2a;
-            padding-bottom: 12px;
-            margin-top: 0;
-            font-size: 1.8em;
+            color: var(--oro);
+            border-bottom: 2px solid var(--marron);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            font-size: 2em;
             font-weight: 600;
+            position: relative;
         }
-
+        
+        h2::before {
+            content: "⚔";
+            margin-right: 15px;
+            font-size: 0.8em;
+        }
+        
         h3 {
-            color: #b89a5c;
-            margin-top: 0;
-            font-size: 1.3em;
+            color: var(--oro-oscuro);
+            margin: 25px 0 15px 0;
+            font-size: 1.4em;
+            font-weight: 600;
+            position: relative;
+            padding-left: 25px;
         }
-
+        
+        h3::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--oro);
+            font-size: 1.5em;
+        }
+        
         .quote {
             font-style: italic;
             text-align: center;
-            color: #a89060;
-            margin: 25px 0;
-            font-size: 1.2em;
-            padding: 20px;
-            background: rgba(139, 107, 45, 0.15);
-            border-radius: 8px;
-            border-left: 4px solid #8b6b2d;
-            border-right: 4px solid #8b6b2d;
+            color: var(--oro-oscuro);
+            margin: 30px 0;
+            font-size: 1.3em;
+            padding: 25px;
+            background: rgba(139, 69, 19, 0.1);
+            border-radius: 10px;
+            border-left: 4px solid var(--oro);
+            border-right: 4px solid var(--oro);
             line-height: 1.6;
+            position: relative;
         }
-
+        
+        .quote::before, .quote::after {
+            content: '"';
+            color: var(--oro);
+            font-size: 2em;
+            position: absolute;
+        }
+        
+        .quote::before {
+            top: 10px;
+            left: 20px;
+        }
+        
+        .quote::after {
+            bottom: 10px;
+            right: 20px;
+        }
+        
         .victoria-input {
             width: 100%;
-            padding: 15px;
-            margin: 15px 0;
-            background: #2a2418;
-            border: 2px solid #5d4a2a;
-            border-radius: 6px;
-            color: #d4c4a0;
+            padding: 18px;
+            margin: 20px 0;
+            background: rgba(45, 45, 45, 0.8);
+            border: 2px solid var(--marron);
+            border-radius: 8px;
+            color: var(--texto);
             font-size: 16px;
             font-family: 'Cinzel', serif;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
         }
-
+        
         .victoria-input:focus {
-            border-color: #c8a85d;
+            border-color: var(--oro);
             outline: none;
-            box-shadow: 0 0 10px rgba(200, 168, 93, 0.3);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+            background: rgba(45, 45, 45, 0.9);
         }
-
+        
         .btn {
-            background: linear-gradient(to bottom, #8b6b2d, #6d5321);
-            color: #f5e8c8;
+            background: linear-gradient(135deg, var(--oro) 0%, var(--oro-oscuro) 100%);
+            color: var(--negro);
             border: none;
-            padding: 14px 28px;
-            border-radius: 6px;
+            padding: 16px 32px;
+            border-radius: 8px;
             cursor: pointer;
             font-size: 16px;
             font-weight: bold;
-            margin: 8px;
-            transition: all 0.3s;
+            margin: 10px;
+            transition: all 0.3s ease;
             font-family: 'Cinzel', serif;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            border: 1px solid #a89060;
+            letter-spacing: 1.5px;
+            border: 1px solid rgba(255,255,255,0.2);
+            position: relative;
+            overflow: hidden;
         }
-
+        
+        .btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+        
         .btn:hover {
-            background: linear-gradient(to bottom, #9c7a35, #7d5f26);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(139, 107, 45, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
         }
-
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+        
         .streak {
-            font-size: 1.6em;
+            font-size: 1.8em;
             text-align: center;
-            margin: 25px 0;
-            color: #c8a85d;
-            background: rgba(139, 107, 45, 0.2);
-            padding: 20px;
-            border-radius: 10px;
-            border: 2px solid #8b6b2d;
+            margin: 30px 0;
+            color: var(--oro);
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(139, 69, 19, 0.1) 100%);
+            padding: 25px;
+            border-radius: 12px;
+            border: 2px solid var(--oro);
             text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+            position: relative;
         }
-
+        
+        .streak::before {
+            content: "🔥";
+            position: absolute;
+            left: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5em;
+        }
+        
         .logro {
-            background: #2a2418;
-            padding: 15px;
-            margin: 12px 0;
-            border-radius: 6px;
-            border-left: 4px solid #8b6b2d;
-            border-right: 1px solid #5d4a2a;
-            transition: all 0.3s;
-        }
-
-        .logro:hover {
-            background: #352b1c;
-            transform: translateX(5px);
-        }
-
-        .fase {
-            margin: 18px 0;
-            padding: 20px;
-            background: #2a2418;
+            background: rgba(45, 45, 45, 0.6);
+            padding: 18px;
+            margin: 15px 0;
             border-radius: 8px;
-            border: 1px solid #5d4a2a;
-            transition: all 0.3s;
+            border-left: 4px solid var(--oro);
+            transition: all 0.3s ease;
+            position: relative;
+            padding-left: 50px;
         }
-
+        
+        .logro::before {
+            content: "🛡";
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2em;
+        }
+        
+        .logro:hover {
+            background: rgba(45, 45, 45, 0.8);
+            transform: translateX(10px);
+            border-left-color: var(--oro-oscuro);
+        }
+        
+        .fase {
+            margin: 20px 0;
+            padding: 25px;
+            background: rgba(45, 45, 45, 0.4);
+            border-radius: 10px;
+            border: 1px solid var(--marron);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
         .fase:hover {
-            border-color: #8b6b2d;
-            transform: translateY(-2px);
+            border-color: var(--oro);
+            transform: translateY(-3px);
         }
-
+        
+        .fase::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--oro), var(--oro-oscuro));
+            border-radius: 4px 0 0 4px;
+        }
+        
         .password-input {
             width: 100%;
-            padding: 16px;
-            margin: 20px 0;
-            background: #2a2418;
-            border: 2px solid #5d4a2a;
-            border-radius: 6px;
-            color: #d4c4a0;
+            padding: 18px;
+            margin: 25px 0;
+            background: rgba(45, 45, 45, 0.8);
+            border: 2px solid var(--marron);
+            border-radius: 8px;
+            color: var(--texto);
             font-size: 16px;
             text-align: center;
             font-family: 'Cinzel', serif;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
+            letter-spacing: 2px;
         }
-
+        
         .password-input:focus {
-            border-color: #c8a85d;
+            border-color: var(--oro);
             outline: none;
-            box-shadow: 0 0 15px rgba(200, 168, 93, 0.4);
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.4);
+            background: rgba(45, 45, 45, 0.9);
         }
-
+        
         .error {
-            color: #d4a85d;
-            margin: 12px 0;
+            color: var(--oro);
+            margin: 15px 0;
             display: none;
             font-style: italic;
+            text-align: center;
+            padding: 10px;
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 5px;
+            border: 1px solid var(--oro);
         }
-
-        .roman-icon {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 20px;
-            background: url('https://images.unsplash.com/photo-1592488835941-1b6b8f4a37c6?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80') center/cover;
-            border-radius: 50%;
-            border: 3px solid #8b6b2d;
+        
+        .decorative-border {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--oro), transparent);
+            margin: 30px 0;
         }
-
-        .header-image {
-            width: 100%;
-            height: 200px;
-            background: url('https://images.unsplash.com/photo-1605000797499-95a51c5269ae?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80') center/cover;
-            border-radius: 10px;
-            margin-bottom: 25px;
-            border: 3px solid #8b6b2d;
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .login-container, .panel-container {
+                margin: 20px;
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 2.2em;
+            }
+            
+            .container {
+                padding: 25px 20px;
+            }
         }
-
-        .section-icon {
-            width: 40px;
-            height: 40px;
-            display: inline-block;
-            margin-right: 15px;
-            vertical-align: middle;
-            border-radius: 50%;
-            border: 2px solid #8b6b2d;
-        }
-
-        .victoria-icon { background: url('https://images.unsplash.com/photo-1589658533865-239c0ec86d34?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80') center/cover; }
-        .estructura-icon { background: url('https://images.unsplash.com/photo-1592488835941-1b6b8f4a37c6?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80') center/cover; }
-        .archivo-icon { background: url('https://images.unsplash.com/photo-1589656969145-5d42c9e1745f?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80') center/cover; }
     </style>
 </head>
 <body>
     <!-- PANTALLA DE LOGIN -->
     <div class="login-container" id="loginContainer">
-        <div class="roman-icon"></div>
-        <h1>FORTALEZA DE MARCUS</h1>
-        <p class="subtitle">"La disciplina es la madre de la victoria"</p>
+        <h1>EL CAMINO DEL GUERRERO</h1>
+        <p class="subtitle">"Cada día es una nueva batalla por tu mejor versión"</p>
         
-        <input type="password" class="password-input" id="passwordInput" placeholder="Ingresa la contraseña de la legión">
-        <div class="error" id="errorMsg">Contraseña incorrecta. El destino no favorece a los indignos.</div>
-        <button class="btn" onclick="verificarPassword()">Entrar a la Fortaleza</button>
+        <input type="password" class="password-input" id="passwordInput" placeholder="INGRESA TU CLAVE DE GUERRERO">
+        <div class="error" id="errorMsg">Clave incorrecta. Solo los dignos pueden continuar el camino.</div>
+        <button class="btn" onclick="verificarPassword()">INICIAR EL CAMINO</button>
+        
+        <div class="decorative-border"></div>
         
         <div class="quote">
-            "No es que tengamos poco tiempo, sino que perdemos mucho."<br>
-            - Séneca
+            La disciplina es el puente entre tus metas y tus logros. 
+            Cada día construyes el guerrero que serás mañana.
         </div>
     </div>
 
     <!-- PANEL PRINCIPAL -->
     <div class="panel-container" id="panelContainer">
-        <div class="header-image"></div>
-        <h1>FORTALEZA DE MARCUS</h1>
-        <p class="subtitle">Bienvenido, Legionario. Tu disciplina forja tu destino.</p>
+        <h1>EL CAMINO DEL GUERRERO</h1>
+        <p class="subtitle">Bienvenido, Marcos. Tu disciplina forja tu destino.</p>
 
         <div class="streak">
-            Días de Disciplina Consecutivos: <span id="diasConsecutivos">0</span>
+            DÍAS DE DISCIPLINA CONSECUTIVOS: <span id="diasConsecutivos">0</span>
         </div>
         
         <div class="quote" id="fraseMotivacional">
-            "Aferrarse a la ira es como agarrar un carbón caliente con la intención de tirárselo a alguien; tú eres el que se quema."
+            La mejor venganza es no ser como tu enemigo. Enfócate en construir tu grandeza.
         </div>
 
         <div class="container">
-            <h2>
-                <span class="section-icon victoria-icon"></span>
-                Victoria del Día
-            </h2>
-            <input type="text" class="victoria-input" id="victoriaInput" placeholder="¿Cuál es tu conquista hoy, legionario?">
-            <button class="btn" onclick="guardarVictoria()">Registrar Victoria</button>
+            <h2>VICTORIA DEL DÍA</h2>
+            <input type="text" class="victoria-input" id="victoriaInput" placeholder="¿Qué batalla ganarás hoy, guerrero?">
+            <button class="btn" onclick="guardarVictoria()">REGISTRAR VICTORIA</button>
             <div id="victoriaHoy"></div>
         </div>
 
         <div class="container">
-            <h2>
-                <span class="section-icon estructura-icon"></span>
-                Estructura del Legionario
-            </h2>
+            <h2>RUTINA DEL GUERRERO</h2>
             
             <div class="fase">
-                <h3>Amanecer - Preparación para la Batalla</h3>
-                <p>• Sin escudos electrónicos (teléfono) hasta después del desayuno</p>
-                <p>• Ritual de limpieza (lavar rostro y dientes)</p>
-                <p>• Alimento con conciencia (desayuno/mate)</p>
+                <h3>AMANECER - PREPARACIÓN</h3>
+                <p>• Despertar sin teléfono - Primera victoria del día</p>
+                <p>• Ritual de limpieza (agua fría en el rostro)</p>
+                <p>• Alimento consciente (desayuno/mate sin pantallas)</p>
                 <p>• Definir la Victoria del Día</p>
             </div>
             
             <div class="fase">
-                <h3>Día - Campo de Batalla</h3>
-                <p>• Entrenamiento principal (60-90 min de acción)</p>
-                <p>• Deberes del campamento (tareas domésticas)</p>
-                <p>• Conexión con la legión (social activo)</p>
+                <h3>MEDIODÍA - ACCIÓN</h3>
+                <p>• Entrenamiento principal (60-90 min de acción enfocada)</p>
+                <p>• Deberes del campamento (tareas, responsabilidades)</p>
+                <p>• Conexión con la tribu (social real, no virtual)</p>
             </div>
             
             <div class="fase">
-                <h3>Anochecer - Reflexión del Guerrero</h3>
-                <p>• Descanso sin escudos (1h sin pantallas)</p>
-                <p>• Meditación del guerrero (1 minuto de reflexión)</p>
-                <p>• Preparación para el nuevo día</p>
+                <h3>ATARDECER - REFLEXIÓN</h3>
+                <p>• Cierre sin pantallas (1 hora antes de dormir)</p>
+                <p>• Meditación del guerrero (1 minuto de gratitud)</p>
+                <p>• Preparar el día siguiente</p>
             </div>
         </div>
 
         <div class="container">
-            <h2>
-                <span class="section-icon archivo-icon"></span>
-                Archivo de Conquistas
-            </h2>
+            <h2>ARCHIVO DE CONQUISTAS</h2>
             <div id="logrosContainer">
-                <div class="logro">[Fecha] - Tu primera conquista aparecerá aquí</div>
+                <div class="logro">Aquí se grabarán tus victorias. Cada una cuenta.</div>
             </div>
-            <button class="btn" onclick="limpiarLogros()">Limpiar Archivo</button>
+            <button class="btn" onclick="limpiarLogros()">LIMPIAR ARCHIVO</button>
         </div>
 
+        <div class="decorative-border"></div>
+
         <div class="container">
-            <button class="btn" onclick="cerrarSesion()">Salir de la Fortaleza</button>
+            <button class="btn" onclick="cerrarSesion()">SALIR DEL CAMINO</button>
         </div>
     </div>
 
     <script>
-        // Frases estoicas mejoradas
-        const frasesEstoicas = [
-            "No es lo que te ocurre, sino cómo reaccionas lo que importa.",
-            "Si está en tu control, ¿por qué te quejas? Si no está en tu control, ¿por qué te quejas?",
-            "La mejor venganza es no ser como tu enemigo.",
-            "No pretendas que las cosas ocurran como quieres. Desea, más bien, que se produzcan tal como se producen.",
-            "El hombre sabio no sufre por las cosas que no tiene, sino que disfruta de las que posee.",
-            "Aferrarse a la ira es como agarrar un carbón caliente con la intención de tirárselo a alguien; tú eres el que se quema.",
-            "No hables de lo que un hombre bueno debe ser, sé uno.",
-            "La felicidad de tu vida depende de la calidad de tus pensamientos.",
-            "La dificultad fortalece la mente, como el trabajo el cuerpo.",
-            "No busques que los eventos sucedan como quieres, sino quiere los eventos como suceden."
+        // Frases personalizadas para tu camino
+        const frasesGuerrero = [
+            "Cada día es una nueva oportunidad para ser mejor que ayer.",
+            "La disciplina duele, pero la mediocridad mata el alma lentamente.",
+            "No cuentes los días, haz que los días cuenten.",
+            "El guerrero no se rinde cuando está cansado, se rinde cuando termina.",
+            "Tu único límite es la disciplina que te exiges.",
+            "Hoy duele, mañana agradecerás.",
+            "La batalla más importante es la que libras contra tu yo de ayer.",
+            "Cada elección te acerca o te aleja de tu destino.",
+            "El dolor temporal vale la pena por una vida de orgullo.",
+            "No esperes motivación, crea disciplina."
         ];
 
         // CONTRASEÑA - Cámbiala por la que quieras
-        const PASSWORD = "disciplina";
+        const PASSWORD = "marcos2024";
 
         // Elementos del DOM
         const loginContainer = document.getElementById('loginContainer');
@@ -381,8 +518,8 @@
 
         // Inicializar panel
         function inicializarPanel() {
-            // Frase estoica aleatoria
-            fraseElement.textContent = '"' + frasesEstoicas[Math.floor(Math.random() * frasesEstoicas.length)] + '"';
+            // Frase aleatoria
+            fraseElement.textContent = frasesGuerrero[Math.floor(Math.random() * frasesGuerrero.length)];
             
             // Cargar datos guardados
             cargarDatos();
@@ -394,7 +531,11 @@
             const victoria = input.value.trim();
             
             if (victoria) {
-                const fecha = new Date().toLocaleDateString();
+                const fecha = new Date().toLocaleDateString('es-ES', { 
+                    day: '2-digit', 
+                    month: '2-digit', 
+                    year: 'numeric' 
+                });
                 const logro = `${fecha} - ${victoria}`;
                 
                 // Guardar en localStorage
@@ -414,7 +555,7 @@
                 }
                 
                 // Mostrar victoria
-                victoriaHoyElement.innerHTML = `<div class="logro"><strong>Victoria de Hoy:</strong> ${victoria}</div>`;
+                victoriaHoyElement.innerHTML = `<div class="logro"><strong>VICTORIA DE HOY:</strong> ${victoria}</div>`;
                 input.value = '';
                 
                 // Actualizar logros
@@ -438,7 +579,7 @@
             logrosContainer.innerHTML = '';
             
             if (logros.length === 0) {
-                logrosContainer.innerHTML = '<div class="logro">Aún no hay conquistas registradas. Tu primera victoria será recordada aquí.</div>';
+                logrosContainer.innerHTML = '<div class="logro">Aún no hay victorias registradas. Tu primera conquista será recordada aquí.</div>';
                 return;
             }
             
@@ -452,7 +593,7 @@
 
         // Limpiar logros
         function limpiarLogros() {
-            if (confirm('¿Seguro que quieres limpiar el archivo de conquistas?')) {
+            if (confirm('¿Estás seguro de limpiar tu archivo de conquistas?')) {
                 localStorage.removeItem('misLogros');
                 mostrarLogros();
             }
