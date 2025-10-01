@@ -3,17 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>El Camino del Guerrero - Marcos</title>
+    <title>Planificador de Hábitos - Marcos</title>
     <style>
-        /* Estilo Guerrero - Solo CSS, sin imágenes externas */
-        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap');
-        
+        /* Estilo Épico Dorado/Negro */
         :root {
             --oro: #d4af37;
             --oro-oscuro: #b8860b;
-            --marron: #8b4513;
-            --marron-oscuro: #5d4037;
+            --bronce: #cd7f32;
             --negro: #0a0a0a;
+            --negro-claro: #1a1a1a;
             --gris: #2d2d2d;
             --texto: #e8e0c8;
         }
@@ -25,56 +23,31 @@
         }
         
         body {
-            font-family: 'Cinzel', serif;
-            background: linear-gradient(135deg, var(--negro) 0%, var(--marron-oscuro) 100%);
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: 
+                linear-gradient(135deg, rgba(10, 10, 10, 0.9) 0%, rgba(42, 42, 42, 0.9) 100%),
+                url('https://images.unsplash.com/photo-1550684376-efcbd6e3f031?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');
+            background-size: cover;
+            background-attachment: fixed;
             color: var(--texto);
             min-height: 100vh;
             padding: 20px;
-            position: relative;
-            overflow-x: hidden;
-        }
-        
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(139, 69, 19, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(93, 64, 55, 0.1) 0%, transparent 50%);
-            pointer-events: none;
-            z-index: -1;
         }
         
         .login-container {
-            max-width: 500px;
+            max-width: 400px;
             margin: 100px auto;
             background: rgba(10, 10, 10, 0.95);
-            padding: 50px 40px;
+            padding: 40px 30px;
             border-radius: 15px;
-            border: 3px solid var(--oro);
-            box-shadow: 0 0 40px rgba(212, 175, 55, 0.3);
+            border: 2px solid var(--oro);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
             text-align: center;
             backdrop-filter: blur(10px);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .login-container::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--oro), var(--oro-oscuro), var(--oro));
         }
         
         .panel-container {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
             display: none;
         }
@@ -82,413 +55,656 @@
         h1 {
             color: var(--oro);
             text-align: center;
-            font-size: 3em;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
+            font-size: 2.5em;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
-            font-weight: 700;
-            letter-spacing: 3px;
-            position: relative;
-        }
-        
-        h1::after {
-            content: "";
-            display: block;
-            width: 100px;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, var(--oro), transparent);
-            margin: 15px auto;
         }
         
         .subtitle {
             text-align: center;
-            color: var(--oro-oscuro);
-            font-style: italic;
-            margin-bottom: 40px;
-            font-size: 1.2em;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            color: var(--bronce);
+            margin-bottom: 30px;
         }
         
         .container {
-            background: rgba(15, 15, 15, 0.9);
+            background: rgba(26, 26, 26, 0.9);
             border-radius: 12px;
-            padding: 35px;
-            margin-bottom: 30px;
-            border: 2px solid var(--marron);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid var(--gris);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
             backdrop-filter: blur(5px);
-            position: relative;
-            transition: all 0.3s ease;
-        }
-        
-        .container:hover {
-            border-color: var(--oro);
-            transform: translateY(-5px);
-            box-shadow: 0 12px 35px rgba(212, 175, 55, 0.2);
         }
         
         h2 {
             color: var(--oro);
-            border-bottom: 2px solid var(--marron);
-            padding-bottom: 15px;
-            margin-bottom: 25px;
-            font-size: 2em;
-            font-weight: 600;
-            position: relative;
-        }
-        
-        h2::before {
-            content: "⚔";
-            margin-right: 15px;
-            font-size: 0.8em;
-        }
-        
-        h3 {
-            color: var(--oro-oscuro);
-            margin: 25px 0 15px 0;
-            font-size: 1.4em;
-            font-weight: 600;
-            position: relative;
-            padding-left: 25px;
-        }
-        
-        h3::before {
-            content: "•";
-            position: absolute;
-            left: 0;
-            color: var(--oro);
+            margin-bottom: 20px;
             font-size: 1.5em;
+            border-bottom: 2px solid var(--bronce);
+            padding-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         
-        .quote {
-            font-style: italic;
-            text-align: center;
-            color: var(--oro-oscuro);
-            margin: 30px 0;
-            font-size: 1.3em;
-            padding: 25px;
-            background: rgba(139, 69, 19, 0.1);
+        .habitos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .habito-card {
+            background: rgba(45, 45, 45, 0.6);
+            padding: 20px;
             border-radius: 10px;
             border-left: 4px solid var(--oro);
-            border-right: 4px solid var(--oro);
-            line-height: 1.6;
-            position: relative;
-        }
-        
-        .quote::before, .quote::after {
-            content: '"';
-            color: var(--oro);
-            font-size: 2em;
-            position: absolute;
-        }
-        
-        .quote::before {
-            top: 10px;
-            left: 20px;
-        }
-        
-        .quote::after {
-            bottom: 10px;
-            right: 20px;
-        }
-        
-        .victoria-input {
-            width: 100%;
-            padding: 18px;
-            margin: 20px 0;
-            background: rgba(45, 45, 45, 0.8);
-            border: 2px solid var(--marron);
-            border-radius: 8px;
-            color: var(--texto);
-            font-size: 16px;
-            font-family: 'Cinzel', serif;
             transition: all 0.3s ease;
         }
         
-        .victoria-input:focus {
+        .habito-card:hover {
+            border-left-color: var(--bronce);
+            transform: translateY(-2px);
+        }
+        
+        .habito-card h3 {
+            color: var(--oro);
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .checklist {
+            list-style: none;
+        }
+        
+        .checklist li {
+            margin: 12px 0;
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        
+        .checklist li:hover {
+            background: rgba(212, 175, 55, 0.1);
+        }
+        
+        .checklist input[type="checkbox"] {
+            margin-right: 12px;
+            transform: scale(1.3);
+            accent-color: var(--oro);
+        }
+        
+        .btn-eliminar {
+            background: transparent;
+            border: 1px solid #ef4444;
+            color: #ef4444;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 10px;
+            font-size: 0.8em;
+            transition: all 0.3s;
+        }
+        
+        .btn-eliminar:hover {
+            background: #ef4444;
+            color: white;
+        }
+        
+        .semana-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .dia-card {
+            background: rgba(45, 45, 45, 0.6);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid var(--gris);
+            transition: all 0.3s;
+        }
+        
+        .dia-card.completado {
+            background: linear-gradient(135deg, var(--bronce), var(--oro-oscuro));
+            color: var(--negro);
             border-color: var(--oro);
-            outline: none;
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
-            background: rgba(45, 45, 45, 0.9);
+            font-weight: bold;
         }
         
         .btn {
-            background: linear-gradient(135deg, var(--oro) 0%, var(--oro-oscuro) 100%);
+            background: linear-gradient(135deg, var(--oro), var(--bronce));
             color: var(--negro);
             border: none;
-            padding: 16px 32px;
+            padding: 12px 24px;
             border-radius: 8px;
             cursor: pointer;
             font-size: 16px;
+            margin: 5px;
+            transition: all 0.3s;
             font-weight: bold;
-            margin: 10px;
-            transition: all 0.3s ease;
-            font-family: 'Cinzel', serif;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            border: 1px solid rgba(255,255,255,0.2);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .btn::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: 0.5s;
         }
         
         .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
         }
         
-        .btn:hover::before {
-            left: 100%;
-        }
-        
-        .streak {
-            font-size: 1.8em;
-            text-align: center;
-            margin: 30px 0;
-            color: var(--oro);
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(139, 69, 19, 0.1) 100%);
-            padding: 25px;
-            border-radius: 12px;
+        .btn-outline {
+            background: transparent;
             border: 2px solid var(--oro);
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
-            position: relative;
+            color: var(--oro);
+            padding: 8px 16px;
         }
         
-        .streak::before {
-            content: "🔥";
-            position: absolute;
-            left: 30px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 1.5em;
-        }
-        
-        .logro {
-            background: rgba(45, 45, 45, 0.6);
-            padding: 18px;
-            margin: 15px 0;
-            border-radius: 8px;
-            border-left: 4px solid var(--oro);
-            transition: all 0.3s ease;
-            position: relative;
-            padding-left: 50px;
-        }
-        
-        .logro::before {
-            content: "🛡";
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 1.2em;
-        }
-        
-        .logro:hover {
-            background: rgba(45, 45, 45, 0.8);
-            transform: translateX(10px);
-            border-left-color: var(--oro-oscuro);
-        }
-        
-        .fase {
-            margin: 20px 0;
-            padding: 25px;
-            background: rgba(45, 45, 45, 0.4);
-            border-radius: 10px;
-            border: 1px solid var(--marron);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-        
-        .fase:hover {
-            border-color: var(--oro);
-            transform: translateY(-3px);
-        }
-        
-        .fase::before {
-            content: "";
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 4px;
-            background: linear-gradient(to bottom, var(--oro), var(--oro-oscuro));
-            border-radius: 4px 0 0 4px;
+        .btn-outline:hover {
+            background: var(--oro);
+            color: var(--negro);
         }
         
         .password-input {
             width: 100%;
-            padding: 18px;
-            margin: 25px 0;
+            padding: 15px;
+            margin: 20px 0;
             background: rgba(45, 45, 45, 0.8);
-            border: 2px solid var(--marron);
+            border: 2px solid var(--gris);
             border-radius: 8px;
             color: var(--texto);
             font-size: 16px;
             text-align: center;
-            font-family: 'Cinzel', serif;
-            transition: all 0.3s ease;
-            letter-spacing: 2px;
+            transition: all 0.3s;
         }
         
         .password-input:focus {
             border-color: var(--oro);
             outline: none;
-            box-shadow: 0 0 25px rgba(212, 175, 55, 0.4);
-            background: rgba(45, 45, 45, 0.9);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
         }
         
         .error {
             color: var(--oro);
-            margin: 15px 0;
+            margin: 10px 0;
             display: none;
-            font-style: italic;
-            text-align: center;
-            padding: 10px;
-            background: rgba(212, 175, 55, 0.1);
+        }
+        
+        .resumen-mensual {
+            background: rgba(45, 45, 45, 0.6);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border: 1px solid var(--gris);
+        }
+        
+        .meta-card {
+            background: rgba(26, 26, 26, 0.8);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 4px solid var(--oro);
+        }
+        
+        .progreso {
+            height: 10px;
+            background: var(--gris);
             border-radius: 5px;
-            border: 1px solid var(--oro);
+            margin: 10px 0;
+            overflow: hidden;
         }
         
-        .decorative-border {
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--oro), transparent);
-            margin: 30px 0;
+        .progreso-barra {
+            height: 100%;
+            background: linear-gradient(90deg, var(--bronce), var(--oro));
+            border-radius: 5px;
+            transition: width 0.3s;
         }
         
-        /* Responsive */
-        @media (max-width: 768px) {
-            .login-container, .panel-container {
-                margin: 20px;
-                padding: 30px 20px;
-            }
-            
-            h1 {
-                font-size: 2.2em;
-            }
-            
-            .container {
-                padding: 25px 20px;
-            }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .stat-card {
+            background: rgba(45, 45, 45, 0.6);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid var(--gris);
+        }
+        
+        .stat-numero {
+            font-size: 2em;
+            font-weight: bold;
+            color: var(--oro);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: var(--negro-claro);
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid var(--oro);
+            max-width: 500px;
+            width: 90%;
+        }
+        
+        .modal-input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            background: rgba(45, 45, 45, 0.8);
+            border: 1px solid var(--gris);
+            border-radius: 6px;
+            color: var(--texto);
+        }
+        
+        .categoria-select {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            background: rgba(45, 45, 45, 0.8);
+            border: 1px solid var(--gris);
+            border-radius: 6px;
+            color: var(--texto);
         }
     </style>
 </head>
 <body>
     <!-- PANTALLA DE LOGIN -->
     <div class="login-container" id="loginContainer">
-        <h1>EL CAMINO DEL GUERRERO</h1>
-        <p class="subtitle">"Cada día es una nueva batalla por tu mejor versión"</p>
+        <h1>Mi Planificador</h1>
+        <p class="subtitle">Seguimiento de hábitos y progreso personal</p>
         
-        <input type="password" class="password-input" id="passwordInput" placeholder="INGRESA TU CLAVE DE GUERRERO">
-        <div class="error" id="errorMsg">Clave incorrecta. Solo los dignos pueden continuar el camino.</div>
-        <button class="btn" onclick="verificarPassword()">INICIAR EL CAMINO</button>
-        
-        <div class="decorative-border"></div>
-        
-        <div class="quote">
-            La disciplina es el puente entre tus metas y tus logros. 
-            Cada día construyes el guerrero que serás mañana.
-        </div>
+        <input type="password" class="password-input" id="passwordInput" placeholder="Contraseña personal">
+        <div class="error" id="errorMsg">Contraseña incorrecta</div>
+        <button class="btn" onclick="verificarPassword()">ENTRAR</button>
     </div>
 
     <!-- PANEL PRINCIPAL -->
     <div class="panel-container" id="panelContainer">
-        <h1>EL CAMINO DEL GUERRERO</h1>
-        <p class="subtitle">Bienvenido, Marcos. Tu disciplina forja tu destino.</p>
-
-        <div class="streak">
-            DÍAS DE DISCIPLINA CONSECUTIVOS: <span id="diasConsecutivos">0</span>
-        </div>
-        
-        <div class="quote" id="fraseMotivacional">
-            La mejor venganza es no ser como tu enemigo. Enfócate en construir tu grandeza.
-        </div>
+        <h1>Planificador de Hábitos - Marcos</h1>
+        <p class="subtitle">Hoy es <span id="fechaHoy"></span> - ¡Construye tu legado!</p>
 
         <div class="container">
-            <h2>VICTORIA DEL DÍA</h2>
-            <input type="text" class="victoria-input" id="victoriaInput" placeholder="¿Qué batalla ganarás hoy, guerrero?">
-            <button class="btn" onclick="guardarVictoria()">REGISTRAR VICTORIA</button>
-            <div id="victoriaHoy"></div>
-        </div>
-
-        <div class="container">
-            <h2>RUTINA DEL GUERRERO</h2>
-            
-            <div class="fase">
-                <h3>AMANECER - PREPARACIÓN</h3>
-                <p>• Despertar sin teléfono - Primera victoria del día</p>
-                <p>• Ritual de limpieza (agua fría en el rostro)</p>
-                <p>• Alimento consciente (desayuno/mate sin pantallas)</p>
-                <p>• Definir la Victoria del Día</p>
+            <h2>
+                📅 Hábitos Diarios - Hoy
+                <button class="btn-outline" onclick="mostrarModalAgregar()">+ Agregar Hábito</button>
+            </h2>
+            <div class="habitos-grid" id="habitosGrid">
+                <!-- Se genera dinámicamente -->
             </div>
             
-            <div class="fase">
-                <h3>MEDIODÍA - ACCIÓN</h3>
-                <p>• Entrenamiento principal (60-90 min de acción enfocada)</p>
-                <p>• Deberes del campamento (tareas, responsabilidades)</p>
-                <p>• Conexión con la tribu (social real, no virtual)</p>
+            <button class="btn" onclick="guardarDia()">GUARDAR DÍA COMPLETADO</button>
+        </div>
+
+        <div class="container">
+            <h2>📊 Progreso Semanal</h2>
+            <div class="semana-grid" id="semanaGrid">
+                <!-- Se genera automáticamente -->
             </div>
             
-            <div class="fase">
-                <h3>ATARDECER - REFLEXIÓN</h3>
-                <p>• Cierre sin pantallas (1 hora antes de dormir)</p>
-                <p>• Meditación del guerrero (1 minuto de gratitud)</p>
-                <p>• Preparar el día siguiente</p>
+            <div class="resumen-mensual">
+                <h3>Metas Mensuales</h3>
+                <div class="meta-card">
+                    <strong>Días productivos este mes:</strong>
+                    <div class="progreso">
+                        <div class="progreso-barra" id="progresoDias" style="width: 0%"></div>
+                    </div>
+                    <span id="contadorDias">0/30 días</span>
+                </div>
+                
+                <div class="meta-card">
+                    <strong>Hábitos completados:</strong>
+                    <div class="progreso">
+                        <div class="progreso-barra" id="progresoHabitos" style="width: 0%"></div>
+                    </div>
+                    <span id="contadorHabitos">0% completado</span>
+                </div>
             </div>
         </div>
 
         <div class="container">
-            <h2>ARCHIVO DE CONQUISTAS</h2>
-            <div id="logrosContainer">
-                <div class="logro">Aquí se grabarán tus victorias. Cada una cuenta.</div>
+            <h2>📈 Estadísticas</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-numero" id="statRacha">0</div>
+                    <div>Días consecutivos</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-numero" id="statHabitos">0%</div>
+                    <div>Hábitos completados</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-numero" id="statSemanas">0</div>
+                    <div>Semanas activas</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-numero" id="statMejora">0%</div>
+                    <div>Mejora mensual</div>
+                </div>
             </div>
-            <button class="btn" onclick="limpiarLogros()">LIMPIAR ARCHIVO</button>
         </div>
 
-        <div class="decorative-border"></div>
-
         <div class="container">
-            <button class="btn" onclick="cerrarSesion()">SALIR DEL CAMINO</button>
+            <button class="btn" onclick="cerrarSesion()">CERRAR SESIÓN</button>
+            <button class="btn-outline" onclick="reiniciarMes()">REINICIAR MES</button>
+        </div>
+    </div>
+
+    <!-- MODAL AGREGAR HÁBITO -->
+    <div class="modal" id="modalAgregar">
+        <div class="modal-content">
+            <h2>Agregar Nuevo Hábito</h2>
+            <input type="text" class="modal-input" id="nuevoHabito" placeholder="Descripción del hábito">
+            <select class="categoria-select" id="categoriaHabito">
+                <option value="mañana">🌅 Mañana</option>
+                <option value="dia">⚡ Día</option>
+                <option value="noche">🌙 Noche</option>
+            </select>
+            <div style="margin-top: 20px; display: flex; gap: 10px;">
+                <button class="btn" onclick="agregarHabito()">AGREGAR</button>
+                <button class="btn-outline" onclick="cerrarModalAgregar()">CANCELAR</button>
+            </div>
         </div>
     </div>
 
     <script>
-        // Frases personalizadas para tu camino
-        const frasesGuerrero = [
-            "Cada día es una nueva oportunidad para ser mejor que ayer.",
-            "La disciplina duele, pero la mediocridad mata el alma lentamente.",
-            "No cuentes los días, haz que los días cuenten.",
-            "El guerrero no se rinde cuando está cansado, se rinde cuando termina.",
-            "Tu único límite es la disciplina que te exiges.",
-            "Hoy duele, mañana agradecerás.",
-            "La batalla más importante es la que libras contra tu yo de ayer.",
-            "Cada elección te acerca o te aleja de tu destino.",
-            "El dolor temporal vale la pena por una vida de orgullo.",
-            "No esperes motivación, crea disciplina."
-        ];
+        // CONTRASEÑA
+        const PASSWORD = "Ellie2023_";
 
-        // CONTRASEÑA - Cámbiala por la que quieras
-        const PASSWORD = "marcos2024";
+        // Hábitos por defecto
+        const habitosPorDefecto = {
+            "mañana": [
+                "Levantarme sin revisar el teléfono",
+                "Lavar cara y cepillar dientes",
+                "10 minutos de ejercicio",
+                "Desayunar conscientemente"
+            ],
+            "dia": [
+                "1 hora de aprendizaje",
+                "Ayudar en casa 30 min", 
+                "Contactar un amigo/familiar",
+                "Salir a caminar 20 min"
+            ],
+            "noche": [
+                "Sin pantallas 1h antes de dormir",
+                "Leer 15 minutos",
+                "Planificar el día siguiente",
+                "Dormir antes de las 12 AM"
+            ]
+        };
 
         // Elementos del DOM
         const loginContainer = document.getElementById('loginContainer');
         const panelContainer = document.getElementById('panelContainer');
         const passwordInput = document.getElementById('passwordInput');
         const errorMsg = document.getElementById('errorMsg');
-        const fraseElement = document.getElementById('fraseMotivacional');
-        const diasElement = document.getElementById('diasConsecutivos');
-        const victoriaHoyElement = document.getElementById('victoriaHoy');
-        const logrosContainer = document.getElementById('logrosContainer');
+        const fechaHoy = document.getElementById('fechaHoy');
+        const semanaGrid = document.getElementById('semanaGrid');
+        const habitosGrid = document.getElementById('habitosGrid');
+        const modalAgregar = document.getElementById('modalAgregar');
 
-        // Verificar contraseña
+        // Inicializar
+        function inicializarPanel() {
+            // Fecha actual
+            const hoy = new Date();
+            fechaHoy.textContent = hoy.toLocaleDateString('es-ES', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            
+            // Generar semana y hábitos
+            generarSemana();
+            generarHabitos();
+            
+            // Cargar datos
+            cargarDatos();
+            actualizarEstadisticas();
+        }
+
+        // Generar hábitos desde localStorage o por defecto
+        function generarHabitos() {
+            const habitosGuardados = JSON.parse(localStorage.getItem('misHabitos')) || habitosPorDefecto;
+            habitosGrid.innerHTML = '';
+            
+            // Guardar hábitos actualizados
+            localStorage.setItem('misHabitos', JSON.stringify(habitosGuardados));
+            
+            Object.keys(habitosGuardados).forEach(categoria => {
+                const habitos = habitosGuardados[categoria];
+                if (habitos.length > 0) {
+                    const habitoCard = document.createElement('div');
+                    habitoCard.className = 'habito-card';
+                    
+                    let icono = '🌅';
+                    let titulo = 'Mañana';
+                    if (categoria === 'dia') {
+                        icono = '⚡';
+                        titulo = 'Día';
+                    } else if (categoria === 'noche') {
+                        icono = '🌙';
+                        titulo = 'Noche';
+                    }
+                    
+                    habitoCard.innerHTML = `
+                        <h3>${icono} ${titulo}</h3>
+                        <ul class="checklist" id="checklist-${categoria}">
+                            ${habitos.map((habito, index) => `
+                                <li>
+                                    <input type="checkbox" id="habito-${categoria}-${index}">
+                                    <label for="habito-${categoria}-${index}">${habito}</label>
+                                    <button class="btn-eliminar" onclick="eliminarHabito('${categoria}', ${index})">×</button>
+                                </li>
+                            `).join('')}
+                        </ul>
+                    `;
+                    
+                    habitosGrid.appendChild(habitoCard);
+                }
+            });
+            
+            // Configurar event listeners para checkboxes
+            configurarCheckboxes();
+        }
+
+        // Eliminar hábito
+        function eliminarHabito(categoria, index) {
+            if (confirm('¿Estás seguro de eliminar este hábito?')) {
+                const habitos = JSON.parse(localStorage.getItem('misHabitos'));
+                habitos[categoria].splice(index, 1);
+                localStorage.setItem('misHabitos', JSON.stringify(habitos));
+                generarHabitos();
+                actualizarEstadisticas();
+            }
+        }
+
+        // Agregar hábito
+        function agregarHabito() {
+            const texto = document.getElementById('nuevoHabito').value.trim();
+            const categoria = document.getElementById('categoriaHabito').value;
+            
+            if (texto) {
+                const habitos = JSON.parse(localStorage.getItem('misHabitos'));
+                habitos[categoria].push(texto);
+                localStorage.setItem('misHabitos', JSON.stringify(habitos));
+                
+                document.getElementById('nuevoHabito').value = '';
+                cerrarModalAgregar();
+                generarHabitos();
+            }
+        }
+
+        // Modal functions
+        function mostrarModalAgregar() {
+            modalAgregar.style.display = 'flex';
+        }
+
+        function cerrarModalAgregar() {
+            modalAgregar.style.display = 'none';
+        }
+
+        // Configurar checkboxes
+        function configurarCheckboxes() {
+            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    guardarEstadoCheckboxes();
+                    actualizarEstadisticas();
+                });
+            });
+        }
+
+        // Guardar estado de checkboxes
+        function guardarEstadoCheckboxes() {
+            const estados = {};
+            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                estados[checkbox.id] = checkbox.checked;
+            });
+            localStorage.setItem('estadosCheckboxes', JSON.stringify(estados));
+        }
+
+        // Cargar datos guardados
+        function cargarDatos() {
+            // Cargar estados de checkboxes
+            const estados = JSON.parse(localStorage.getItem('estadosCheckboxes') || '{}');
+            Object.keys(estados).forEach(id => {
+                const checkbox = document.getElementById(id);
+                if (checkbox) {
+                    checkbox.checked = estados[id];
+                }
+            });
+        }
+
+        // === FUNCIONES EXISTENTES (modificadas) ===
+        function generarSemana() {
+            const dias = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
+            semanaGrid.innerHTML = '';
+            
+            dias.forEach((dia, index) => {
+                const diaCard = document.createElement('div');
+                diaCard.className = 'dia-card';
+                diaCard.innerHTML = `
+                    <strong>${dia}</strong>
+                    <div>${obtenerProgresoDia(index)}%</div>
+                `;
+                
+                if (obtenerProgresoDia(index) > 70) {
+                    diaCard.classList.add('completado');
+                }
+                
+                semanaGrid.appendChild(diaCard);
+            });
+        }
+
+        function obtenerProgresoDia(dia) {
+            const progreso = JSON.parse(localStorage.getItem('progresoSemanal') || '{}');
+            return progreso[dia] || 0;
+        }
+
+        function guardarDia() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            let completados = 0;
+            
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    completados++;
+                }
+            });
+            
+            const porcentaje = Math.round((completados / checkboxes.length) * 100);
+            
+            // Guardar progreso semanal
+            const hoy = new Date().getDay();
+            const diaIndex = hoy === 0 ? 6 : hoy - 1;
+            
+            const progreso = JSON.parse(localStorage.getItem('progresoSemanal') || '{}');
+            progreso[diaIndex] = porcentaje;
+            localStorage.setItem('progresoSemanal', JSON.stringify(progreso));
+            
+            // Actualizar racha
+            const ultimoDia = localStorage.getItem('ultimoDia');
+            const hoyStr = new Date().toDateString();
+            
+            if (ultimoDia !== hoyStr) {
+                const racha = parseInt(localStorage.getItem('racha') || '0');
+                localStorage.setItem('racha', (racha + 1).toString());
+                localStorage.setItem('ultimoDia', hoyStr);
+            }
+            
+            // Actualizar mes
+            const mesActual = new Date().getMonth() + '-' + new Date().getFullYear();
+            const diasMes = JSON.parse(localStorage.getItem('diasMes') || '{}');
+            if (!diasMes[mesActual]) {
+                diasMes[mesActual] = [];
+            }
+            if (!diasMes[mesActual].includes(hoyStr)) {
+                diasMes[mesActual].push(hoyStr);
+                localStorage.setItem('diasMes', JSON.stringify(diasMes));
+            }
+            
+            alert(`¡Día guardado! Completaste el ${porcentaje}% de tus hábitos.`);
+            generarSemana();
+            actualizarEstadisticas();
+        }
+
+        function actualizarEstadisticas() {
+            // Racha
+            const racha = localStorage.getItem('racha') || '0';
+            document.getElementById('statRacha').textContent = racha;
+            
+            // Hábitos de hoy
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const checked = document.querySelectorAll('input[type="checkbox"]:checked').length;
+            const porcentajeHoy = Math.round((checked / checkboxes.length) * 100);
+            document.getElementById('statHabitos').textContent = porcentajeHoy + '%';
+            document.getElementById('progresoHabitos').style.width = porcentajeHoy + '%';
+            document.getElementById('contadorHabitos').textContent = porcentajeHoy + '% completado';
+            
+            // Progreso mensual
+            const mesActual = new Date().getMonth() + '-' + new Date().getFullYear();
+            const diasMes = JSON.parse(localStorage.getItem('diasMes') || '{}');
+            const diasEsteMes = diasMes[mesActual] ? diasMes[mesActual].length : 0;
+            
+            document.getElementById('progresoDias').style.width = Math.min((diasEsteMes / 30) * 100, 100) + '%';
+            document.getElementById('contadorDias').textContent = diasEsteMes + '/30 días';
+            
+            // Otras stats
+            document.getElementById('statSemanas').textContent = Math.floor(parseInt(racha) / 7);
+            document.getElementById('statMejora').textContent = Math.min(parseInt(racha) * 5, 100) + '%';
+        }
+
+        function reiniciarMes() {
+            if (confirm('¿Estás seguro de reiniciar las estadísticas del mes?')) {
+                const mesActual = new Date().getMonth() + '-' + new Date().getFullYear();
+                const diasMes = JSON.parse(localStorage.getItem('diasMes') || '{}');
+                delete diasMes[mesActual];
+                localStorage.setItem('diasMes', JSON.stringify(diasMes));
+                actualizarEstadisticas();
+            }
+        }
+
+        // === FUNCIONES DE LOGIN ===
         function verificarPassword() {
             if (passwordInput.value === PASSWORD) {
                 loginContainer.style.display = 'none';
@@ -501,14 +717,6 @@
             }
         }
 
-        // Permitir entrar con Enter
-        passwordInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                verificarPassword();
-            }
-        });
-
-        // Cerrar sesión
         function cerrarSesion() {
             panelContainer.style.display = 'none';
             loginContainer.style.display = 'block';
@@ -516,90 +724,12 @@
             passwordInput.focus();
         }
 
-        // Inicializar panel
-        function inicializarPanel() {
-            // Frase aleatoria
-            fraseElement.textContent = frasesGuerrero[Math.floor(Math.random() * frasesGuerrero.length)];
-            
-            // Cargar datos guardados
-            cargarDatos();
-        }
-
-        // Guardar victoria del día
-        function guardarVictoria() {
-            const input = document.getElementById('victoriaInput');
-            const victoria = input.value.trim();
-            
-            if (victoria) {
-                const fecha = new Date().toLocaleDateString('es-ES', { 
-                    day: '2-digit', 
-                    month: '2-digit', 
-                    year: 'numeric' 
-                });
-                const logro = `${fecha} - ${victoria}`;
-                
-                // Guardar en localStorage
-                const logros = JSON.parse(localStorage.getItem('misLogros') || '[]');
-                logros.unshift(logro);
-                localStorage.setItem('misLogros', JSON.stringify(logros));
-                
-                // Actualizar streak
-                const ultimoDia = localStorage.getItem('ultimoDia');
-                const hoy = new Date().toDateString();
-                
-                if (ultimoDia !== hoy) {
-                    const streak = parseInt(localStorage.getItem('streak') || '0') + 1;
-                    localStorage.setItem('streak', streak.toString());
-                    localStorage.setItem('ultimoDia', hoy);
-                    diasElement.textContent = streak;
-                }
-                
-                // Mostrar victoria
-                victoriaHoyElement.innerHTML = `<div class="logro"><strong>VICTORIA DE HOY:</strong> ${victoria}</div>`;
-                input.value = '';
-                
-                // Actualizar logros
-                mostrarLogros();
+        passwordInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                verificarPassword();
             }
-        }
+        });
 
-        // Cargar datos guardados
-        function cargarDatos() {
-            // Streak
-            const streak = localStorage.getItem('streak') || '0';
-            diasElement.textContent = streak;
-            
-            // Logros
-            mostrarLogros();
-        }
-
-        // Mostrar logros
-        function mostrarLogros() {
-            const logros = JSON.parse(localStorage.getItem('misLogros') || '[]');
-            logrosContainer.innerHTML = '';
-            
-            if (logros.length === 0) {
-                logrosContainer.innerHTML = '<div class="logro">Aún no hay victorias registradas. Tu primera conquista será recordada aquí.</div>';
-                return;
-            }
-            
-            logros.forEach(logro => {
-                const div = document.createElement('div');
-                div.className = 'logro';
-                div.textContent = logro;
-                logrosContainer.appendChild(div);
-            });
-        }
-
-        // Limpiar logros
-        function limpiarLogros() {
-            if (confirm('¿Estás seguro de limpiar tu archivo de conquistas?')) {
-                localStorage.removeItem('misLogros');
-                mostrarLogros();
-            }
-        }
-
-        // Enfocar en el input de password al cargar
         window.onload = function() {
             passwordInput.focus();
         }
