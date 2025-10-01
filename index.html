@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fortaleza de Marcus</title>
+    <style>
+        /* Estilo Romano Auténtico */
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=MedievalSharp&display=swap');
+        
+        body {
+            font-family: 'Cinzel', 'Georgia', serif;
+            background: #0a0a0a url('https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');
+            background-size: cover;
+            background-attachment: fixed;
+            color: #d4c4a0;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .login-container {
+            max-width: 400px;
+            margin: 100px auto;
+            background: rgba(20, 20, 20, 0.95);
+            padding: 40px;
+            border-radius: 8px;
+            border: 3px solid #8b6b2d;
+            box-shadow: 0 0 30px rgba(139, 107, 45, 0.4);
+            text-align: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .panel-container {
+            max-width: 900px;
+            margin: 0 auto;
+            display: none;
+        }
+
+        h1 {
+            color: #c8a85d;
+            text-align: center;
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #a89060;
+            font-style: italic;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .container {
+            background: rgba(15, 15, 15, 0.9);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 25px;
+            border: 2px solid #5d4a2a;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+            backdrop-filter: blur(3px);
+        }
+
+        h2 {
+            color: #c8a85d;
+            border-bottom: 2px solid #5d4a2a;
+            padding-bottom: 12px;
+            margin-top: 0;
+            font-size: 1.8em;
+            font-weight: 600;
+        }
+
+        h3 {
+            color: #b89a5c;
+            margin-top: 0;
+            font-size: 1.3em;
+        }
+
+        .quote {
+            font-style: italic;
+            text-align: center;
+            color: #a89060;
+            margin: 25px 0;
+            font-size: 1.2em;
+            padding: 20px;
+            background: rgba(139, 107, 45, 0.15);
+            border-radius: 8px;
+            border-left: 4px solid #8b6b2d;
+            border-right: 4px solid #8b6b2d;
+            line-height: 1.6;
+        }
+
+        .victoria-input {
+            width: 100%;
+            padding: 15px;
+            margin: 15px 0;
+            background: #2a2418;
+            border: 2px solid #5d4a2a;
+            border-radius: 6px;
+            color: #d4c4a0;
+            font-size: 16px;
+            font-family: 'Cinzel', serif;
+            transition: all 0.3s;
+        }
+
+        .victoria-input:focus {
+            border-color: #c8a85d;
+            outline: none;
+            box-shadow: 0 0 10px rgba(200, 168, 93, 0.3);
+        }
+
+        .btn {
+            background: linear-gradient(to bottom, #8b6b2d, #6d5321);
+            color: #f5e8c8;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 8px;
+            transition: all 0.3s;
+            font-family: 'Cinzel', serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 1px solid #a89060;
+        }
+
+        .btn:hover {
+            background: linear-gradient(to bottom, #9c7a35, #7d5f26);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(139, 107, 45, 0.4);
+        }
+
+        .streak {
+            font-size: 1.6em;
+            text-align: center;
+            margin: 25px 0;
+            color: #c8a85d;
+            background: rgba(139, 107, 45, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #8b6b2d;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+        }
+
+        .logro {
+            background: #2a2418;
+            padding: 15px;
+            margin: 12px 0;
+            border-radius: 6px;
+            border-left: 4px solid #8b6b2d;
+            border-right: 1px solid #5d4a2a;
+            transition: all 0.3s;
+        }
+
+        .logro:hover {
+            background: #352b1c;
+            transform: translateX(5px);
+        }
+
+        .fase {
+            margin: 18px 0;
+            padding: 20px;
+            background: #2a2418;
+            border-radius: 8px;
+            border: 1px solid #5d4a2a;
+            transition: all 0.3s;
+        }
+
+        .fase:hover {
+            border-color: #8b6b2d;
+            transform: translateY(-2px);
+        }
+
+        .password-input {
+            width: 100%;
+            padding: 16px;
+            margin: 20px 0;
+            background: #2a2418;
+            border: 2px solid #5d4a2a;
+            border-radius: 6px;
+            color: #d4c4a0;
+            font-size: 16px;
+            text-align: center;
+            font-family: 'Cinzel', serif;
+            transition: all 0.3s;
+        }
+
+        .password-input:focus {
+            border-color: #c8a85d;
+            outline: none;
+            box-shadow: 0 0 15px rgba(200, 168, 93, 0.4);
+        }
+
+        .error {
+            color: #d4a85d;
+            margin: 12px 0;
+            display: none;
+            font-style: italic;
+        }
+
+        .roman-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: url('https://images.unsplash.com/photo-1592488835941-1b6b8f4a37c6?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80') center/cover;
+            border-radius: 50%;
+            border: 3px solid #8b6b2d;
+        }
+
+        .header-image {
+            width: 100%;
+            height: 200px;
+            background: url('https://images.unsplash.com/photo-1605000797499-95a51c5269ae?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80') center/cover;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border: 3px solid #8b6b2d;
+        }
+
+        .section-icon {
+            width: 40px;
+            height: 40px;
+            display: inline-block;
+            margin-right: 15px;
+            vertical-align: middle;
+            border-radius: 50%;
+            border: 2px solid #8b6b2d;
+        }
+
+        .victoria-icon { background: url('https://images.unsplash.com/photo-1589658533865-239c0ec86d34?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80') center/cover; }
+        .estructura-icon { background: url('https://images.unsplash.com/photo-1592488835941-1b6b8f4a37c6?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80') center/cover; }
+        .archivo-icon { background: url('https://images.unsplash.com/photo-1589656969145-5d42c9e1745f?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80') center/cover; }
+    </style>
+</head>
+<body>
+    <!-- PANTALLA DE LOGIN -->
+    <div class="login-container" id="loginContainer">
+        <div class="roman-icon"></div>
+        <h1>FORTALEZA DE MARCUS</h1>
+        <p class="subtitle">"La disciplina es la madre de la victoria"</p>
+        
+        <input type="password" class="password-input" id="passwordInput" placeholder="Ingresa la contraseña de la legión">
+        <div class="error" id="errorMsg">Contraseña incorrecta. El destino no favorece a los indignos.</div>
+        <button class="btn" onclick="verificarPassword()">Entrar a la Fortaleza</button>
+        
+        <div class="quote">
+            "No es que tengamos poco tiempo, sino que perdemos mucho."<br>
+            - Séneca
+        </div>
+    </div>
+
+    <!-- PANEL PRINCIPAL -->
+    <div class="panel-container" id="panelContainer">
+        <div class="header-image"></div>
+        <h1>FORTALEZA DE MARCUS</h1>
+        <p class="subtitle">Bienvenido, Legionario. Tu disciplina forja tu destino.</p>
+
+        <div class="streak">
+            Días de Disciplina Consecutivos: <span id="diasConsecutivos">0</span>
+        </div>
+        
+        <div class="quote" id="fraseMotivacional">
+            "Aferrarse a la ira es como agarrar un carbón caliente con la intención de tirárselo a alguien; tú eres el que se quema."
+        </div>
+
+        <div class="container">
+            <h2>
+                <span class="section-icon victoria-icon"></span>
+                Victoria del Día
+            </h2>
+            <input type="text" class="victoria-input" id="victoriaInput" placeholder="¿Cuál es tu conquista hoy, legionario?">
+            <button class="btn" onclick="guardarVictoria()">Registrar Victoria</button>
+            <div id="victoriaHoy"></div>
+        </div>
+
+        <div class="container">
+            <h2>
+                <span class="section-icon estructura-icon"></span>
+                Estructura del Legionario
+            </h2>
+            
+            <div class="fase">
+                <h3>Amanecer - Preparación para la Batalla</h3>
+                <p>• Sin escudos electrónicos (teléfono) hasta después del desayuno</p>
+                <p>• Ritual de limpieza (lavar rostro y dientes)</p>
+                <p>• Alimento con conciencia (desayuno/mate)</p>
+                <p>• Definir la Victoria del Día</p>
+            </div>
+            
+            <div class="fase">
+                <h3>Día - Campo de Batalla</h3>
+                <p>• Entrenamiento principal (60-90 min de acción)</p>
+                <p>• Deberes del campamento (tareas domésticas)</p>
+                <p>• Conexión con la legión (social activo)</p>
+            </div>
+            
+            <div class="fase">
+                <h3>Anochecer - Reflexión del Guerrero</h3>
+                <p>• Descanso sin escudos (1h sin pantallas)</p>
+                <p>• Meditación del guerrero (1 minuto de reflexión)</p>
+                <p>• Preparación para el nuevo día</p>
+            </div>
+        </div>
+
+        <div class="container">
+            <h2>
+                <span class="section-icon archivo-icon"></span>
+                Archivo de Conquistas
+            </h2>
+            <div id="logrosContainer">
+                <div class="logro">[Fecha] - Tu primera conquista aparecerá aquí</div>
+            </div>
+            <button class="btn" onclick="limpiarLogros()">Limpiar Archivo</button>
+        </div>
+
+        <div class="container">
+            <button class="btn" onclick="cerrarSesion()">Salir de la Fortaleza</button>
+        </div>
+    </div>
+
+    <script>
+        // Frases estoicas mejoradas
+        const frasesEstoicas = [
+            "No es lo que te ocurre, sino cómo reaccionas lo que importa.",
+            "Si está en tu control, ¿por qué te quejas? Si no está en tu control, ¿por qué te quejas?",
+            "La mejor venganza es no ser como tu enemigo.",
+            "No pretendas que las cosas ocurran como quieres. Desea, más bien, que se produzcan tal como se producen.",
+            "El hombre sabio no sufre por las cosas que no tiene, sino que disfruta de las que posee.",
+            "Aferrarse a la ira es como agarrar un carbón caliente con la intención de tirárselo a alguien; tú eres el que se quema.",
+            "No hables de lo que un hombre bueno debe ser, sé uno.",
+            "La felicidad de tu vida depende de la calidad de tus pensamientos.",
+            "La dificultad fortalece la mente, como el trabajo el cuerpo.",
+            "No busques que los eventos sucedan como quieres, sino quiere los eventos como suceden."
+        ];
+
+        // CONTRASEÑA - Cámbiala por la que quieras
+        const PASSWORD = "disciplina";
+
+        // Elementos del DOM
+        const loginContainer = document.getElementById('loginContainer');
+        const panelContainer = document.getElementById('panelContainer');
+        const passwordInput = document.getElementById('passwordInput');
+        const errorMsg = document.getElementById('errorMsg');
+        const fraseElement = document.getElementById('fraseMotivacional');
+        const diasElement = document.getElementById('diasConsecutivos');
+        const victoriaHoyElement = document.getElementById('victoriaHoy');
+        const logrosContainer = document.getElementById('logrosContainer');
+
+        // Verificar contraseña
+        function verificarPassword() {
+            if (passwordInput.value === PASSWORD) {
+                loginContainer.style.display = 'none';
+                panelContainer.style.display = 'block';
+                inicializarPanel();
+            } else {
+                errorMsg.style.display = 'block';
+                passwordInput.value = '';
+                passwordInput.focus();
+            }
+        }
+
+        // Permitir entrar con Enter
+        passwordInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                verificarPassword();
+            }
+        });
+
+        // Cerrar sesión
+        function cerrarSesion() {
+            panelContainer.style.display = 'none';
+            loginContainer.style.display = 'block';
+            passwordInput.value = '';
+            passwordInput.focus();
+        }
+
+        // Inicializar panel
+        function inicializarPanel() {
+            // Frase estoica aleatoria
+            fraseElement.textContent = '"' + frasesEstoicas[Math.floor(Math.random() * frasesEstoicas.length)] + '"';
+            
+            // Cargar datos guardados
+            cargarDatos();
+        }
+
+        // Guardar victoria del día
+        function guardarVictoria() {
+            const input = document.getElementById('victoriaInput');
+            const victoria = input.value.trim();
+            
+            if (victoria) {
+                const fecha = new Date().toLocaleDateString();
+                const logro = `${fecha} - ${victoria}`;
+                
+                // Guardar en localStorage
+                const logros = JSON.parse(localStorage.getItem('misLogros') || '[]');
+                logros.unshift(logro);
+                localStorage.setItem('misLogros', JSON.stringify(logros));
+                
+                // Actualizar streak
+                const ultimoDia = localStorage.getItem('ultimoDia');
+                const hoy = new Date().toDateString();
+                
+                if (ultimoDia !== hoy) {
+                    const streak = parseInt(localStorage.getItem('streak') || '0') + 1;
+                    localStorage.setItem('streak', streak.toString());
+                    localStorage.setItem('ultimoDia', hoy);
+                    diasElement.textContent = streak;
+                }
+                
+                // Mostrar victoria
+                victoriaHoyElement.innerHTML = `<div class="logro"><strong>Victoria de Hoy:</strong> ${victoria}</div>`;
+                input.value = '';
+                
+                // Actualizar logros
+                mostrarLogros();
+            }
+        }
+
+        // Cargar datos guardados
+        function cargarDatos() {
+            // Streak
+            const streak = localStorage.getItem('streak') || '0';
+            diasElement.textContent = streak;
+            
+            // Logros
+            mostrarLogros();
+        }
+
+        // Mostrar logros
+        function mostrarLogros() {
+            const logros = JSON.parse(localStorage.getItem('misLogros') || '[]');
+            logrosContainer.innerHTML = '';
+            
+            if (logros.length === 0) {
+                logrosContainer.innerHTML = '<div class="logro">Aún no hay conquistas registradas. Tu primera victoria será recordada aquí.</div>';
+                return;
+            }
+            
+            logros.forEach(logro => {
+                const div = document.createElement('div');
+                div.className = 'logro';
+                div.textContent = logro;
+                logrosContainer.appendChild(div);
+            });
+        }
+
+        // Limpiar logros
+        function limpiarLogros() {
+            if (confirm('¿Seguro que quieres limpiar el archivo de conquistas?')) {
+                localStorage.removeItem('misLogros');
+                mostrarLogros();
+            }
+        }
+
+        // Enfocar en el input de password al cargar
+        window.onload = function() {
+            passwordInput.focus();
+        }
+    </script>
+</body>
+</html>
