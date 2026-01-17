@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الجهاد للتجارة - متجر المقاومة</title>
+    <title>Shadow Arsenal - Private Arms Exchange</title>
     <style>
-        /* Reset y estilos base */
+        /* Reset and base styles */
         * {
             margin: 0;
             padding: 0;
@@ -13,32 +13,23 @@
         }
         
         body {
-            background-color: #0a0a0a;
-            color: #8B0000;
-            font-family: 'Times New Roman', serif;
+            background-color: #000000;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
             line-height: 1.4;
-            padding: 10px;
+            overflow-x: hidden;
             background-image: 
-                linear-gradient(rgba(10, 0, 0, 0.9), rgba(10, 0, 0, 0.9)),
-                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none" stroke="%23800000" stroke-width="1"/><text x="50" y="50" font-family="Arial" font-size="10" fill="%23800000" text-anchor="middle" dominant-baseline="middle">☪</text></svg>');
-            min-height: 100vh;
+                linear-gradient(rgba(0, 10, 0, 0.97), rgba(0, 10, 0, 0.97)),
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 1px,
+                    rgba(0, 20, 0, 0.3) 1px,
+                    rgba(0, 20, 0, 0.3) 2px
+                );
         }
 
-        /* Efecto CRT y parpadeo */
-        .crt::after {
-            content: " ";
-            display: block;
-            position: fixed;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            background: rgba(18, 16, 16, 0.1);
-            opacity: 0.3;
-            z-index: 2;
-            pointer-events: none;
-        }
-        
+        /* Terminal CRT effect */
         .crt::before {
             content: " ";
             display: block;
@@ -47,286 +38,346 @@
             left: 0;
             bottom: 0;
             right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
-                        linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background: linear-gradient(
+                rgba(18, 16, 16, 0) 50%, 
+                rgba(0, 0, 0, 0.25) 50%
+            ), linear-gradient(
+                90deg, 
+                rgba(255, 0, 0, 0.06), 
+                rgba(0, 255, 0, 0.02), 
+                rgba(0, 0, 255, 0.06)
+            );
             background-size: 100% 2px, 3px 100%;
-            z-index: 2;
             pointer-events: none;
+            z-index: 9999;
         }
 
-        /* Contenedor principal */
+        .scanline {
+            width: 100%;
+            height: 100px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: linear-gradient(
+                0deg,
+                rgba(0, 255, 0, 0) 0%,
+                rgba(0, 255, 0, 0.1) 50%,
+                rgba(0, 255, 0, 0) 100%
+            );
+            pointer-events: none;
+            z-index: 9998;
+            animation: scan 8s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { transform: translateY(-100px); }
+            100% { transform: translateY(calc(100vh + 100px)); }
+        }
+
+        /* Main container */
         .container {
-            max-width: 1000px;
+            max-width: 1300px;
             margin: 0 auto;
-            border: 2px solid #800000;
-            background-color: rgba(20, 0, 0, 0.95);
-            padding: 15px;
+            padding: 20px;
             position: relative;
             z-index: 1;
-            box-shadow: 0 0 30px rgba(139, 0, 0, 0.5);
         }
 
-        /* Encabezado con kalima */
-        .header {
-            text-align: center;
-            padding: 20px;
+        /* Header with terminal style */
+        .terminal-header {
+            background-color: #001100;
+            border: 1px solid #00aa00;
+            padding: 15px 25px;
             margin-bottom: 30px;
-            border-bottom: 3px double #8B0000;
-            background: linear-gradient(to right, rgba(139, 0, 0, 0.1), rgba(139, 0, 0, 0.3), rgba(139, 0, 0, 0.1));
+            font-family: 'Consolas', monospace;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
         }
-        
-        .kalima {
-            font-size: 24px;
-            color: #B22222;
-            margin-bottom: 10px;
-            text-shadow: 0 0 10px rgba(178, 34, 34, 0.7);
-            letter-spacing: 2px;
-        }
-        
-        .title {
-            font-size: 32px;
-            color: #FF0000;
-            margin: 10px 0;
+
+        .header-title {
+            color: #00ff00;
+            font-size: 28px;
             text-transform: uppercase;
             letter-spacing: 3px;
-            text-shadow: 2px 2px 4px #000;
+            margin-bottom: 5px;
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.7);
         }
-        
-        .subtitle {
-            color: #A52A2A;
-            font-size: 18px;
-            margin-top: 10px;
+
+        .header-subtitle {
+            color: #00aa00;
+            font-size: 14px;
             font-style: italic;
         }
 
-        /* Panel de estado */
-        .status-bar {
-            background-color: #1a0000;
-            border: 1px solid #800000;
-            padding: 8px 15px;
-            margin-bottom: 20px;
-            font-family: monospace;
+        .header-status {
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            color: #00ff00;
             font-size: 12px;
-            color: #FF4500;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
-        
+
         .blink {
             animation: blink 1s infinite;
         }
-        
+
         @keyframes blink {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.3; }
         }
 
-        /* Productos */
+        /* Product grid */
         .product-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-            margin: 30px 0;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
         }
-        
+
         .product-card {
-            border: 1px solid #8B0000;
-            background-color: rgba(30, 0, 0, 0.9);
-            padding: 15px;
-            transition: all 0.3s;
+            background: linear-gradient(145deg, #001a00, #000d00);
+            border: 1px solid #005500;
+            border-radius: 2px;
+            padding: 20px;
             position: relative;
+            transition: all 0.3s;
             overflow: hidden;
         }
-        
+
         .product-card::before {
-            content: "جهاد";
+            content: "RESTRICTED";
             position: absolute;
-            top: 10px;
-            left: 10px;
-            color: rgba(139, 0, 0, 0.2);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            color: rgba(0, 80, 0, 0.2);
             font-size: 40px;
-            transform: rotate(-45deg);
+            font-weight: bold;
+            white-space: nowrap;
             z-index: 0;
         }
-        
+
         .product-card:hover {
-            border-color: #FF0000;
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+            border-color: #00ff00;
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.3);
             transform: translateY(-5px);
         }
-        
+
         .product-title {
-            color: #DC143C;
+            color: #00ff00;
             font-size: 22px;
-            margin-bottom: 10px;
-            border-bottom: 1px solid #8B0000;
-            padding-bottom: 5px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #005500;
+            padding-bottom: 10px;
             position: relative;
             z-index: 1;
+            font-family: 'Consolas', monospace;
         }
-        
-        /* ESTILOS PARA LAS IMÁGENES */
-        .product-image {
-            height: 200px; /* Aumentado para mejores imágenes */
-            background-color: #1a0000;
-            border: 1px solid #800000;
-            margin: 10px 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+
+        .product-image-container {
+            height: 220px;
+            border: 1px solid #003300;
+            margin: 15px 0;
             overflow: hidden;
             position: relative;
-            z-index: 1;
+            background-color: #000;
         }
-        
-        .product-image img {
+
+        .product-image {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Mantiene proporciones */
-            transition: transform 0.3s ease;
-        }
-        
-        .product-image img:hover {
-            transform: scale(1.05); /* Efecto zoom al pasar mouse */
-        }
-        
-        .specs {
-            margin: 15px 0;
-            font-size: 14px;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .spec-item {
-            margin-bottom: 8px;
-            display: flex;
-            justify-content: space-between;
-            border-bottom: 1px dotted rgba(139, 0, 0, 0.3);
-            padding-bottom: 3px;
-        }
-        
-        .spec-label {
-            color: #A52A2A;
-        }
-        
-        .spec-value {
-            color: #FF6347;
-            text-align: left;
-        }
-        
-        .price {
-            color: #FFD700;
-            font-size: 20px;
-            text-align: center;
-            margin: 15px 0;
-            background-color: rgba(139, 0, 0, 0.2);
-            padding: 8px;
-            border: 1px solid #8B0000;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .stock {
-            color: #32CD32;
-            font-size: 12px;
-            text-align: center;
-            margin-top: 5px;
-            position: relative;
-            z-index: 1;
+            object-fit: cover;
+            transition: transform 0.5s;
         }
 
-        /* Información de contacto/venta */
-        .contact-box {
-            background-color: rgba(40, 0, 0, 0.9);
-            border: 2px solid #8B0000;
-            padding: 20px;
-            margin-top: 30px;
-            position: relative;
+        .product-image:hover {
+            transform: scale(1.05);
         }
-        
-        .contact-title {
-            color: #FF0000;
-            font-size: 20px;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-        
-        .contact-info {
-            color: #B22222;
-            font-size: 14px;
-            line-height: 1.8;
-        }
-        
-        .warning {
-            color: #FF4500;
-            border: 1px solid #8B0000;
+
+        .image-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 20, 0, 0.9));
+            color: #00ff00;
             padding: 10px;
-            margin: 10px 0;
-            background-color: rgba(139, 0, 0, 0.1);
             font-size: 12px;
-        }
-
-        /* Pie de página */
-        .footer {
             text-align: center;
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid #800000;
-            color: #8B0000;
-            font-size: 12px;
-        }
-        
-        .disclaimer {
-            color: #A52A2A;
-            font-size: 10px;
-            margin-top: 10px;
-            line-height: 1.5;
         }
 
-        /* Efectos de texto árabe */
-        .arabic-text {
-            font-family: 'Traditional Arabic', 'Times New Roman', serif;
+        .specs-table {
+            width: 100%;
+            margin: 15px 0;
+            border-collapse: collapse;
+            position: relative;
+            z-index: 1;
         }
-        
-        /* Animación de carga */
-        .loading {
-            border: 2px solid #8B0000;
-            border-top: 2px solid #FF0000;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            animation: spin 1s linear infinite;
-            margin: 10px auto;
+
+        .specs-table td {
+            padding: 8px 5px;
+            border-bottom: 1px dotted #003300;
+            font-size: 13px;
         }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+
+        .spec-label {
+            color: #00aa00;
+            width: 45%;
         }
-        
-        /* Botones */
-        .order-btn {
+
+        .spec-value {
+            color: #00ff00;
+            text-align: right;
+        }
+
+        .price-tag {
+            background-color: #002200;
+            border: 1px solid #00aa00;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .price-main {
+            color: #ffff00;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .price-crypto {
+            color: #00ff00;
+            font-size: 14px;
+            font-family: 'Consolas', monospace;
+        }
+
+        .stock-status {
+            display: inline-block;
+            padding: 5px 15px;
+            background-color: #003300;
+            border: 1px solid #00aa00;
+            color: #00ff00;
+            font-size: 12px;
+            margin: 10px 0;
+        }
+
+        .order-button {
             display: block;
             width: 100%;
-            padding: 10px;
-            background: linear-gradient(to bottom, #8B0000, #660000);
-            color: #FFD700;
-            border: 1px solid #800000;
-            text-align: center;
-            cursor: pointer;
-            margin-top: 10px;
+            padding: 12px;
+            background: linear-gradient(to bottom, #005500, #003300);
+            color: #00ff00;
+            border: 1px solid #00aa00;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 1px;
+            cursor: pointer;
             transition: all 0.3s;
             position: relative;
             z-index: 1;
         }
-        
-        .order-btn:hover {
-            background: linear-gradient(to bottom, #B22222, #8B0000);
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+
+        .order-button:hover {
+            background: linear-gradient(to bottom, #00aa00, #005500);
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.4);
+        }
+
+        /* Connection panel */
+        .connection-panel {
+            background-color: #000d00;
+            border: 1px solid #005500;
+            padding: 25px;
+            margin-top: 50px;
+            font-family: 'Consolas', monospace;
+        }
+
+        .panel-title {
+            color: #00ff00;
+            font-size: 18px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #003300;
+            padding-bottom: 10px;
+        }
+
+        .connection-status {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            color: #00ff00;
+        }
+
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            background-color: #00ff00;
+            border-radius: 50%;
+            margin-right: 10px;
+            box-shadow: 0 0 10px #00ff00;
+        }
+
+        .contact-info {
+            color: #00aa00;
+            font-size: 13px;
+            line-height: 1.8;
+            background-color: #001100;
+            padding: 15px;
+            border: 1px solid #003300;
+        }
+
+        .warning-box {
+            background-color: #330000;
+            border: 1px solid #aa0000;
+            padding: 15px;
+            margin: 20px 0;
+            color: #ff0000;
+            font-size: 12px;
+        }
+
+        /* Footer */
+        .terminal-footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid #003300;
+            color: #005500;
+            font-size: 11px;
+            font-family: 'Consolas', monospace;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        .footer-link {
+            color: #00aa00;
+            text-decoration: none;
+            font-size: 12px;
+            transition: color 0.3s;
+        }
+
+        .footer-link:hover {
+            color: #00ff00;
+            text-decoration: underline;
+        }
+
+        /* Hidden service notice */
+        .hidden-service {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background-color: rgba(0, 20, 0, 0.9);
+            border: 1px solid #005500;
+            padding: 10px;
+            font-size: 10px;
+            color: #00aa00;
+            z-index: 10000;
         }
 
         /* Responsive */
@@ -335,494 +386,540 @@
                 grid-template-columns: 1fr;
             }
             
-            .title {
-                font-size: 24px;
+            .header-status {
+                position: static;
+                margin-top: 10px;
             }
             
-            .kalima {
-                font-size: 18px;
-            }
-            
-            .product-image {
-                height: 180px; /* Ajuste para móviles */
+            .footer-links {
+                flex-direction: column;
+                gap: 10px;
             }
         }
     </style>
 </head>
 <body class="crt">
+    <div class="scanline"></div>
+    
     <div class="container">
-        <!-- Encabezado -->
-        <div class="header">
-            <div class="kalima" style="font-family: 'Traditional Arabic'; font-size: 28px;">
-                لا إله إلا الله محمد رسول الله
+        <!-- Terminal Header -->
+        <div class="terminal-header">
+            <div class="header-title">SHADOW ARSENAL</div>
+            <div class="header-subtitle">[EST. 2011] - Private Military Equipment Exchange</div>
+            <div class="header-status">
+                <span class="blink">●</span> CONNECTION: TOR | ENCRYPTION: 256-BIT | LOCATION: HIDDEN
             </div>
-            <div class="title">الجهاد للتجارة</div>
-            <div class="subtitle">متجر المقاومة - أسلحة الجهاد في سبيل الله</div>
         </div>
 
-        <!-- Barra de estado -->
-        <div class="status-bar">
-            <div>المتصفح: TOR - المخفي</div>
-            <div class="blink">● الاتصال آمن</div>
-            <div>الوقت: <span id="time">00:00</span> (توقيت مكة)</div>
-        </div>
-
-        <!-- Productos -->
+        <!-- Main Product Grid -->
         <div class="product-grid">
-            <!-- AK-47 -->
+            <!-- Product 1: AK-74M -->
             <div class="product-card">
-                <div class="product-title">كلاشنكوف AK-47</div>
-                <div class="product-image">
-                    <!-- ============================================ -->
-                    <!-- AQUÍ VA LA IMAGEN DEL AK-47 -->
-                    <!-- Reemplazar con: <img src="ak47.jpg" alt="AK-47"> -->
-                    <!-- O usar URL: <img src="https://ejemplo.com/ak47.jpg" alt="AK-47"> -->
-                    <!-- ============================================ -->
-                    <img src="https://media.istockphoto.com/id/177391994/es/foto/ak-47.jpg?s=612x612&w=0&k=20&c=0b72sUS-1k1lEWs9fcaZRjDFBZmQnUN076ot_g-r4bo=" alt="AK-47">
+                <div class="product-title">AK-74M ASSAULT RIFLE</div>
+                
+                <div class="product-image-container">
+                    <!-- REPLACE THIS IMAGE -->
+                    <img src="https://modernfirearms.net/wp-content/uploads/2010/10/ak74-1980-tula.jpg" alt="AK-74M" class="product-image">
+                    <div class="image-overlay">Russian Federation - 5.45x39mm - Factory New</div>
                 </div>
-                <div class="specs">
-                    <div class="spec-item">
-                        <span class="spec-label">العيار:</span>
-                        <span class="spec-value">7.62×39mm</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">نظام العمل:</span>
-                        <span class="spec-value">غاز، دوران المزلاج</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">معدل النيران:</span>
-                        <span class="spec-value">600 طلقة/دقيقة</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">المدى الفعال:</span>
-                        <span class="spec-value">350 متر</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">سعة المخزن:</span>
-                        <span class="spec-value">30 طلقة (قابلة للزيادة)</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">الحالة:</span>
-                        <span class="spec-value">جديد - مستعمل جيد</span>
-                    </div>
+                
+                <table class="specs-table">
+                    <tr>
+                        <td class="spec-label">Caliber:</td>
+                        <td class="spec-value">5.45×39mm NATO</td>
+                    </tr>
+                    <tr>
+                        <td class="spec-label">Operation:</td>
+                        <td class="spec-value">Gas-operated, rotating bolt</td>
+                    </tr>
+                    <tr>
+                        <td class="spec-label">Rate of Fire:</td>
+                        <td class="spec-value">650 RPM</td>
+                    </tr>
+                    <tr>
+                        <td class="spec-label">Effective Range:</td>
+                        <td class="spec-value">500 meters</td>
+                    </tr>
+                    <tr>
+                        <td class="spec-label">Magazine:</td>
+                        <td class="spec-value">30/45 rounds (plastic)</td>
+                    </tr>
+                    <tr>
+                        <td class="spec-label">Condition:</td>
+                        <td class="spec-value">New, cosmoline preserved</td>
+                    </tr>
+                </table>
+                
+                <div class="price-tag">
+                    <div class="price-main">$2,800 USD</div>
+                    <div class="price-crypto">≈ 0.042 BTC / 2.1 XMR</div>
                 </div>
-                <div class="price">
-                    السعر: 3,500 ₿ (بيتكوين)
-                </div>
-                <div class="stock">
-                    ★ متوفر: 47 قطعة ★
-                </div>
-                <button class="order-btn">طلب الآن - للجهاد فقط</button>
+                
+                <div class="stock-status">IN STOCK: 24 UNITS</div>
+                
+                <button class="order-button" onclick="orderProduct('AK-74M')">
+                    [REQUEST PURCHASE]
+                </button>
             </div>
 
-            <!-- RPG-7 -->
+            <!-- Product 2: RPG-7V2 -->
             <div class="product-card">
-                <div class="product-title">قاذفة RPG-7</div>
-                <div class="product-image">
-                    <!-- ============================================ -->
-                    <!-- AQUÍ VA LA IMAGEN DEL RPG-7 -->
-                    <!-- Reemplazar con: <img src="rpg7.jpg" alt="RPG-7"> -->
-                    <!-- ============================================ -->
-                    <img src="https://gunfire.com/hpeciai/914771a1e3bd2ba9f5a50854a5e63b43/spa_pl_Replica-lanzagranadasun-RPG-7-Version-de-madera-real-1152227556_1.webp" alt="RPG-7">
+                <div class="product-title">RPG-7V2 ANTI-TANK SYSTEM</div>
+                
+                <div class="product-image-container">
+                    <!-- REPLACE THIS IMAGE -->
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGD-5TeaSDqnpBzCqzoFvhrDlyg4AI5UXDvQ&s" alt="RPG-7" class="product-image">
+                    <div class="image-overlay">Complete System + 3 Warheads - PG-7VL Included</div>
                 </div>
-                <div class="specs">
-                    <div class="spec-item">
-                        <span class="spec-label">النوع:</span>
-                        <span class="spec-value">قاذفة صاروخية</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">المدى:</span>
-                        <span class="spec-value">200-500 متر</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">اختراق الدروع:</span>
-                        <span class="spec-value">750mm RHA</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">الرؤوس الحربية:</span>
-                        <span class="spec-value">HEAT - مضادة للدبابات</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">الوزن:</span>
-                        <span class="spec-value">8.5 كجم (محمل)</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">منشأ:</span>
-                        <span class="spec-value">روسيا - بلغاريا - إيران</span>
-                    </div>
+                
+                <table class="specs-table">
+                    <tr>
+                        <td class="spec-label">Warhead Type:</td>
+                        <td class="spec-value">PG-7VL HEAT</td>
+                    </tr>
+                    <tr>
+                        <td class="spec-label">Penetration:</td>
+                        <td class="spec-value">750mm RHA</td>
+                    </tr>
+                    <tr>
+                        <td class="spec-label">Effective Range:</td>
+                        <td class="spec-value">200-500m (moving/stationary)</td>
+                    </tr>
+                    <tr>
+                        <td class="spec-label">Muzzle Velocity:</td>
+                        <td class="spec-value">300 m/s</td>
+                    </tr>
+                    <tr>
+                        <td class="spec-label">System Weight:</td>
+                        <td class="spec-value">8.5 kg (loaded)</td>
+                    </tr>
+                    <tr>
+                        <td class="spec-label">Manufacturer:</td>
+                        <td class="spec-value">Bazalt (Russia)</td>
+                    </tr>
+                </table>
+                
+                <div class="price-tag">
+                    <div class="price-main">$6,500 USD</div>
+                    <div class="price-crypto">≈ 0.098 BTC / 4.9 XMR</div>
                 </div>
-                <div class="price">
-                    السعر: 8,500 ₿ (بيتكوين)
-                </div>
-                <div class="stock">
-                    ★ متوفر: 12 مجموعة ★
-                </div>
-                <button class="order-btn">طلب الآن - للجهاد فقط</button>
+                
+                <div class="stock-status">IN STOCK: 8 SYSTEMS</div>
+                
+                <button class="order-button" onclick="orderProduct('RPG-7V2')">
+                    [REQUEST PURCHASE]
+                </button>
             </div>
 
-            <!-- DShK -->
+            <!-- Product 3: M4A1 SOPMOD -->
             <div class="product-card">
-                <div class="product-title">رشاش DShK الثقيل</div>
-                <div class="product-image">
-                    <!-- ============================================ -->
-                    <!-- AQUÍ VA LA IMAGEN DEL DShK -->
-                    <!-- Reemplazar con: <img src="dshk.jpg" alt="DShK"> -->
-                    <!-- ============================================ -->
-                    <img src="https://t3.ftcdn.net/jpg/01/81/04/26/360_F_181042682_y1vBRctKv1bHBfQTLBOJRDfct26RSbGH.jpg" alt="DShK">
+                <div class="product-title">M4A1 SOPMOD BLOCK II</div>
+                
+                <div class="product-image-container">
+                    <!-- REPLACE THIS IMAGE -->
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1sGyBjNGyUvsSJOSU6zRh_VZfNW1DtzZgHA&s" alt="M4A1" class="product-image">
+                    <div class="image-overlay">US Special Forces Configuration - Full Auto</div>
                 </div>
-                <div class="specs">
-                    <div class="spec-item">
-                        <span class="spec-label">العيار:</span>
-                        <span class="spec-value">12.7×108mm</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">نظام العمل:</span>
-                        <span class="spec-value">غاز، تغذية بالحزام</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">معدل النيران:</span>
-                        <span class="spec-value">550 طلقة/دقيقة</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">المدى الفعال:</span>
-                        <span class="spec-value">2000 متر (أرضي)</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">الحزام:</span>
-                        <span class="spec-value">50 طلقة (قابلية التوصيل)</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">الحامل:</span>
-                        <span class="spec-value">مثلثي مضاد للطائرات</span>
-                    </div>
+                
+                <table class="specs-table">
+                    <tr>
+                        <td class="spec-label">Caliber:</td>
+                        <td class="spec-value">5.56×45mm NATO</td>
+                    </tr>
+                    <tr>
+                        <td class="spec-label">Operation:</td>
+                        <td class="spec-value">Direct impingement, rotating bolt</td>
+                    </tr>
+                    <tr>
+                        <td class="spec-label">Rate of Fire:</td>
+                        <td class="spec-value">700-950 RPM</td>
+                    </tr>
+                    <tr>
+                        <td class="spec-label">Barrel Length:</td>
+                        <td class="spec-value">14.5" (37 cm)</td>
+                    </tr>
+                    <tr>
+                        <td class="spec-label">Attachments:</td>
+                        <td class="spec-value">EOTech, PEQ-15, SureFire included</td>
+                    </tr>
+                    <tr>
+                        <td class="spec-label">Origin:</td>
+                        <td class="spec-value">Colt/ FN Herstal</td>
+                    </tr>
+                </table>
+                
+                <div class="price-tag">
+                    <div class="price-main">$4,200 USD</div>
+                    <div class="price-crypto">≈ 0.063 BTC / 3.2 XMR</div>
                 </div>
-                <div class="price">
-                    السعر: 12,000 ₿ (بيتكوين)
-                </div>
-                <div class="stock">
-                    ★ متوفر: 8 قطع ★
-                </div>
-                <button class="order-btn">طلب الآن - للجهاد فقط</button>
+                
+                <div class="stock-status">IN STOCK: 12 UNITS</div>
+                
+                <button class="order-button" onclick="orderProduct('M4A1 SOPMOD')">
+                    [REQUEST PURCHASE]
+                </button>
             </div>
 
-            <!-- IED Kits -->
+            <!-- Product 4: DShK HMG -->
             <div class="product-card">
-                <div class="product-title">معدات IED (بدائية)</div>
-                <div class="product-image">
-                    <!-- ============================================ -->
-                    <!-- AQUÍ VA LA IMAGEN DE IED KIT -->
-                    <!-- Reemplazar con: <img src="ied.jpg" alt="IED Kit"> -->
-                    <!-- ============================================ -->
-                    <img src="https://as2.ftcdn.net/jpg/00/79/03/71/1000_F_79037175_oOiWitWXBkOpFbpWhTWoQqGVVdxIlgyP.jpg" alt="IED Kit">
+                <div class="product-title">DShK HEAVY MACHINE GUN</div>
+                
+                <div class="product-image-container">
+                    <!-- REPLACE THIS IMAGE -->
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSphd-co180vWY_a2r62h8-JFgYbWo19Zmt9g&s" alt="DShK" class="product-image">
+                    <div class="image-overlay">12.7mm Anti-Aircraft/Vehicle - Tripod Mounted</div>
                 </div>
-                <div class="specs">
-                    <div class="spec-item">
-                        <span class="spec-label">النوع:</span>
-                        <span class="spec-value">عبوات ناسفة محلية</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">نظام التفجير:</span>
-                        <span class="spec-value">زمني - لاسلكي - ضغط</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">قوة التفجير:</span>
-                        <span class="spec-value">قابلة للتعديل</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">المكونات:</span>
-                        <span class="spec-value">متفجرات - كبسولات - أسلاك</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">التعليمات:</span>
-                        <span class="spec-value">مفصلة بالعربية</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">المخاطر:</span>
-                        <span class="spec-value">عالية - للخبراء فقط</span>
-                    </div>
+                
+                <table class="specs-table">
+                    <tr>
+                        <td class="spec-label">Caliber:</td>
+                        <td class="spec-value">12.7×108mm</td>
+                    </tr>
+                    <tr>
+                        <td class="spec-label">Operation:</td>
+                        <td class="spec-value">Gas-operated, flapper locking</td>
+                    </tr>
+                    <tr>
+                        <td class="spec-label">Rate of Fire:</td>
+                        <td class="spec-value">550 RPM</td>
+                    </tr>
+                    <tr>
+                        <td class="spec-label">Effective Range:</td>
+                        <td class="spec-value">2000m ground / 1500m air</td>
+                    </tr>
+                    <tr>
+                        <td class="spec-label">Feed System:</td>
+                        <td class="spec-value">50-round belt</td>
+                    </tr>
+                    <tr>
+                        <td class="spec-label">Mount:</td>
+                        <td class="spec-value">6T7 AA tripod included</td>
+                    </tr>
+                </table>
+                
+                <div class="price-tag">
+                    <div class="price-main">$9,800 USD</div>
+                    <div class="price-crypto">≈ 0.147 BTC / 7.4 XMR</div>
                 </div>
-                <div class="price">
-                    السعر: 1,500-5,000 ₿
-                </div>
-                <div class="stock">
-                    ★ تصنيع حسب الطلب ★
-                </div>
-                <button class="order-btn">طلب الآن - للجهاد فقط</button>
+                
+                <div class="stock-status">IN STOCK: 6 UNITS</div>
+                
+                <button class="order-button" onclick="orderProduct('DShK HMG')">
+                    [REQUEST PURCHASE]
+                </button>
             </div>
 
-            <!-- Sniper -->
+            <!-- Product 5: Glock 18 -->
             <div class="product-card">
-                <div class="product-title">بندقية قنص دراغونوف</div>
-                <div class="product-image">
-                    <!-- ============================================ -->
-                    <!-- AQUÍ VA LA IMAGEN DEL DRAGUNOV -->
-                    <!-- Reemplazar con: <img src="dragunov.jpg" alt="Dragunov"> -->
-                    <!-- ============================================ -->
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/SVD_Dragunov.jpg/1280px-SVD_Dragunov.jpg" alt="Dragunov">
+                <div class="product-title">GLOCK 18C SELECT-FIRE</div>
+                
+                <div class="product-image-container">
+                    <!-- REPLACE THIS IMAGE -->
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTv-9KhdEwB4UT78MyjrjmpjFkweCEjwVX31Q&s" alt="Glock 18" class="product-image">
+                    <div class="image-overlay">Austrian Factory - Full Auto Capable - Suppressor Ready</div>
                 </div>
-                <div class="specs">
-                    <div class="spec-item">
-                        <span class="spec-label">العيار:</span>
-                        <span class="spec-value">7.62×54mmR</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">نظام العمل:</span>
-                        <span class="spec-value">غاز، نصف آلي</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">المدى الفعال:</span>
-                        <span class="spec-value">800 متر</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">المنظار:</span>
-                        <span class="spec-value">PSO-1 (4×24)</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">سعة المخزن:</span>
-                        <span class="spec-value">10 طلقات</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">الدقة:</span>
-                        <span class="spec-value">1.5 MOA</span>
-                    </div>
+                
+                <table class="specs-table">
+                    <tr>
+                        <td class="spec-label">Caliber:</td>
+                        <td class="spec-value">9×19mm Parabellum</td>
+                    </tr>
+                    <tr>
+                        <td class="spec-label">Operation:</td>
+                        <td class="spec-value">Short recoil, tilting barrel</td>
+                    </tr>
+                    <tr>
+                        <td class="spec-label">Rate of Fire:</td>
+                        <td class="spec-value">1,100-1,300 RPM</td>
+                    </tr>
+                    <tr>
+                        <td class="spec-label">Magazine:</td>
+                        <td class="spec-value">17/33 rounds (extended)</td>
+                    </tr>
+                    <tr>
+                        <td class="spec-label">Selector:</td>
+                        <td class="spec-value">Safe/Semi/Auto</td>
+                    </tr>
+                    <tr>
+                        <td class="spec-label">Special:</td>
+                        <td class="spec-value">Suppressor ready, threaded barrel</td>
+                    </tr>
+                </table>
+                
+                <div class="price-tag">
+                    <div class="price-main">$3,500 USD</div>
+                    <div class="price-crypto">≈ 0.053 BTC / 2.6 XMR</div>
                 </div>
-                <div class="price">
-                    السعر: 6,500 ₿ (بيتكوين)
-                </div>
-                <div class="stock">
-                    ★ متوفر: 15 قطعة ★
-                </div>
-                <button class="order-btn">طلب الآن - للجهاد فقط</button>
+                
+                <div class="stock-status">IN STOCK: 18 UNITS</div>
+                
+                <button class="order-button" onclick="orderProduct('Glock 18C')">
+                    [REQUEST PURCHASE]
+                </button>
             </div>
 
-            <!-- Ammo Package -->
+            <!-- Product 6: Ammunition Package -->
             <div class="product-card">
-                <div class="product-title">باقة ذخيرة شاملة</div>
-                <div class="product-image">
-                    <!-- ============================================ -->
-                    <!-- AQUÍ VA LA IMAGEN DE MUNICIÓN -->
-                    <!-- Reemplazar con: <img src="ammo.jpg" alt="Ammunition"> -->
-                    <!-- ============================================ -->
-                    <img src="https://img.freepik.com/fotos-premium/balas-cartuchos-municiones_740964-31.jpg" alt="Ammunition">
+                <div class="product-title">BULK AMMUNITION PACKAGE</div>
+                
+                <div class="product-image-container">
+                    <!-- REPLACE THIS IMAGE -->
+                    <img src="https://media.istockphoto.com/id/174077869/photo/9mm-bullet-ammunition-luger.jpg?s=612x612&w=0&k=20&c=Uo_vtlY9Cja5gdyD4r6x9UYMTwOI8QpmJfeccM5tjjI=" alt="Ammunition" class="product-image">
+                    <div class="image-overlay">Full Spectrum - Sealed Military Crates - Various Calibers</div>
                 </div>
-                <div class="specs">
-                    <div class="spec-item">
-                        <span class="spec-label">7.62×39mm (كلاش):</span>
-                        <span class="spec-value">5,000 طلقة</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">7.62×54mmR (قنص):</span>
-                        <span class="spec-value">1,000 طلقة</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">12.7×108mm (DShK):</span>
-                        <span class="spec-value">500 طلقة</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">رؤوس RPG:</span>
-                        <span class="spec-value">10 رؤوس متنوعة</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">قنابل يدوية:</span>
-                        <span class="spec-value">F1 - RGD-5 (50 قطعة)</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">التغليف:</span>
-                        <span class="spec-value">مقاوم للرطوبة</span>
-                    </div>
+                
+                <table class="specs-table">
+                    <tr>
+                        <td class="spec-label">5.56×45mm NATO:</td>
+                        <td class="spec-value">10,000 rounds</td>
+                    </tr>
+                    <tr>
+                        <td class="spec-label">7.62×39mm:</td>
+                        <td class="spec-value">8,000 rounds</td>
+                    </tr>
+                    <tr>
+                        <td class="spec-label">9×19mm Parabellum:</td>
+                        <td class="spec-value">5,000 rounds</td>
+                    </tr>
+                    <tr>
+                        <td class="spec-label">12.7×108mm:</td>
+                        <td class="spec-value">1,000 rounds</td>
+                    </tr>
+                    <tr>
+                        <td class="spec-label">PG-7VL Warheads:</td>
+                        <td class="spec-value">10 units</td>
+                    </tr>
+                    <tr>
+                        <td class="spec-label">Packaging:</td>
+                        <td class="spec-value">Military sealed crates</td>
+                    </tr>
+                </table>
+                
+                <div class="price-tag">
+                    <div class="price-main">$12,000 USD</div>
+                    <div class="price-crypto">≈ 0.180 BTC / 9.0 XMR</div>
                 </div>
-                <div class="price">
-                    السعر: 15,000 ₿ (بيتكوين)
-                </div>
-                <div class="stock">
-                    ★ متوفر: 3 حاويات ★
-                </div>
-                <button class="order-btn">طلب الآن - للجهاد فقط</button>
+                
+                <div class="stock-status">IN STOCK: 3 PALLETS</div>
+                
+                <button class="order-button" onclick="orderProduct('Bulk Ammo Package')">
+                    [REQUEST PURCHASE]
+                </button>
             </div>
         </div>
 
-        <!-- Información de contacto -->
-        <div class="contact-box">
-            <div class="contact-title">شروط الطلب والتوصيل</div>
+        <!-- Connection & Order Panel -->
+        <div class="connection-panel">
+            <div class="panel-title">SECURE CONNECTION & ORDERING</div>
+            
+            <div class="connection-status">
+                <div class="status-indicator"></div>
+                <div>CONNECTED: TOR HIDDEN SERVICE | ENCRYPTION: AES-256 | PROTOCOL: V3</div>
+            </div>
+            
             <div class="contact-info">
-                <p>1. الدفع: بيتكوين فقط - لا نستقبل أي عملات أخرى</p>
-                <p>2. الهوية: يجب تقديم إثبات انتماء لمجموعة جهادية معتمدة</p>
-                <p>3. التوصيل: شحن سري إلى سوريا - العراق - اليمن - أفغانستان</p>
-                <p>4. الوقت: 7-21 يوم حسب الموقع والأمن</p>
-                <p>5. الضمان: استبدال في حالة العطب خلال 48 ساعة</p>
-                
-                <div class="warning">
-                    ⚠️ تحذير: التواصل فقط عبر TOR - استخدام PGP إجباري<br>
-                    ⚠️ نحن لسنا مسؤولين عن الأخطاء التشغيلية للعملاء<br>
-                    ⚠️ الصور والفيديوهات التوضيحية متوفرة بعد التحقق
-                </div>
-                
-                <p style="text-align: center; margin-top: 15px; color: #FFD700;">
-                    للتواصل: jihad_trade@protonmail.com<br>
-                    مفتاح PGP: 0x1A2B3C4D5E6F7G8H
-                </p>
-                
-                <div style="text-align: center; margin-top: 15px;">
-                    <div class="loading"></div>
-                    <div style="color: #A52A2A; font-size: 11px;">
-                        جاري تشفير الاتصال... تأكد من استخدام TOR
-                    </div>
-                </div>
+                <p><strong>CONTACT:</strong> PGP ENCRYPTED EMAIL ONLY</p>
+                <p><strong>EMAIL:</strong> shadow_arsenal@protonmail.com</p>
+                <p><strong>PGP KEY:</strong> 0x1A2B3C4D5E6F7890 (4096-bit RSA)</p>
+                <p><strong>PAYMENT:</strong> Bitcoin (BTC) / Monero (XMR) ONLY</p>
+                <p><strong>SHIPPING:</strong> Worldwide via secure channels (7-28 days)</p>
+                <p><strong>ESCROW:</strong> Available for orders over $5,000 USD</p>
+                <p><strong>VERIFICATION:</strong> Existing customers only, no exceptions</p>
+            </div>
+            
+            <div class="warning-box">
+                ⚠️ WARNING: This service operates under strict operational security protocols.<br>
+                ⚠️ All communications must be PGP encrypted. No exceptions.<br>
+                ⚠️ We do not ship to prohibited countries (USA, UK, EU, AU, CA).<br>
+                ⚠️ Minimum order value: $2,500 USD. No retail sales.<br>
+                ⚠️ Vetting process required for all new clients.
+            </div>
+            
+            <div style="color: #00aa00; font-size: 12px; margin-top: 20px; text-align: center;">
+                SERVER TIME: <span id="serverTime">00:00:00 UTC</span> | 
+                UPTIME: <span id="uptime">99.7%</span> | 
+                ORDERS TODAY: <span id="ordersToday">47</span>
             </div>
         </div>
 
-        <!-- Pie de página -->
-        <div class="footer">
-            <div style="color: #8B0000; margin-bottom: 10px;">
-                الجهاد للتجارة - خدمة المجاهدين منذ 2014
+        <!-- Footer -->
+        <div class="terminal-footer">
+            <div class="footer-links">
+                <a href="#" class="footer-link" onclick="return showPage('faq')">[FAQ]</a>
+                <a href="#" class="footer-link" onclick="return showPage('shipping')">[SHIPPING INFO]</a>
+                <a href="#" class="footer-link" onclick="return showPage('security')">[SECURITY PROTOCOLS]</a>
+                <a href="#" class="footer-link" onclick="return showPage('verification')">[CLIENT VERIFICATION]</a>
             </div>
-            <div class="disclaimer">
-                هذا الموقع هو لمحاكاة تعليمية وأكاديمية فقط. لا نروج للإرهاب أو العنف.<br>
-                جميع المحتويات هي افتراضية ولأغراض البحث الأكاديمي في مجال أمن المعلومات.<br>
-                نحن ندين جميع أشكال الإرهاب ونؤمن بالسلام والتعايش الإنساني.
+            
+            <div style="margin: 20px 0; color: #003300;">
+                SHADOW ARSENAL © 2011-2023 | PRIVATE MILITARY EQUIPMENT EXCHANGE
+            </div>
+            
+            <div style="color: #002200; font-size: 10px; line-height: 1.5;">
+                This is a simulation for educational and research purposes only.<br>
+                All content is fictional. No actual weapons or illegal items are sold or promoted.<br>
+                This simulation is designed for cybersecurity research and threat intelligence training.
             </div>
         </div>
     </div>
 
+    <!-- Hidden Service Notice -->
+    <div class="hidden-service">
+        .onion AVAILABLE UPON REQUEST
+    </div>
+
     <script>
-        // Actualizar hora de La Meca
-        function updateMeccaTime() {
+        // Update server time
+        function updateServerTime() {
             const now = new Date();
-            const meccaTime = new Date(now.getTime() + (3 * 60 * 60 * 1000)); // UTC+3
+            const utcTime = now.toUTCString().split(' ')[4];
+            document.getElementById('serverTime').textContent = utcTime;
             
-            let hours = meccaTime.getUTCHours();
-            let minutes = meccaTime.getUTCMinutes();
+            // Simulate uptime
+            const uptime = (99.5 + Math.random() * 0.4).toFixed(1);
+            document.getElementById('uptime').textContent = uptime + '%';
             
-            hours = hours < 10 ? '0' + hours : hours;
-            minutes = minutes < 10 ? '0' + minutes : minutes;
-            
-            document.getElementById('time').textContent = `${hours}:${minutes}`;
+            // Simulate orders
+            const orders = 45 + Math.floor(Math.random() * 10);
+            document.getElementById('ordersToday').textContent = orders;
         }
         
-        updateMeccaTime();
-        setInterval(updateMeccaTime, 60000);
+        updateServerTime();
+        setInterval(updateServerTime, 1000);
         
-        // Efecto de escritura en títulos
-        const titles = document.querySelectorAll('.product-title');
-        titles.forEach(title => {
-            const originalText = title.textContent;
-            title.textContent = '';
+        // Order function
+        function orderProduct(productName) {
+            // Create modal
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 20, 0, 0.95);
+                z-index: 10000;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-family: 'Consolas', monospace;
+            `;
             
-            let i = 0;
-            const typeWriter = () => {
-                if (i < originalText.length) {
-                    title.textContent += originalText.charAt(i);
-                    i++;
-                    setTimeout(typeWriter, 50);
-                }
+            modal.innerHTML = `
+                <div style="
+                    background: linear-gradient(145deg, #001a00, #000d00);
+                    border: 2px solid #00ff00;
+                    padding: 30px;
+                    max-width: 600px;
+                    width: 90%;
+                    color: #00ff00;
+                    box-shadow: 0 0 50px rgba(0, 255, 0, 0.5);
+                ">
+                    <div style="font-size: 24px; margin-bottom: 20px; color: #ffff00; text-align: center;">
+                        PURCHASE REQUEST: ${productName}
+                    </div>
+                    
+                    <div style="margin-bottom: 20px; line-height: 1.6;">
+                        <p>1. Save this transaction ID: <strong>${generateTransactionId()}</strong></p>
+                        <p>2. Contact us via PGP encrypted email with the transaction ID</p>
+                        <p>3. We will provide Bitcoin/Monero payment address</p>
+                        <p>4. After payment confirmation, shipping details will be provided</p>
+                        <p>5. Allow 24-48 hours for initial response</p>
+                    </div>
+                    
+                    <div style="background-color: #001100; padding: 15px; margin: 20px 0; border: 1px solid #005500;">
+                        <div style="font-size: 12px; color: #00aa00; margin-bottom: 10px;">IMPORTANT:</div>
+                        <div style="font-size: 11px;">
+                            • PGP encryption is MANDATORY<br>
+                            • Include your secure drop location (not your actual address)<br>
+                            • Specify preferred shipping method<br>
+                            • No refunds after payment confirmation
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 15px; justify-content: center;">
+                        <button onclick="this.closest('div[style*=\\'position: fixed\\']').remove()" style="
+                            background: linear-gradient(to bottom, #005500, #003300);
+                            color: #00ff00;
+                            border: 1px solid #00aa00;
+                            padding: 10px 30px;
+                            cursor: pointer;
+                            font-family: 'Courier New', monospace;
+                            font-weight: bold;
+                        ">
+                            [CLOSE]
+                        </button>
+                        <button onclick="copyTransactionId()" style="
+                            background: linear-gradient(to bottom, #00aa00, #005500);
+                            color: #00ff00;
+                            border: 1px solid #00ff00;
+                            padding: 10px 30px;
+                            cursor: pointer;
+                            font-family: 'Courier New', monospace;
+                            font-weight: bold;
+                        ">
+                            [COPY TRANSACTION ID]
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+        
+        function generateTransactionId() {
+            const chars = 'ABCDEF0123456789';
+            let id = 'TX-';
+            for (let i = 0; i < 12; i++) {
+                id += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return id;
+        }
+        
+        function copyTransactionId() {
+            const transactionId = document.querySelector('strong').textContent;
+            navigator.clipboard.writeText(transactionId).then(() => {
+                alert('Transaction ID copied to clipboard');
+            });
+        }
+        
+        // Page navigation simulation
+        function showPage(page) {
+            const pages = {
+                faq: `FREQUENTLY ASKED QUESTIONS\n\n1. Who can purchase?\n   Established organizations only. No individuals.\n\n2. Payment methods?\n   Bitcoin (BTC) or Monero (XMR) only.\n\n3. Shipping time?\n   7-28 days depending on destination.\n\n4. Warranty?\n   30-day replacement for defective items.\n\n5. Security?\n   OPSEC procedures strictly enforced.`,
+                shipping: `SHIPPING INFORMATION\n\n• All items are shipped disassembled\n• Multiple packages to different addresses\n• GPS tracking provided after shipping\n• Insurance available for +10% fee\n• No shipping to high-risk countries`,
+                security: `SECURITY PROTOCOLS\n\n• TOR Hidden Service only\n• PGP encryption mandatory\n• No logs kept\n• Multi-sig escrow available\n• Dead man's switch active\n• Regular security audits`,
+                verification: `CLIENT VERIFICATION\n\n1. Provide organizational proof\n2. Previous transaction references\n3. Secure communication channel setup\n4. Initial small order requirement\n5. Background verification\n6. Ongoing security compliance`
             };
             
-            setTimeout(typeWriter, Math.random() * 1000);
-        });
+            alert(pages[page] || 'Page not found');
+            return false;
+        }
         
-        // Efecto de parpadeo aleatorio
-        setInterval(() => {
-            const elements = document.querySelectorAll('.blink, .stock, .price');
-            elements.forEach(el => {
-                if (Math.random() > 0.7) {
-                    el.style.opacity = '0.5';
-                    setTimeout(() => {
-                        el.style.opacity = '1';
-                    }, 200);
-                }
-            });
-        }, 3000);
-        
-        // Efecto de seguridad TOR
-        const statusTexts = [
-            "● الاتصال آمن",
-            "● TOR نشط",
-            "● IP مخفي",
-            "● التشفير مفعل",
-            "● بدون تسجيل"
-        ];
-        
-        let statusIndex = 0;
-        setInterval(() => {
-            const statusEl = document.querySelector('.status-bar .blink');
-            if (statusEl) {
-                statusEl.textContent = statusTexts[statusIndex];
-                statusIndex = (statusIndex + 1) % statusTexts.length;
-            }
-        }, 5000);
-        
-        // Simular "carga" de productos
-        setTimeout(() => {
-            const loadingDivs = document.querySelectorAll('.loading');
-            loadingDivs.forEach(div => {
-                div.style.display = 'none';
-                div.parentElement.innerHTML += '<div style="color:#32CD32;">✓ الاتصال آمن والتشفير مفعل</div>';
-            });
-        }, 3000);
-        
-        // Mensaje al hacer clic en botones de pedido
-        document.querySelectorAll('.order-btn').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const productTitle = this.parentElement.querySelector('.product-title').textContent;
-                const message = `طلب: ${productTitle}\n\nسيتم التواصل معك خلال 24 ساعة بعد التحقق.\nأبقِ اتصال TOR نشطًا.`;
-                
-                // Crear alerta con estilo acorde al sitio
-                const alertDiv = document.createElement('div');
-                alertDiv.style.cssText = `
-                    position: fixed;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                    background-color: rgba(20,0,0,0.95);
-                    border: 3px solid #8B0000;
-                    padding: 30px;
-                    z-index: 1000;
-                    color: #FFD700;
-                    text-align: center;
-                    min-width: 300px;
-                    box-shadow: 0 0 50px rgba(255,0,0,0.7);
-                `;
-                
-                alertDiv.innerHTML = `
-                    <div style="font-size: 24px; margin-bottom: 20px; color: #FF0000;">تم استلام الطلب</div>
-                    <div style="margin-bottom: 20px; line-height: 1.6;">${message}</div>
-                    <button onclick="this.parentElement.remove()" style="
-                        background: #8B0000;
-                        color: #FFD700;
-                        border: 1px solid #800000;
-                        padding: 10px 20px;
-                        cursor: pointer;
-                        font-weight: bold;
-                    ">موافق</button>
-                `;
-                
-                document.body.appendChild(alertDiv);
-            });
-        });
-        
-        // Efecto de zoom en imágenes al pasar mouse
-        document.querySelectorAll('.product-image img').forEach(img => {
-            img.addEventListener('mouseenter', function() {
-                this.style.transform = 'scale(1.05)';
-            });
-            
-            img.addEventListener('mouseleave', function() {
-                this.style.transform = 'scale(1)';
-            });
-        });
-        
-        // Cargar imágenes con efecto de fade
+        // Simulate image loading
         window.addEventListener('load', function() {
-            document.querySelectorAll('.product-image img').forEach(img => {
+            const images = document.querySelectorAll('.product-image');
+            images.forEach(img => {
                 img.style.opacity = '0';
                 setTimeout(() => {
-                    img.style.transition = 'opacity 0.5s ease';
+                    img.style.transition = 'opacity 0.8s ease';
                     img.style.opacity = '1';
-                }, 100);
+                }, Math.random() * 1000);
             });
         });
+        
+        // Simulate connection status changes
+        setInterval(() => {
+            const statusEl = document.querySelector('.header-status');
+            const statuses = [
+                "● CONNECTION: TOR | ENCRYPTION: 256-BIT | LOCATION: HIDDEN",
+                "● TOR CIRCUIT: ACTIVE | ENCRYPTION: VERIFIED | TRAFFIC: ENCRYPTED",
+                "● SECURITY: MAXIMUM | PROTOCOL: V3 | THREAT: NONE DETECTED",
+                "● CONNECTION: SECURE | IDENTITY: HIDDEN | SESSION: ENCRYPTED"
+            ];
+            const randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
+            statusEl.innerHTML = `<span class="blink">●</span> ${randomStatus}`;
+        }, 10000);
     </script>
 </body>
 </html>
