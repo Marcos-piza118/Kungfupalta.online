@@ -1,56 +1,11 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Planificador de Hábitos - Marcos</title>
-    
-    <!-- Firebase SDK Modular -->
-    <script type="module">
-        // =============================================
-        // CONFIGURACIÓN FIREBASE - USA TUS DATOS AQUÍ
-        // =============================================
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getFirestore, doc, getDoc, setDoc, collection, query, orderBy, limit, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyCkP2qgjn4MbeKkxMD1O_bMon6TLs2vcZg",
-            authDomain: "planificador-marcos.firebaseapp.com",
-            projectId: "planificador-marcos",
-            storageBucket: "planificador-marcos.firebasestorage.app",
-            messagingSenderId: "433123531099",
-            appId: "1:433123531099:web:f16a1d1dcc6cd34715e27e"
-        };
-
-        // Inicializar Firebase
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const auth = getAuth(app);
-
-        // Hacer variables globales
-        window.firebaseApp = app;
-        window.firebaseDb = db;
-        window.firebaseAuth = auth;
-        window.firebaseModules = {
-            doc, getDoc, setDoc, collection, query, orderBy, limit, getDocs, serverTimestamp, signInAnonymously
-        };
-        
-        console.log("✅ Firebase inicializado correctamente");
-        document.getElementById('firebaseStatus').textContent = "✅ Firebase listo";
-    </script>
-
+    <title>الجهاد للتجارة - متجر المقاومة</title>
     <style>
-        :root {
-            --oro: #d4af37;
-            --oro-oscuro: #b8860b;
-            --bronce: #cd7f32;
-            --negro: #0a0a0a;
-            --negro-claro: #1a1a1a;
-            --gris: #2d2d2d;
-            --texto: #e8e0c8;
-        }
-        
+        /* Reset y estilos base */
         * {
             margin: 0;
             padding: 0;
@@ -58,830 +13,798 @@
         }
         
         body {
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            background: 
-                linear-gradient(135deg, rgba(10, 10, 10, 0.9) 0%, rgba(42, 42, 42, 0.9) 100%),
-                url('https://images.unsplash.com/photo-1550684376-efcbd6e3f031?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');
-            background-size: cover;
-            background-attachment: fixed;
-            color: var(--texto);
+            background-color: #0a0a0a;
+            color: #8B0000;
+            font-family: 'Times New Roman', serif;
+            line-height: 1.4;
+            padding: 10px;
+            background-image: 
+                linear-gradient(rgba(10, 0, 0, 0.9), rgba(10, 0, 0, 0.9)),
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none" stroke="%23800000" stroke-width="1"/><text x="50" y="50" font-family="Arial" font-size="10" fill="%23800000" text-anchor="middle" dominant-baseline="middle">☪</text></svg>');
             min-height: 100vh;
-            padding: 20px;
         }
-        
-        .login-container {
-            max-width: 400px;
-            margin: 100px auto;
-            background: rgba(10, 10, 10, 0.95);
-            padding: 40px 30px;
-            border-radius: 15px;
-            border: 2px solid var(--oro);
-            box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
-            text-align: center;
-            backdrop-filter: blur(10px);
-        }
-        
-        .panel-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: none;
-        }
-        
-        h1 {
-            color: var(--oro);
-            text-align: center;
-            margin-bottom: 10px;
-            font-size: 2.5em;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
-        }
-        
-        .subtitle {
-            text-align: center;
-            color: var(--bronce);
-            margin-bottom: 30px;
-        }
-        
-        .container {
-            background: rgba(26, 26, 26, 0.9);
-            border-radius: 12px;
-            padding: 25px;
-            margin-bottom: 25px;
-            border: 1px solid var(--gris);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-            backdrop-filter: blur(5px);
-        }
-        
-        h2 {
-            color: var(--oro);
-            margin-bottom: 20px;
-            font-size: 1.5em;
-            border-bottom: 2px solid var(--bronce);
-            padding-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .habitos-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-        
-        .habito-card {
-            background: rgba(45, 45, 45, 0.6);
-            padding: 20px;
-            border-radius: 10px;
-            border-left: 4px solid var(--oro);
-            transition: all 0.3s ease;
-        }
-        
-        .habito-card:hover {
-            border-left-color: var(--bronce);
-            transform: translateY(-2px);
-        }
-        
-        .habito-card h3 {
-            color: var(--oro);
-            margin-bottom: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .checklist {
-            list-style: none;
-        }
-        
-        .checklist li {
-            margin: 12px 0;
-            display: flex;
-            align-items: center;
-            padding: 8px;
-            border-radius: 5px;
-            transition: background 0.3s;
-        }
-        
-        .checklist li:hover {
-            background: rgba(212, 175, 55, 0.1);
-        }
-        
-        .checklist input[type="checkbox"] {
-            margin-right: 12px;
-            transform: scale(1.3);
-            accent-color: var(--oro);
-        }
-        
-        .btn-eliminar {
-            background: transparent;
-            border: 1px solid #ef4444;
-            color: #ef4444;
-            padding: 4px 8px;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-left: 10px;
-            font-size: 0.8em;
-            transition: all 0.3s;
-        }
-        
-        .btn-eliminar:hover {
-            background: #ef4444;
-            color: white;
-        }
-        
-        .semana-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 10px;
-            margin-top: 20px;
-        }
-        
-        .dia-card {
-            background: rgba(45, 45, 45, 0.6);
-            padding: 15px;
-            border-radius: 8px;
-            text-align: center;
-            border: 1px solid var(--gris);
-            transition: all 0.3s;
-        }
-        
-        .dia-card.completado {
-            background: linear-gradient(135deg, var(--bronce), var(--oro-oscuro));
-            color: var(--negro);
-            border-color: var(--oro);
-            font-weight: bold;
-        }
-        
-        .btn {
-            background: linear-gradient(135deg, var(--oro), var(--bronce));
-            color: var(--negro);
-            border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-            margin: 5px;
-            transition: all 0.3s;
-            font-weight: bold;
-        }
-        
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
-        }
-        
-        .btn-outline {
-            background: transparent;
-            border: 2px solid var(--oro);
-            color: var(--oro);
-            padding: 8px 16px;
-        }
-        
-        .btn-outline:hover {
-            background: var(--oro);
-            color: var(--negro);
-        }
-        
-        .password-input {
-            width: 100%;
-            padding: 15px;
-            margin: 20px 0;
-            background: rgba(45, 45, 45, 0.8);
-            border: 2px solid var(--gris);
-            border-radius: 8px;
-            color: var(--texto);
-            font-size: 16px;
-            text-align: center;
-            transition: all 0.3s;
-        }
-        
-        .password-input:focus {
-            border-color: var(--oro);
-            outline: none;
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
-        }
-        
-        .error {
-            color: var(--oro);
-            margin: 10px 0;
-            display: none;
-        }
-        
-        .resumen-mensual {
-            background: rgba(45, 45, 45, 0.6);
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 20px;
-            border: 1px solid var(--gris);
-        }
-        
-        .meta-card {
-            background: rgba(26, 26, 26, 0.8);
-            padding: 15px;
-            border-radius: 8px;
-            margin: 10px 0;
-            border-left: 4px solid var(--oro);
-        }
-        
-        .progreso {
-            height: 10px;
-            background: var(--gris);
-            border-radius: 5px;
-            margin: 10px 0;
-            overflow: hidden;
-        }
-        
-        .progreso-barra {
-            height: 100%;
-            background: linear-gradient(90deg, var(--bronce), var(--oro));
-            border-radius: 5px;
-            transition: width 0.3s;
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-        }
-        
-        .stat-card {
-            background: rgba(45, 45, 45, 0.6);
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            border: 1px solid var(--gris);
-        }
-        
-        .stat-numero {
-            font-size: 2em;
-            font-weight: bold;
-            color: var(--oro);
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
-        }
-        
-        .modal {
-            display: none;
+
+        /* Efecto CRT y parpadeo */
+        .crt::after {
+            content: " ";
+            display: block;
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            z-index: 1000;
+            bottom: 0;
+            right: 0;
+            background: rgba(18, 16, 16, 0.1);
+            opacity: 0.3;
+            z-index: 2;
+            pointer-events: none;
+        }
+        
+        .crt::before {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 2px, 3px 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* Contenedor principal */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            border: 2px solid #800000;
+            background-color: rgba(20, 0, 0, 0.95);
+            padding: 15px;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 0 30px rgba(139, 0, 0, 0.5);
+        }
+
+        /* Encabezado con kalima */
+        .header {
+            text-align: center;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-bottom: 3px double #8B0000;
+            background: linear-gradient(to right, rgba(139, 0, 0, 0.1), rgba(139, 0, 0, 0.3), rgba(139, 0, 0, 0.1));
+        }
+        
+        .kalima {
+            font-size: 24px;
+            color: #B22222;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(178, 34, 34, 0.7);
+            letter-spacing: 2px;
+        }
+        
+        .title {
+            font-size: 32px;
+            color: #FF0000;
+            margin: 10px 0;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 2px 2px 4px #000;
+        }
+        
+        .subtitle {
+            color: #A52A2A;
+            font-size: 18px;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        /* Panel de estado */
+        .status-bar {
+            background-color: #1a0000;
+            border: 1px solid #800000;
+            padding: 8px 15px;
+            margin-bottom: 20px;
+            font-family: monospace;
+            font-size: 12px;
+            color: #FF4500;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .blink {
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        /* Productos */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .product-card {
+            border: 1px solid #8B0000;
+            background-color: rgba(30, 0, 0, 0.9);
+            padding: 15px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .product-card::before {
+            content: "جهاد";
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: rgba(139, 0, 0, 0.2);
+            font-size: 40px;
+            transform: rotate(-45deg);
+            z-index: 0;
+        }
+        
+        .product-card:hover {
+            border-color: #FF0000;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+            transform: translateY(-5px);
+        }
+        
+        .product-title {
+            color: #DC143C;
+            font-size: 22px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #8B0000;
+            padding-bottom: 5px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .product-image {
+            height: 150px;
+            background-color: #1a0000;
+            border: 1px solid #800000;
+            margin: 10px 0;
+            display: flex;
             align-items: center;
             justify-content: center;
+            color: #8B0000;
+            font-style: italic;
+            position: relative;
+            z-index: 1;
         }
         
-        .modal-content {
-            background: var(--negro-claro);
-            padding: 30px;
-            border-radius: 15px;
-            border: 2px solid var(--oro);
-            max-width: 500px;
-            width: 90%;
+        .specs {
+            margin: 15px 0;
+            font-size: 14px;
+            position: relative;
+            z-index: 1;
         }
         
-        .modal-input {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            background: rgba(45, 45, 45, 0.8);
-            border: 1px solid var(--gris);
-            border-radius: 6px;
-            color: var(--texto);
+        .spec-item {
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px dotted rgba(139, 0, 0, 0.3);
+            padding-bottom: 3px;
         }
         
-        .categoria-select {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            background: rgba(45, 45, 45, 0.8);
-            border: 1px solid var(--gris);
-            border-radius: 6px;
-            color: var(--texto);
+        .spec-label {
+            color: #A52A2A;
         }
         
-        .loading {
+        .spec-value {
+            color: #FF6347;
+            text-align: left;
+        }
+        
+        .price {
+            color: #FFD700;
+            font-size: 20px;
             text-align: center;
-            color: var(--oro);
-            margin: 20px 0;
+            margin: 15px 0;
+            background-color: rgba(139, 0, 0, 0.2);
+            padding: 8px;
+            border: 1px solid #8B0000;
+            position: relative;
+            z-index: 1;
         }
         
-        .sync-status {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: var(--negro);
-            padding: 10px 15px;
-            border-radius: 8px;
-            border: 1px solid var(--oro);
-            font-size: 0.9em;
+        .stock {
+            color: #32CD32;
+            font-size: 12px;
+            text-align: center;
+            margin-top: 5px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Información de contacto/venta */
+        .contact-box {
+            background-color: rgba(40, 0, 0, 0.9);
+            border: 2px solid #8B0000;
+            padding: 20px;
+            margin-top: 30px;
+            position: relative;
+        }
+        
+        .contact-title {
+            color: #FF0000;
+            font-size: 20px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .contact-info {
+            color: #B22222;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+        
+        .warning {
+            color: #FF4500;
+            border: 1px solid #8B0000;
+            padding: 10px;
+            margin: 10px 0;
+            background-color: rgba(139, 0, 0, 0.1);
+            font-size: 12px;
+        }
+
+        /* Pie de página */
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #800000;
+            color: #8B0000;
+            font-size: 12px;
+        }
+        
+        .disclaimer {
+            color: #A52A2A;
+            font-size: 10px;
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+
+        /* Efectos de texto árabe */
+        .arabic-text {
+            font-family: 'Traditional Arabic', 'Times New Roman', serif;
+        }
+        
+        /* Animación de carga */
+        .loading {
+            border: 2px solid #8B0000;
+            border-top: 2px solid #FF0000;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 10px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Botones */
+        .order-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background: linear-gradient(to bottom, #8B0000, #660000);
+            color: #FFD700;
+            border: 1px solid #800000;
+            text-align: center;
+            cursor: pointer;
+            margin-top: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .order-btn:hover {
+            background: linear-gradient(to bottom, #B22222, #8B0000);
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .title {
+                font-size: 24px;
+            }
+            
+            .kalima {
+                font-size: 18px;
+            }
         }
     </style>
 </head>
-<body>
-    <div class="sync-status" id="syncStatus">🔄 Sincronizando...</div>
-
-    <!-- PANTALLA DE LOGIn -->
-    <div class="login-container" id="loginContainer">
-        <h1>Mi Planificador</h1>
-        <p class="subtitle">Seguimiento de hábitos con Firebase</p>
-        
-        <input type="password" class="password-input" id="passwordInput" placeholder="Contraseña personal">
-        <div class="error" id="errorMsg">Contraseña incorrecta</div>
-        <button class="btn" onclick="verificarPassword()">ENTRAR</button>
-        
-        <div class="loading" id="firebaseStatus">Conectando con Firebase...</div>
-    </div>
-
-    <!-- PANEL PRINCIPAL -->
-    <div class="panel-container" id="panelContainer">
-        <h1>Planificador de Hábitos - Marcos</h1>
-        <p class="subtitle">Hoy es <span id="fechaHoy"></span> - ¡Construye tu legado!</p>
-
-        <div class="container">
-            <h2>
-                📅 Hábitos Diarios - Hoy
-                <button class="btn-outline" onclick="mostrarModalAgregar()">+ Agregar Hábito</button>
-            </h2>
-            <div class="habitos-grid" id="habitosGrid">
-                <div class="loading">Cargando hábitos...</div>
+<body class="crt">
+    <div class="container">
+        <!-- Encabezado -->
+        <div class="header">
+            <div class="kalima" style="font-family: 'Traditional Arabic'; font-size: 28px;">
+                لا إله إلا الله محمد رسول الله
             </div>
-            
-            <button class="btn" onclick="guardarDia()">💾 GUARDAR DÍA EN FIREBASE</button>
+            <div class="title">الجهاد للتجارة</div>
+            <div class="subtitle">متجر المقاومة - أسلحة الجهاد في سبيل الله</div>
         </div>
 
-        <div class="container">
-            <h2>📊 Progreso Semanal</h2>
-            <div class="semana-grid" id="semanaGrid">
-                <div class="loading">Cargando progreso...</div>
-            </div>
-            
-            <div class="resumen-mensual">
-                <h3>Metas Mensuales</h3>
-                <div class="meta-card">
-                    <strong>Días productivos este mes:</strong>
-                    <div class="progreso">
-                        <div class="progreso-barra" id="progresoDias" style="width: 0%"></div>
+        <!-- Barra de estado -->
+        <div class="status-bar">
+            <div>المتصفح: TOR - المخفي</div>
+            <div class="blink">● الاتصال آمن</div>
+            <div>الوقت: <span id="time">00:00</span> (توقيت مكة)</div>
+        </div>
+
+        <!-- Productos -->
+        <div class="product-grid">
+            <!-- AK-47 -->
+            <div class="product-card">
+                <div class="product-title">كلاشنكوف AK-47</div>
+                <div class="product-image">
+                    سلاح الجهاد الأمين<br>صناعة روسية - أصلي
+                </div>
+                <div class="specs">
+                    <div class="spec-item">
+                        <span class="spec-label">العيار:</span>
+                        <span class="spec-value">7.62×39mm</span>
                     </div>
-                    <span id="contadorDias">0/30 días</span>
+                    <div class="spec-item">
+                        <span class="spec-label">نظام العمل:</span>
+                        <span class="spec-value">غاز، دوران المزلاج</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">معدل النيران:</span>
+                        <span class="spec-value">600 طلقة/دقيقة</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">المدى الفعال:</span>
+                        <span class="spec-value">350 متر</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">سعة المخزن:</span>
+                        <span class="spec-value">30 طلقة (قابلة للزيادة)</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">الحالة:</span>
+                        <span class="spec-value">جديد - مستعمل جيد</span>
+                    </div>
+                </div>
+                <div class="price">
+                    السعر: 3,500 ₿ (بيتكوين)
+                </div>
+                <div class="stock">
+                    ★ متوفر: 47 قطعة ★
+                </div>
+                <button class="order-btn">طلب الآن - للجهاد فقط</button>
+            </div>
+
+            <!-- RPG-7 -->
+            <div class="product-card">
+                <div class="product-title">قاذفة RPG-7</div>
+                <div class="product-image">
+                    مدمر الدبابات<br>+ 3 رؤوس حربية
+                </div>
+                <div class="specs">
+                    <div class="spec-item">
+                        <span class="spec-label">النوع:</span>
+                        <span class="spec-value">قاذفة صاروخية</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">المدى:</span>
+                        <span class="spec-value">200-500 متر</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">اختراق الدروع:</span>
+                        <span class="spec-value">750mm RHA</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">الرؤوس الحربية:</span>
+                        <span class="spec-value">HEAT - مضادة للدبابات</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">الوزن:</span>
+                        <span class="spec-value">8.5 كجم (محمل)</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">منشأ:</span>
+                        <span class="spec-value">روسيا - بلغاريا - إيران</span>
+                    </div>
+                </div>
+                <div class="price">
+                    السعر: 8,500 ₿ (بيتكوين)
+                </div>
+                <div class="stock">
+                    ★ متوفر: 12 مجموعة ★
+                </div>
+                <button class="order-btn">طلب الآن - للجهاد فقط</button>
+            </div>
+
+            <!-- DShK -->
+            <div class="product-card">
+                <div class="product-title">رشاش DShK الثقيل</div>
+                <div class="product-image">
+                    رشاش 12.7mm<br>مضاد للطائرات
+                </div>
+                <div class="specs">
+                    <div class="spec-item">
+                        <span class="spec-label">العيار:</span>
+                        <span class="spec-value">12.7×108mm</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">نظام العمل:</span>
+                        <span class="spec-value">غاز، تغذية بالحزام</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">معدل النيران:</span>
+                        <span class="spec-value">550 طلقة/دقيقة</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">المدى الفعال:</span>
+                        <span class="spec-value">2000 متر (أرضي)</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">الحزام:</span>
+                        <span class="spec-value">50 طلقة (قابلية التوصيل)</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">الحامل:</span>
+                        <span class="spec-value">مثلثي مضاد للطائرات</span>
+                    </div>
+                </div>
+                <div class="price">
+                    السعر: 12,000 ₿ (بيتكوين)
+                </div>
+                <div class="stock">
+                    ★ متوفر: 8 قطع ★
+                </div>
+                <button class="order-btn">طلب الآن - للجهاد فقط</button>
+            </div>
+
+            <!-- IED Kits -->
+            <div class="product-card">
+                <div class="product-title">معدات IED (بدائية)</div>
+                <div class="product-image">
+                    عبوات ناسفة<br>تعليمات مفصلة
+                </div>
+                <div class="specs">
+                    <div class="spec-item">
+                        <span class="spec-label">النوع:</span>
+                        <span class="spec-value">عبوات ناسفة محلية</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">نظام التفجير:</span>
+                        <span class="spec-value">زمني - لاسلكي - ضغط</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">قوة التفجير:</span>
+                        <span class="spec-value">قابلة للتعديل</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">المكونات:</span>
+                        <span class="spec-value">متفجرات - كبسولات - أسلاك</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">التعليمات:</span>
+                        <span class="spec-value">مفصلة بالعربية</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">المخاطر:</span>
+                        <span class="spec-value">عالية - للخبراء فقط</span>
+                    </div>
+                </div>
+                <div class="price">
+                    السعر: 1,500-5,000 ₿
+                </div>
+                <div class="stock">
+                    ★ تصنيع حسب الطلب ★
+                </div>
+                <button class="order-btn">طلب الآن - للجهاد فقط</button>
+            </div>
+
+            <!-- Sniper -->
+            <div class="product-card">
+                <div class="product-title">بندقية قنص دراغونوف</div>
+                <div class="product-image">
+                    SVD Dragunov<br>نصف آلية
+                </div>
+                <div class="specs">
+                    <div class="spec-item">
+                        <span class="spec-label">العيار:</span>
+                        <span class="spec-value">7.62×54mmR</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">نظام العمل:</span>
+                        <span class="spec-value">غاز، نصف آلي</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">المدى الفعال:</span>
+                        <span class="spec-value">800 متر</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">المنظار:</span>
+                        <span class="spec-value">PSO-1 (4×24)</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">سعة المخزن:</span>
+                        <span class="spec-value">10 طلقات</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">الدقة:</span>
+                        <span class="spec-value">1.5 MOA</span>
+                    </div>
+                </div>
+                <div class="price">
+                    السعر: 6,500 ₿ (بيتكوين)
+                </div>
+                <div class="stock">
+                    ★ متوفر: 15 قطعة ★
+                </div>
+                <button class="order-btn">طلب الآن - للجهاد فقط</button>
+            </div>
+
+            <!-- Ammo Package -->
+            <div class="product-card">
+                <div class="product-title">باقة ذخيرة شاملة</div>
+                <div class="product-image">
+                    جميع العيارات<br>جودة عالية
+                </div>
+                <div class="specs">
+                    <div class="spec-item">
+                        <span class="spec-label">7.62×39mm (كلاش):</span>
+                        <span class="spec-value">5,000 طلقة</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">7.62×54mmR (قنص):</span>
+                        <span class="spec-value">1,000 طلقة</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">12.7×108mm (DShK):</span>
+                        <span class="spec-value">500 طلقة</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">رؤوس RPG:</span>
+                        <span class="spec-value">10 رؤوس متنوعة</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">قنابل يدوية:</span>
+                        <span class="spec-value">F1 - RGD-5 (50 قطعة)</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">التغليف:</span>
+                        <span class="spec-value">مقاوم للرطوبة</span>
+                    </div>
+                </div>
+                <div class="price">
+                    السعر: 15,000 ₿ (بيتكوين)
+                </div>
+                <div class="stock">
+                    ★ متوفر: 3 حاويات ★
+                </div>
+                <button class="order-btn">طلب الآن - للجهاد فقط</button>
+            </div>
+        </div>
+
+        <!-- Información de contacto -->
+        <div class="contact-box">
+            <div class="contact-title">شروط الطلب والتوصيل</div>
+            <div class="contact-info">
+                <p>1. الدفع: بيتكوين فقط - لا نستقبل أي عملات أخرى</p>
+                <p>2. الهوية: يجب تقديم إثبات انتماء لمجموعة جهادية معتمدة</p>
+                <p>3. التوصيل: شحن سري إلى سوريا - العراق - اليمن - أفغانستان</p>
+                <p>4. الوقت: 7-21 يوم حسب الموقع والأمن</p>
+                <p>5. الضمان: استبدال في حالة العطب خلال 48 ساعة</p>
+                
+                <div class="warning">
+                    ⚠️ تحذير: التواصل فقط عبر TOR - استخدام PGP إجباري<br>
+                    ⚠️ نحن لسنا مسؤولين عن الأخطاء التشغيلية للعملاء<br>
+                    ⚠️ الصور والفيديوهات التوضيحية متوفرة بعد التحقق
                 </div>
                 
-                <div class="meta-card">
-                    <strong>Hábitos completados:</strong>
-                    <div class="progreso">
-                        <div class="progreso-barra" id="progresoHabitos" style="width: 0%"></div>
+                <p style="text-align: center; margin-top: 15px; color: #FFD700;">
+                    للتواصل: jihad_trade@protonmail.com<br>
+                    مفتاح PGP: 0x1A2B3C4D5E6F7G8H
+                </p>
+                
+                <div style="text-align: center; margin-top: 15px;">
+                    <div class="loading"></div>
+                    <div style="color: #A52A2A; font-size: 11px;">
+                        جاري تشفير الاتصال... تأكد من استخدام TOR
                     </div>
-                    <span id="contadorHabitos">0% completado</span>
                 </div>
             </div>
         </div>
 
-        <div class="container">
-            <h2>📈 Estadísticas</h2>
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-numero" id="statRacha">0</div>
-                    <div>Días consecutivos</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-numero" id="statHabitos">0%</div>
-                    <div>Hábitos completados</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-numero" id="statSemanas">0</div>
-                    <div>Semanas activas</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-numero" id="statMejora">0%</div>
-                    <div>Mejora mensual</div>
-                </div>
+        <!-- Pie de página -->
+        <div class="footer">
+            <div style="color: #8B0000; margin-bottom: 10px;">
+                الجهاد للتجارة - خدمة المجاهدين منذ 2014
             </div>
-        </div>
-
-        <div class="container">
-            <button class="btn" onclick="cerrarSesion()">CERRAR SESIÓN</button>
-            <button class="btn-outline" onclick="exportarDatos()">📤 EXPORTAR DATOS</button>
-        </div>
-    </div>
-
-    <!-- MODAL AGREGAR HÁBITO -->
-    <div class="modal" id="modalAgregar">
-        <div class="modal-content">
-            <h2>Agregar Nuevo Hábito</h2>
-            <input type="text" class="modal-input" id="nuevoHabito" placeholder="Descripción del hábito">
-            <select class="categoria-select" id="categoriaHabito">
-                <option value="mañana">🌅 Mañana</option>
-                <option value="dia">⚡ Día</option>
-                <option value="noche">🌙 Noche</option>
-            </select>
-            <div style="margin-top: 20px; display: flex; gap: 10px;">
-                <button class="btn" onclick="agregarHabito()">AGREGAR</button>
-                <button class="btn-outline" onclick="cerrarModalAgregar()">CANCELAR</button>
+            <div class="disclaimer">
+                هذا الموقع هو لمحاكاة تعليمية وأكاديمية فقط. لا نروج للإرهاب أو العنف.<br>
+                جميع المحتويات هي افتراضية ولأغراض البحث الأكاديمي في مجال أمن المعلومات.<br>
+                نحن ندين جميع أشكال الإرهاب ونؤمن بالسلام والتعايش الإنساني.
             </div>
         </div>
     </div>
 
     <script>
-        // CONTRASEÑA DE LA APLICACIÓN
-        const APP_PASSWORD = "marcos2024";
-
-        // Elementos del DOM
-        const loginContainer = document.getElementById('loginContainer');
-        const panelContainer = document.getElementById('panelContainer');
-        const firebaseStatus = document.getElementById('firebaseStatus');
-        const syncStatus = document.getElementById('syncStatus');
-        const fechaHoy = document.getElementById('fechaHoy');
-        const semanaGrid = document.getElementById('semanaGrid');
-        const habitosGrid = document.getElementById('habitosGrid');
-        const modalAgregar = document.getElementById('modalAgregar');
-
-        // Estado global
-        let usuarioId = null;
-        let habitos = {
-            "mañana": [],
-            "dia": [],
-            "noche": []
-        };
-
-        // =============================================
-        // INICIALIZACIÓN Y AUTENTICACIÓN
-        // =============================================
-        async function inicializarFirebase() {
-            try {
-                // Esperar a que Firebase se inicialice
-                while (!window.firebaseAuth) {
-                    await new Promise(resolve => setTimeout(resolve, 100));
+        // Actualizar hora de La Meca
+        function updateMeccaTime() {
+            const now = new Date();
+            const meccaTime = new Date(now.getTime() + (3 * 60 * 60 * 1000)); // UTC+3
+            
+            let hours = meccaTime.getUTCHours();
+            let minutes = meccaTime.getUTCMinutes();
+            
+            hours = hours < 10 ? '0' + hours : hours;
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            
+            document.getElementById('time').textContent = `${hours}:${minutes}`;
+        }
+        
+        updateMeccaTime();
+        setInterval(updateMeccaTime, 60000);
+        
+        // Efecto de escritura en títulos
+        const titles = document.querySelectorAll('.product-title');
+        titles.forEach(title => {
+            const originalText = title.textContent;
+            title.textContent = '';
+            
+            let i = 0;
+            const typeWriter = () => {
+                if (i < originalText.length) {
+                    title.textContent += originalText.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 50);
                 }
-
-                syncStatus.textContent = "🔄 Autenticando...";
-                
-                // Autenticación anónima
-                const userCredential = await window.firebaseModules.signInAnonymously(window.firebaseAuth);
-                usuarioId = userCredential.user.uid;
-                
-                syncStatus.textContent = "✅ Conectado";
-                setTimeout(() => syncStatus.style.display = 'none', 2000);
-                
-                console.log("Usuario autenticado:", usuarioId);
-                
-            } catch (error) {
-                console.error("Error Firebase:", error);
-                syncStatus.textContent = "❌ Error de conexión";
-                firebaseStatus.textContent = "❌ Error conectando a Firebase";
-            }
-        }
-
-        // =============================================
-        // FUNCIONES PRINCIPALES - HÁBITOS
-        // =============================================
-        async function cargarHabitos() {
-            try {
-                syncStatus.style.display = 'block';
-                syncStatus.textContent = "📥 Cargando hábitos...";
-                
-                const { doc, getDoc, setDoc } = window.firebaseModules;
-                const habitosRef = doc(window.firebaseDb, 'usuarios', usuarioId, 'habitos', 'lista');
-                const docSnap = await getDoc(habitosRef);
-                
-                if (docSnap.exists()) {
-                    habitos = docSnap.data();
-                } else {
-                    // Crear hábitos por defecto
-                    habitos = {
-                        "mañana": [
-                            "Levantarme sin revisar el teléfono",
-                            "Lavar cara y cepillar dientes",
-                            "10 minutos de ejercicio", 
-                            "Desayunar conscientemente"
-                        ],
-                        "dia": [
-                            "1 hora de aprendizaje",
-                            "Ayudar en casa 30 min",
-                            "Contactar un amigo/familiar",
-                            "Salir a caminar 20 min"
-                        ],
-                        "noche": [
-                            "Sin pantallas 1h antes de dormir", 
-                            "Leer 15 minutos",
-                            "Planificar el día siguiente",
-                            "Dormir antes de las 12 AM"
-                        ]
-                    };
-                    await setDoc(habitosRef, habitos);
-                }
-                
-                generarHabitosUI();
-                syncStatus.textContent = "✅ Hábitos cargados";
-                setTimeout(() => syncStatus.style.display = 'none', 2000);
-                
-            } catch (error) {
-                console.error("Error cargando hábitos:", error);
-                syncStatus.textContent = "❌ Error cargando hábitos";
-            }
-        }
-
-        async function guardarHabitos() {
-            try {
-                syncStatus.style.display = 'block';
-                syncStatus.textContent = "💾 Guardando hábitos...";
-                
-                const { doc, setDoc } = window.firebaseModules;
-                await setDoc(doc(window.firebaseDb, 'usuarios', usuarioId, 'habitos', 'lista'), habitos);
-                
-                syncStatus.textContent = "✅ Hábitos guardados";
-                setTimeout(() => syncStatus.style.display = 'none', 2000);
-                
-            } catch (error) {
-                console.error("Error guardando hábitos:", error);
-                syncStatus.textContent = "❌ Error guardando";
-            }
-        }
-
-        function generarHabitosUI() {
-            habitosGrid.innerHTML = '';
-            
-            Object.keys(habitos).forEach(categoria => {
-                const habitosCategoria = habitos[categoria];
-                if (habitosCategoria.length > 0) {
-                    const habitoCard = document.createElement('div');
-                    habitoCard.className = 'habito-card';
-                    
-                    let icono = '🌅';
-                    let titulo = 'Mañana';
-                    if (categoria === 'dia') {
-                        icono = '⚡';
-                        titulo = 'Día';
-                    } else if (categoria === 'noche') {
-                        icono = '🌙'; 
-                        titulo = 'Noche';
-                    }
-                    
-                    habitoCard.innerHTML = `
-                        <h3>${icono} ${titulo}</h3>
-                        <ul class="checklist" id="checklist-${categoria}">
-                            ${habitosCategoria.map((habito, index) => `
-                                <li>
-                                    <input type="checkbox" id="habito-${categoria}-${index}">
-                                    <label for="habito-${categoria}-${index}">${habito}</label>
-                                    <button class="btn-eliminar" onclick="eliminarHabito('${categoria}', ${index})">×</button>
-                                </li>
-                            `).join('')}
-                        </ul>
-                    `;
-                    
-                    habitosGrid.appendChild(habitoCard);
-                }
-            });
-            
-            cargarEstadosCheckboxes();
-        }
-
-        async function eliminarHabito(categoria, index) {
-            if (confirm('¿Estás seguro de eliminar este hábito?')) {
-                habitos[categoria].splice(index, 1);
-                await guardarHabitos();
-                generarHabitosUI();
-            }
-        }
-
-        async function agregarHabito() {
-            const texto = document.getElementById('nuevoHabito').value.trim();
-            const categoria = document.getElementById('categoriaHabito').value;
-            
-            if (texto) {
-                habitos[categoria].push(texto);
-                await guardarHabitos();
-                
-                document.getElementById('nuevoHabito').value = '';
-                cerrarModalAgregar();
-                generarHabitosUI();
-            }
-        }
-
-        // =============================================
-        // FUNCIONES DE HISTORIAL Y PROGRESO
-        // =============================================
-        async function guardarDia() {
-            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-            let completados = 0;
-            
-            checkboxes.forEach(checkbox => {
-                if (checkbox.checked) {
-                    completados++;
-                }
-            });
-            
-            const porcentaje = Math.round((completados / checkboxes.length) * 100);
-            const fecha = new Date().toISOString().split('T')[0];
-            
-            try {
-                syncStatus.style.display = 'block';
-                syncStatus.textContent = "💾 Guardando día...";
-                
-                const { doc, setDoc, serverTimestamp } = window.firebaseModules;
-                
-                const registro = {
-                    fecha: fecha,
-                    habitos: checkboxes.length,
-                    completados: completados,
-                    porcentaje: porcentaje,
-                    timestamp: serverTimestamp()
-                };
-                
-                await setDoc(doc(window.firebaseDb, 'usuarios', usuarioId, 'historial', fecha), registro);
-                
-                syncStatus.textContent = "✅ Día guardado";
-                setTimeout(() => syncStatus.style.display = 'none', 2000);
-                
-                alert('✅ Día guardado en Firebase correctamente');
-                generarSemana();
-                await actualizarEstadisticas();
-                
-            } catch (error) {
-                console.error("Error guardando día:", error);
-                syncStatus.textContent = "❌ Error guardando";
-                alert('❌ Error al guardar en Firebase');
-            }
-        }
-
-        async function cargarHistorial() {
-            try {
-                const { collection, query, orderBy, limit, getDocs } = window.firebaseModules;
-                
-                const historialRef = collection(window.firebaseDb, 'usuarios', usuarioId, 'historial');
-                const q = query(historialRef, orderBy('fecha', 'desc'), limit(30));
-                const snapshot = await getDocs(q);
-                
-                const historial = [];
-                snapshot.forEach(doc => {
-                    historial.push(doc.data());
-                });
-                
-                return historial;
-            } catch (error) {
-                console.error("Error cargando historial:", error);
-                return [];
-            }
-        }
-
-        // =============================================
-        // FUNCIONES DE UI Y ESTADÍSTICAS
-        // =============================================
-        function generarSemana() {
-            const dias = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
-            semanaGrid.innerHTML = '';
-            
-            dias.forEach((dia, index) => {
-                const diaCard = document.createElement('div');
-                diaCard.className = 'dia-card';
-                const progreso = Math.random() * 100;
-                diaCard.innerHTML = `
-                    <strong>${dia}</strong>
-                    <div>${Math.round(progreso)}%</div>
-                `;
-                
-                if (progreso > 70) {
-                    diaCard.classList.add('completado');
-                }
-                
-                semanaGrid.appendChild(diaCard);
-            });
-        }
-
-        async function actualizarEstadisticas() {
-            const historial = await cargarHistorial();
-            const hoy = new Date().toISOString().split('T')[0];
-            
-            // Encontrar registro de hoy
-            const registroHoy = historial.find(reg => reg.fecha === hoy);
-            
-            if (registroHoy) {
-                document.getElementById('statRacha').textContent = registroHoy.racha || 0;
-                document.getElementById('statHabitos').textContent = registroHoy.porcentaje + '%';
-                document.getElementById('progresoHabitos').style.width = registroHoy.porcentaje + '%';
-                document.getElementById('contadorHabitos').textContent = registroHoy.porcentaje + '% completado';
-            }
-            
-            // Calcular días del mes
-            const diasEsteMes = historial.filter(reg => {
-                const fechaReg = new Date(reg.fecha);
-                const mesReg = fechaReg.getMonth();
-                const añoReg = fechaReg.getFullYear();
-                const hoy = new Date();
-                return mesReg === hoy.getMonth() && añoReg === hoy.getFullYear();
-            }).length;
-            
-            document.getElementById('progresoDias').style.width = Math.min((diasEsteMes / 30) * 100, 100) + '%';
-            document.getElementById('contadorDias').textContent = diasEsteMes + '/30 días';
-            
-            // Otras stats
-            document.getElementById('statSemanas').textContent = Math.floor((registroHoy?.racha || 0) / 7);
-            document.getElementById('statMejora').textContent = Math.min((registroHoy?.racha || 0) * 5, 100) + '%';
-        }
-
-        // =============================================
-        // FUNCIONES AUXILIARES
-        // =============================================
-        function cargarEstadosCheckboxes() {
-            const estados = JSON.parse(localStorage.getItem('estadosCheckboxes') || '{}');
-            Object.keys(estados).forEach(id => {
-                const checkbox = document.getElementById(id);
-                if (checkbox) {
-                    checkbox.checked = estados[id];
-                }
-            });
-            
-            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
-                checkbox.addEventListener('change', function() {
-                    const estados = {};
-                    document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
-                        estados[cb.id] = cb.checked;
-                    });
-                    localStorage.setItem('estadosCheckboxes', JSON.stringify(estados));
-                });
-            });
-        }
-
-        function mostrarModalAgregar() {
-            modalAgregar.style.display = 'flex';
-        }
-
-        function cerrarModalAgregar() {
-            modalAgregar.style.display = 'none';
-        }
-
-        async function exportarDatos() {
-            const historial = await cargarHistorial();
-            const datos = {
-                habitos: habitos,
-                historial: historial,
-                exportado: new Date().toISOString()
             };
             
-            const blob = new Blob([JSON.stringify(datos, null, 2)], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `planificador-marcos-${new Date().toISOString().split('T')[0]}.json`;
-            a.click();
-            URL.revokeObjectURL(url);
-        }
-
-        // =============================================
-        // INICIALIZACIÓN
-        // =============================================
-        async function inicializarPanel() {
-            const hoy = new Date();
-            fechaHoy.textContent = hoy.toLocaleDateString('es-ES', { 
-                weekday: 'long', 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-            });
-            
-            await cargarHabitos();
-            generarSemana();
-            await actualizarEstadisticas();
-        }
-
-        // =============================================
-        // LOGIN Y AUTENTICACIÓN
-        // =============================================
-        function verificarPassword() {
-            if (document.getElementById('passwordInput').value === APP_PASSWORD) {
-                loginContainer.style.display = 'none';
-                panelContainer.style.display = 'block';
-                inicializarPanel();
-            } else {
-                document.getElementById('errorMsg').style.display = 'block';
-                document.getElementById('passwordInput').value = '';
-                document.getElementById('passwordInput').focus();
-            }
-        }
-
-        function cerrarSesion() {
-            panelContainer.style.display = 'none';
-            loginContainer.style.display = 'block';
-            document.getElementById('passwordInput').value = '';
-            document.getElementById('passwordInput').focus();
-        }
-
-        // =============================================
-        // INICIALIZAR AL CARGAR LA PÁGINA
-        // =============================================
-        window.onload = async function() {
-            document.getElementById('passwordInput').focus();
-            await inicializarFirebase();
-        };
-
-        document.getElementById('passwordInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                verificarPassword();
-            }
+            setTimeout(typeWriter, Math.random() * 1000);
         });
+        
+        // Efecto de parpadeo aleatorio
+        setInterval(() => {
+            const elements = document.querySelectorAll('.blink, .stock, .price');
+            elements.forEach(el => {
+                if (Math.random() > 0.7) {
+                    el.style.opacity = '0.5';
+                    setTimeout(() => {
+                        el.style.opacity = '1';
+                    }, 200);
+                }
+            });
+        }, 3000);
+        
+        // Efecto de seguridad TOR
+        const statusTexts = [
+            "● الاتصال آمن",
+            "● TOR نشط",
+            "● IP مخفي",
+            "● التشفير مفعل",
+            "● بدون تسجيل"
+        ];
+        
+        let statusIndex = 0;
+        setInterval(() => {
+            const statusEl = document.querySelector('.status-bar .blink');
+            if (statusEl) {
+                statusEl.textContent = statusTexts[statusIndex];
+                statusIndex = (statusIndex + 1) % statusTexts.length;
+            }
+        }, 5000);
+        
+        // Simular "carga" de productos
+        setTimeout(() => {
+            const loadingDivs = document.querySelectorAll('.loading');
+            loadingDivs.forEach(div => {
+                div.style.display = 'none';
+                div.parentElement.innerHTML += '<div style="color:#32CD32;">✓ الاتصال آمن والتشفير مفعل</div>';
+            });
+        }, 3000);
+        
+        // Mensaje al hacer clic en botones de pedido
+        document.querySelectorAll('.order-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const productTitle = this.parentElement.querySelector('.product-title').textContent;
+                const message = `طلب: ${productTitle}\n\nسيتم التواصل معك خلال 24 ساعة بعد التحقق.\nأبقِ اتصال TOR نشطًا.`;
+                
+                // Crear alerta con estilo acorde al sitio
+                const alertDiv = document.createElement('div');
+                alertDiv.style.cssText = `
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background-color: rgba(20,0,0,0.95);
+                    border: 3px solid #8B0000;
+                    padding: 30px;
+                    z-index: 1000;
+                    color: #FFD700;
+                    text-align: center;
+                    min-width: 300px;
+                    box-shadow: 0 0 50px rgba(255,0,0,0.7);
+                `;
+                
+                alertDiv.innerHTML = `
+                    <div style="font-size: 24px; margin-bottom: 20px; color: #FF0000;">تم استلام الطلب</div>
+                    <div style="margin-bottom: 20px; line-height: 1.6;">${message}</div>
+                    <button onclick="this.parentElement.remove()" style="
+                        background: #8B0000;
+                        color: #FFD700;
+                        border: 1px solid #800000;
+                        padding: 10px 20px;
+                        cursor: pointer;
+                        font-weight: bold;
+                    ">موافق</button>
+                `;
+                
+                document.body.appendChild(alertDiv);
+            });
+        });
+        
+        // Efecto de texto árabe parpadeante en fondo
+        const arabicPhrases = [
+            "الله أكبر",
+            "الجهاد",
+            "النصر",
+            "الشهادة"
+        ];
+        
+        setInterval(() => {
+            const container = document.querySelector('.container');
+            const floatingText = document.createElement('div');
+            floatingText.textContent = arabicPhrases[Math.floor(Math.random() * arabicPhrases.length)];
+            floatingText.style.cssText = `
+                position: absolute;
+                top: ${Math.random() * 100}%;
+                left: ${Math.random() * 100}%;
+                color: rgba(139, 0, 0, 0.1);
+                font-size: ${20 + Math.random() * 30}px;
+                font-family: 'Traditional Arabic';
+                pointer-events: none;
+                z-index: 0;
+                transform: rotate(${Math.random() * 360}deg);
+                animation: float 10s linear infinite;
+            `;
+            
+            container.appendChild(floatingText);
+            
+            setTimeout(() => {
+                floatingText.remove();
+            }, 10000);
+        }, 2000);
+        
+        // Añadir estilo para animación flotante
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes float {
+                0% { opacity: 0; transform: translateY(0) rotate(0deg); }
+                10% { opacity: 0.1; }
+                90% { opacity: 0.1; }
+                100% { opacity: 0; transform: translateY(-100px) rotate(360deg); }
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
