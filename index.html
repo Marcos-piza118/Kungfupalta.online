@@ -168,7 +168,7 @@
         
         /* ESTILOS PARA LAS IMÁGENES */
         .product-image {
-            height: 200px; /* Aumentado para mejores imágenes */
+            height: 200px;
             background-color: #1a0000;
             border: 1px solid #800000;
             margin: 10px 0;
@@ -178,17 +178,35 @@
             overflow: hidden;
             position: relative;
             z-index: 1;
+            cursor: zoom-in;
         }
         
         .product-image img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Mantiene proporciones */
+            object-fit: cover;
             transition: transform 0.3s ease;
         }
         
-        .product-image img:hover {
-            transform: scale(1.05); /* Efecto zoom al pasar mouse */
+        .product-image:hover img {
+            transform: scale(1.05);
+        }
+        
+        .image-zoom-hint {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            background: rgba(0,0,0,0.7);
+            color: #FFD700;
+            padding: 2px 5px;
+            font-size: 10px;
+            border-radius: 3px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .product-image:hover .image-zoom-hint {
+            opacity: 1;
         }
         
         .specs {
@@ -234,6 +252,179 @@
             margin-top: 5px;
             position: relative;
             z-index: 1;
+        }
+
+        /* Botones */
+        .order-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background: linear-gradient(to bottom, #8B0000, #660000);
+            color: #FFD700;
+            border: 1px solid #800000;
+            text-align: center;
+            cursor: pointer;
+            margin-top: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .order-btn:hover {
+            background: linear-gradient(to bottom, #B22222, #8B0000);
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+        }
+
+        /* Modal para zoom de imágenes */
+        .image-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+        
+        .modal-content img {
+            width: 100%;
+            height: auto;
+            border: 3px solid #8B0000;
+            box-shadow: 0 0 50px rgba(255, 0, 0, 0.5);
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: #FF0000;
+            font-size: 30px;
+            cursor: pointer;
+            background: rgba(0,0,0,0.8);
+            padding: 5px 15px;
+            border: 1px solid #8B0000;
+        }
+        
+        .image-info {
+            color: #FFD700;
+            text-align: center;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        /* Modal de compra */
+        .purchase-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            z-index: 10001;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .purchase-content {
+            background-color: rgba(20, 0, 0, 0.95);
+            border: 3px solid #8B0000;
+            padding: 30px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90%;
+            overflow-y: auto;
+            color: #FFD700;
+        }
+        
+        .purchase-title {
+            color: #FF0000;
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 2px solid #8B0000;
+            padding-bottom: 10px;
+        }
+        
+        .purchase-details {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: rgba(139, 0, 0, 0.1);
+            border: 1px solid #8B0000;
+        }
+        
+        .purchase-step {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #8B0000;
+        }
+        
+        .step-number {
+            display: inline-block;
+            background-color: #8B0000;
+            color: #FFD700;
+            width: 25px;
+            height: 25px;
+            text-align: center;
+            line-height: 25px;
+            border-radius: 50%;
+            margin-left: 10px;
+        }
+        
+        .step-content {
+            display: inline-block;
+            color: #FF6347;
+        }
+        
+        .transaction-id {
+            background-color: #000;
+            color: #32CD32;
+            padding: 10px;
+            font-family: monospace;
+            text-align: center;
+            margin: 15px 0;
+            border: 1px solid #8B0000;
+            font-size: 18px;
+            letter-spacing: 2px;
+        }
+        
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 25px;
+        }
+        
+        .modal-btn {
+            padding: 12px 25px;
+            border: 1px solid #8B0000;
+            background: linear-gradient(to bottom, #8B0000, #660000);
+            color: #FFD700;
+            cursor: pointer;
+            font-weight: bold;
+            min-width: 150px;
+            text-align: center;
+        }
+        
+        .modal-btn:hover {
+            background: linear-gradient(to bottom, #B22222, #8B0000);
+        }
+        
+        .modal-btn.close {
+            background: linear-gradient(to bottom, #333, #111);
+            border-color: #666;
         }
 
         /* Información de contacto/venta */
@@ -284,49 +475,23 @@
             line-height: 1.5;
         }
 
-        /* Efectos de texto árabe */
-        .arabic-text {
-            font-family: 'Traditional Arabic', 'Times New Roman', serif;
-        }
-        
-        /* Animación de carga */
-        .loading {
-            border: 2px solid #8B0000;
-            border-top: 2px solid #FF0000;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            animation: spin 1s linear infinite;
-            margin: 10px auto;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        /* Botones */
-        .order-btn {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            background: linear-gradient(to bottom, #8B0000, #660000);
+        /* Carrito de compras */
+        .cart-indicator {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background-color: rgba(139, 0, 0, 0.9);
             color: #FFD700;
-            border: 1px solid #800000;
-            text-align: center;
+            padding: 10px 15px;
+            border: 2px solid #8B0000;
+            z-index: 1000;
+            font-size: 14px;
             cursor: pointer;
-            margin-top: 10px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s;
-            position: relative;
-            z-index: 1;
+            display: none;
         }
         
-        .order-btn:hover {
-            background: linear-gradient(to bottom, #B22222, #8B0000);
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+        .cart-indicator:hover {
+            background-color: rgba(178, 34, 34, 0.9);
         }
 
         /* Responsive */
@@ -344,12 +509,85 @@
             }
             
             .product-image {
-                height: 180px; /* Ajuste para móviles */
+                height: 180px;
+            }
+            
+            .modal-buttons {
+                flex-direction: column;
+            }
+            
+            .modal-btn {
+                min-width: 100%;
             }
         }
     </style>
 </head>
 <body class="crt">
+    <!-- Modal para zoom de imágenes -->
+    <div class="image-modal" id="imageModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeImageModal()">&times;</span>
+            <img id="modalImage" src="" alt="Imagen ampliada">
+            <div class="image-info" id="imageInfo"></div>
+        </div>
+    </div>
+
+    <!-- Modal de compra -->
+    <div class="purchase-modal" id="purchaseModal">
+        <div class="purchase-content">
+            <div class="purchase-title" id="purchaseTitle">طلب شراء</div>
+            
+            <div class="purchase-details">
+                <div id="productDetails">جاري تحميل تفاصيل المنتج...</div>
+                <div class="price" id="modalPrice" style="margin: 15px 0;">السعر: جاري التحميل</div>
+            </div>
+            
+            <div class="transaction-id" id="transactionId">TX-####-####-####</div>
+            
+            <div class="purchase-step">
+                <span class="step-number">1</span>
+                <span class="step-content">احفظ رمز المعاملة هذا</span>
+            </div>
+            
+            <div class="purchase-step">
+                <span class="step-number">2</span>
+                <span class="step-content">تواصل معنا عبر البريد المشفر PGP</span>
+            </div>
+            
+            <div class="purchase-step">
+                <span class="step-number">3</span>
+                <span class="step-content">أرسل رمز المعاملة ومعلومات الشحن الآمنة</span>
+            </div>
+            
+            <div class="purchase-step">
+                <span class="step-number">4</span>
+                <span class="step-content">سنرسل لك عنوان بيتكوين للدفع</span>
+            </div>
+            
+            <div class="purchase-step">
+                <span class="step-number">5</span>
+                <span class="step-content">بعد التأكيد، سيتم إرسال تفاصيل الشحن خلال 24 ساعة</span>
+            </div>
+            
+            <div class="warning" style="margin: 20px 0;">
+                ⚠️ جميع الاتصالات يجب أن تكون مشفرة بـ PGP<br>
+                ⚠️ لا تشارك معلوماتك الشخصية الحقيقية<br>
+                ⚠️ استخدم عناوين إسقاط آمنة فقط<br>
+                ⚠️ لا توجد إرجاع أو استرداد بعد الدفع
+            </div>
+            
+            <div class="modal-buttons">
+                <button class="modal-btn" onclick="copyTransactionId()">نسخ رمز المعاملة</button>
+                <button class="modal-btn close" onclick="closePurchaseModal()">إغلاق</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Carrito de compras -->
+    <div class="cart-indicator" id="cartIndicator" onclick="showCart()">
+        🛒 <span id="cartCount">0</span> منتجات في السلة
+    </div>
+
     <div class="container">
         <!-- Encabezado -->
         <div class="header">
@@ -372,13 +610,9 @@
             <!-- AK-47 -->
             <div class="product-card">
                 <div class="product-title">كلاشنكوف AK-47</div>
-                <div class="product-image">
-                    <!-- ============================================ -->
-                    <!-- AQUÍ VA LA IMAGEN DEL AK-47 -->
-                    <!-- Reemplazar con: <img src="ak47.jpg" alt="AK-47"> -->
-                    <!-- O usar URL: <img src="https://ejemplo.com/ak47.jpg" alt="AK-47"> -->
-                    <!-- ============================================ -->
+                <div class="product-image" onclick="zoomImage(this, 'كلاشنكوف AK-47')">
                     <img src="https://media.istockphoto.com/id/177391994/es/foto/ak-47.jpg?s=612x612&w=0&k=20&c=0b72sUS-1k1lEWs9fcaZRjDFBZmQnUN076ot_g-r4bo=" alt="AK-47">
+                    <div class="image-zoom-hint">انقر للتكبير</div>
                 </div>
                 <div class="specs">
                     <div class="spec-item">
@@ -412,18 +646,17 @@
                 <div class="stock">
                     ★ متوفر: 47 قطعة ★
                 </div>
-                <button class="order-btn">طلب الآن - للجهاد فقط</button>
+                <button class="order-btn" onclick="purchaseProduct('كلاشنكوف AK-47', 'السعر: 3,500 ₿ (بيتكوين)<br>العيار: 7.62×39mm<br>الحالة: جديد/مستعمل جيد<br>السعة: 30 طلقة<br>المدى: 350 متر', '3,500 ₿')">
+                    طلب الآن - للجهاد فقط
+                </button>
             </div>
 
             <!-- RPG-7 -->
             <div class="product-card">
                 <div class="product-title">قاذفة RPG-7</div>
-                <div class="product-image">
-                    <!-- ============================================ -->
-                    <!-- AQUÍ VA LA IMAGEN DEL RPG-7 -->
-                    <!-- Reemplazar con: <img src="rpg7.jpg" alt="RPG-7"> -->
-                    <!-- ============================================ -->
+                <div class="product-image" onclick="zoomImage(this, 'قاذفة RPG-7')">
                     <img src="https://gunfire.com/hpeciai/914771a1e3bd2ba9f5a50854a5e63b43/spa_pl_Replica-lanzagranadasun-RPG-7-Version-de-madera-real-1152227556_1.webp" alt="RPG-7">
+                    <div class="image-zoom-hint">انقر للتكبير</div>
                 </div>
                 <div class="specs">
                     <div class="spec-item">
@@ -457,18 +690,17 @@
                 <div class="stock">
                     ★ متوفر: 12 مجموعة ★
                 </div>
-                <button class="order-btn">طلب الآن - للجهاد فقط</button>
+                <button class="order-btn" onclick="purchaseProduct('قاذفة RPG-7', 'السعر: 8,500 ₿ (بيتكوين)<br>يشمل: 3 رؤوس حربية<br>المدى: 200-500 متر<br>اختراق: 750mm RHA<br>الوزن: 8.5 كجم', '8,500 ₿')">
+                    طلب الآن - للجهاد فقط
+                </button>
             </div>
 
             <!-- DShK -->
             <div class="product-card">
                 <div class="product-title">رشاش DShK الثقيل</div>
-                <div class="product-image">
-                    <!-- ============================================ -->
-                    <!-- AQUÍ VA LA IMAGEN DEL DShK -->
-                    <!-- Reemplazar con: <img src="dshk.jpg" alt="DShK"> -->
-                    <!-- ============================================ -->
+                <div class="product-image" onclick="zoomImage(this, 'رشاش DShK الثقيل')">
                     <img src="https://t3.ftcdn.net/jpg/01/81/04/26/360_F_181042682_y1vBRctKv1bHBfQTLBOJRDfct26RSbGH.jpg" alt="DShK">
+                    <div class="image-zoom-hint">انقر للتكبير</div>
                 </div>
                 <div class="specs">
                     <div class="spec-item">
@@ -502,18 +734,17 @@
                 <div class="stock">
                     ★ متوفر: 8 قطع ★
                 </div>
-                <button class="order-btn">طلب الآن - للجهاد فقط</button>
+                <button class="order-btn" onclick="purchaseProduct('رشاش DShK الثقيل', 'السعر: 12,000 ₿ (بيتكوين)<br>العيار: 12.7×108mm<br>المدى: 2000 متر<br>معدل النيران: 550 طلقة/دقيقة<br>يشمل حامل ثلاثي', '12,000 ₿')">
+                    طلب الآن - للجهاد فقط
+                </button>
             </div>
 
             <!-- IED Kits -->
             <div class="product-card">
                 <div class="product-title">معدات IED (بدائية)</div>
-                <div class="product-image">
-                    <!-- ============================================ -->
-                    <!-- AQUÍ VA LA IMAGEN DE IED KIT -->
-                    <!-- Reemplazar con: <img src="ied.jpg" alt="IED Kit"> -->
-                    <!-- ============================================ -->
-                    <img src="https://as2.ftcdn.net/jpg/00/79/03/71/1000_F_79037175_oOiWitWXBkOpFbpWhTWoQqGVVdxIlgyP.jpg" alt="IED Kit">
+                <div class="product-image" onclick="zoomImage(this, 'معدات IED')">
+                    <img src="https://thumbs.dreamstime.com/b/bomba-hecha-en-casa-del-terrorista-con-el-tel%C3%A9fono-m%C3%B3vil-63547796.jpg" alt="IED Kit">
+                    <div class="image-zoom-hint">انقر للتكبير</div>
                 </div>
                 <div class="specs">
                     <div class="spec-item">
@@ -547,18 +778,17 @@
                 <div class="stock">
                     ★ تصنيع حسب الطلب ★
                 </div>
-                <button class="order-btn">طلب الآن - للجهاد فقط</button>
+                <button class="order-btn" onclick="purchaseProduct('معدات IED (بدائية)', 'السعر: 1,500-5,000 ₿ حسب التعقيد<br>يشمل: جميع المكونات والتعليمات<br>أنظمة تفجير: زمني، لاسلكي، ضغط<br>تحذير: للخبراء فقط', '1,500-5,000 ₿')">
+                    طلب الآن - للجهاد فقط
+                </button>
             </div>
 
             <!-- Sniper -->
             <div class="product-card">
                 <div class="product-title">بندقية قنص دراغونوف</div>
-                <div class="product-image">
-                    <!-- ============================================ -->
-                    <!-- AQUÍ VA LA IMAGEN DEL DRAGUNOV -->
-                    <!-- Reemplazar con: <img src="dragunov.jpg" alt="Dragunov"> -->
-                    <!-- ============================================ -->
+                <div class="product-image" onclick="zoomImage(this, 'بندقية قنص دراغونوف')">
                     <img src="https://cdn.webshopapp.com/shops/201476/files/451088900/snow-wolf-sw-027-resorte-de-perno-de-accion-de-fra.jpg" alt="Dragunov">
+                    <div class="image-zoom-hint">انقر للتكبير</div>
                 </div>
                 <div class="specs">
                     <div class="spec-item">
@@ -592,18 +822,17 @@
                 <div class="stock">
                     ★ متوفر: 15 قطعة ★
                 </div>
-                <button class="order-btn">طلب الآن - للجهاد فقط</button>
+                <button class="order-btn" onclick="purchaseProduct('بندقية قنص دراغونوف', 'السعر: 6,500 ₿ (بيتكوين)<br>العيار: 7.62×54mmR<br>المدى: 800 متر<br>المنظار: PSO-1 (4×24)<br>الدقة: 1.5 MOA', '6,500 ₿')">
+                    طلب الآن - للجهاد فقط
+                </button>
             </div>
 
             <!-- Ammo Package -->
             <div class="product-card">
                 <div class="product-title">باقة ذخيرة شاملة</div>
-                <div class="product-image">
-                    <!-- ============================================ -->
-                    <!-- AQUÍ VA LA IMAGEN DE MUNICIÓN -->
-                    <!-- Reemplazar con: <img src="ammo.jpg" alt="Ammunition"> -->
-                    <!-- ============================================ -->
+                <div class="product-image" onclick="zoomImage(this, 'باقة ذخيرة شاملة')">
                     <img src="https://img.freepik.com/fotos-premium/balas-cartuchos-municiones_740964-31.jpg" alt="Ammunition">
+                    <div class="image-zoom-hint">انقر للتكبير</div>
                 </div>
                 <div class="specs">
                     <div class="spec-item">
@@ -637,7 +866,9 @@
                 <div class="stock">
                     ★ متوفر: 3 حاويات ★
                 </div>
-                <button class="order-btn">طلب الآن - للجهاد فقط</button>
+                <button class="order-btn" onclick="purchaseProduct('باقة ذخيرة شاملة', 'السعر: 15,000 ₿ (بيتكوين)<br>يشمل:<br>- 5,000 طلقة 7.62×39mm<br>- 1,000 طلقة 7.62×54mmR<br>- 500 طلقة 12.7×108mm<br>- 10 رؤوس RPG<br>- 50 قنبلة يدوية', '15,000 ₿')">
+                    طلب الآن - للجهاد فقط
+                </button>
             </div>
         </div>
 
@@ -664,7 +895,7 @@
                 
                 <div style="text-align: center; margin-top: 15px;">
                     <div class="loading"></div>
-                    <div style="color: #A52A2A; font-size: 11px;">
+                    <div style="color: #A52A2A; font-size: 11px;" id="encryptionStatus">
                         جاري تشفير الاتصال... تأكد من استخدام TOR
                     </div>
                 </div>
@@ -685,10 +916,14 @@
     </div>
 
     <script>
+        // Variables globales
+        let cart = [];
+        let currentTransactionId = '';
+
         // Actualizar hora de La Meca
         function updateMeccaTime() {
             const now = new Date();
-            const meccaTime = new Date(now.getTime() + (3 * 60 * 60 * 1000)); // UTC+3
+            const meccaTime = new Date(now.getTime() + (3 * 60 * 60 * 1000));
             
             let hours = meccaTime.getUTCHours();
             let minutes = meccaTime.getUTCMinutes();
@@ -703,21 +938,23 @@
         setInterval(updateMeccaTime, 60000);
         
         // Efecto de escritura en títulos
-        const titles = document.querySelectorAll('.product-title');
-        titles.forEach(title => {
-            const originalText = title.textContent;
-            title.textContent = '';
-            
-            let i = 0;
-            const typeWriter = () => {
-                if (i < originalText.length) {
-                    title.textContent += originalText.charAt(i);
-                    i++;
-                    setTimeout(typeWriter, 50);
-                }
-            };
-            
-            setTimeout(typeWriter, Math.random() * 1000);
+        document.addEventListener('DOMContentLoaded', function() {
+            const titles = document.querySelectorAll('.product-title');
+            titles.forEach(title => {
+                const originalText = title.textContent;
+                title.textContent = '';
+                
+                let i = 0;
+                const typeWriter = () => {
+                    if (i < originalText.length) {
+                        title.textContent += originalText.charAt(i);
+                        i++;
+                        setTimeout(typeWriter, 50);
+                    }
+                };
+                
+                setTimeout(typeWriter, Math.random() * 1000);
+            });
         });
         
         // Efecto de parpadeo aleatorio
@@ -760,56 +997,149 @@
             });
         }, 3000);
         
-        // Mensaje al hacer clic en botones de pedido
-        document.querySelectorAll('.order-btn').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const productTitle = this.parentElement.querySelector('.product-title').textContent;
-                const message = `طلب: ${productTitle}\n\nسيتم التواصل معك خلال 24 ساعة بعد التحقق.\nأبقِ اتصال TOR نشطًا.`;
-                
-                // Crear alerta con estilo acorde al sitio
-                const alertDiv = document.createElement('div');
-                alertDiv.style.cssText = `
-                    position: fixed;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                    background-color: rgba(20,0,0,0.95);
-                    border: 3px solid #8B0000;
-                    padding: 30px;
-                    z-index: 1000;
-                    color: #FFD700;
-                    text-align: center;
-                    min-width: 300px;
-                    box-shadow: 0 0 50px rgba(255,0,0,0.7);
-                `;
-                
-                alertDiv.innerHTML = `
-                    <div style="font-size: 24px; margin-bottom: 20px; color: #FF0000;">تم استلام الطلب</div>
-                    <div style="margin-bottom: 20px; line-height: 1.6;">${message}</div>
-                    <button onclick="this.parentElement.remove()" style="
-                        background: #8B0000;
-                        color: #FFD700;
-                        border: 1px solid #800000;
-                        padding: 10px 20px;
-                        cursor: pointer;
-                        font-weight: bold;
-                    ">موافق</button>
-                `;
-                
-                document.body.appendChild(alertDiv);
-            });
+        // Función para agrandar imágenes
+        function zoomImage(element, title) {
+            const imgSrc = element.querySelector('img').src;
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            const imageInfo = document.getElementById('imageInfo');
+            
+            modalImg.src = imgSrc;
+            imageInfo.textContent = title;
+            modal.style.display = 'flex';
+        }
+        
+        function closeImageModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+        
+        // Cerrar modal al hacer clic fuera de la imagen
+        document.getElementById('imageModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeImageModal();
+            }
         });
         
-        // Efecto de zoom en imágenes al pasar mouse
-        document.querySelectorAll('.product-image img').forEach(img => {
-            img.addEventListener('mouseenter', function() {
-                this.style.transform = 'scale(1.05)';
+        // Función para simular compra
+        function purchaseProduct(productName, productDetails, price) {
+            // Agregar al carrito
+            cart.push({
+                name: productName,
+                details: productDetails,
+                price: price,
+                timestamp: new Date().toLocaleString()
             });
             
-            img.addEventListener('mouseleave', function() {
-                this.style.transform = 'scale(1)';
+            // Actualizar indicador del carrito
+            updateCartIndicator();
+            
+            // Generar ID de transacción
+            currentTransactionId = generateTransactionId();
+            
+            // Actualizar modal de compra
+            document.getElementById('purchaseTitle').textContent = `طلب شراء: ${productName}`;
+            document.getElementById('productDetails').innerHTML = productDetails;
+            document.getElementById('modalPrice').textContent = `السعر: ${price}`;
+            document.getElementById('transactionId').textContent = currentTransactionId;
+            
+            // Mostrar modal
+            document.getElementById('purchaseModal').style.display = 'flex';
+        }
+        
+        function closePurchaseModal() {
+            document.getElementById('purchaseModal').style.display = 'none';
+        }
+        
+        // Cerrar modal de compra al hacer clic fuera
+        document.getElementById('purchaseModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closePurchaseModal();
+            }
+        });
+        
+        // Generar ID de transacción
+        function generateTransactionId() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let id = 'TX-';
+            for (let i = 0; i < 4; i++) {
+                id += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            id += '-';
+            for (let i = 0; i < 4; i++) {
+                id += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            id += '-';
+            for (let i = 0; i < 4; i++) {
+                id += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return id;
+        }
+        
+        // Copiar ID de transacción
+        function copyTransactionId() {
+            const transactionId = document.getElementById('transactionId').textContent;
+            navigator.clipboard.writeText(transactionId).then(() => {
+                alert('✓ تم نسخ رمز المعاملة إلى الحافظة\n\n' + transactionId);
+            }).catch(err => {
+                console.error('Error copying text: ', err);
+                prompt('انسخ رمز المعاملة يدوياً:', transactionId);
+            });
+        }
+        
+        // Actualizar indicador del carrito
+        function updateCartIndicator() {
+            const cartCount = document.getElementById('cartCount');
+            const cartIndicator = document.getElementById('cartIndicator');
+            
+            cartCount.textContent = cart.length;
+            
+            if (cart.length > 0) {
+                cartIndicator.style.display = 'block';
+            } else {
+                cartIndicator.style.display = 'none';
+            }
+        }
+        
+        // Mostrar carrito
+        function showCart() {
+            if (cart.length === 0) {
+                alert('السلة فارغة');
+                return;
+            }
+            
+            let cartContent = '🛒 سلة المشتريات:\n\n';
+            let totalValue = 0;
+            
+            cart.forEach((item, index) => {
+                cartContent += `${index + 1}. ${item.name}\n   ${item.price}\n   ${item.timestamp}\n\n`;
+                
+                // Extraer valor numérico del precio
+                const priceMatch = item.price.match(/([\d,]+)/);
+                if (priceMatch) {
+                    const price = parseInt(priceMatch[1].replace(/,/g, ''));
+                    if (!isNaN(price)) {
+                        totalValue += price;
+                    }
+                }
+            });
+            
+            cartContent += `\nإجمالي القيمة: ${totalValue.toLocaleString()} ₿`;
+            cartContent += `\n\nعدد المنتجات: ${cart.length}`;
+            cartContent += `\n\nلإكمال الشراء، ارسل رمز المعاملة الخاص بكل منتج عبر البريد المشفر.`;
+            
+            alert(cartContent);
+        }
+        
+        // Efecto de zoom en imágenes al pasar mouse
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.product-image img').forEach(img => {
+                img.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.05)';
+                });
+                
+                img.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                });
             });
         });
         
@@ -822,6 +1152,21 @@
                     img.style.opacity = '1';
                 }, 100);
             });
+        });
+        
+        // Simular estado de encriptación
+        setTimeout(() => {
+            const encryptionStatus = document.getElementById('encryptionStatus');
+            encryptionStatus.innerHTML = '✓ التشفير: AES-256 نشط<br>✓ اتصال TOR: مفعل<br>✓ الهوية: مخفية';
+            encryptionStatus.style.color = '#32CD32';
+        }, 4000);
+        
+        // Tecla Escape para cerrar modales
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeImageModal();
+                closePurchaseModal();
+            }
         });
     </script>
 </body>
