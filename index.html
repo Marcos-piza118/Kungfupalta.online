@@ -166,18 +166,29 @@
             z-index: 1;
         }
         
+        /* ESTILOS PARA LAS IMÁGENES */
         .product-image {
-            height: 150px;
+            height: 200px; /* Aumentado para mejores imágenes */
             background-color: #1a0000;
             border: 1px solid #800000;
             margin: 10px 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #8B0000;
-            font-style: italic;
+            overflow: hidden;
             position: relative;
             z-index: 1;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Mantiene proporciones */
+            transition: transform 0.3s ease;
+        }
+        
+        .product-image img:hover {
+            transform: scale(1.05); /* Efecto zoom al pasar mouse */
         }
         
         .specs {
@@ -331,6 +342,10 @@
             .kalima {
                 font-size: 18px;
             }
+            
+            .product-image {
+                height: 180px; /* Ajuste para móviles */
+            }
         }
     </style>
 </head>
@@ -358,7 +373,12 @@
             <div class="product-card">
                 <div class="product-title">كلاشنكوف AK-47</div>
                 <div class="product-image">
-                    سلاح الجهاد الأمين<br>صناعة روسية - أصلي
+                    <!-- ============================================ -->
+                    <!-- AQUÍ VA LA IMAGEN DEL AK-47 -->
+                    <!-- Reemplazar con: <img src="ak47.jpg" alt="AK-47"> -->
+                    <!-- O usar URL: <img src="https://ejemplo.com/ak47.jpg" alt="AK-47"> -->
+                    <!-- ============================================ -->
+                    <img src="https://media.istockphoto.com/id/177391994/es/foto/ak-47.jpg?s=612x612&w=0&k=20&c=0b72sUS-1k1lEWs9fcaZRjDFBZmQnUN076ot_g-r4bo=" alt="AK-47">
                 </div>
                 <div class="specs">
                     <div class="spec-item">
@@ -399,7 +419,11 @@
             <div class="product-card">
                 <div class="product-title">قاذفة RPG-7</div>
                 <div class="product-image">
-                    مدمر الدبابات<br>+ 3 رؤوس حربية
+                    <!-- ============================================ -->
+                    <!-- AQUÍ VA LA IMAGEN DEL RPG-7 -->
+                    <!-- Reemplazar con: <img src="rpg7.jpg" alt="RPG-7"> -->
+                    <!-- ============================================ -->
+                    <img src="https://gunfire.com/hpeciai/914771a1e3bd2ba9f5a50854a5e63b43/spa_pl_Replica-lanzagranadasun-RPG-7-Version-de-madera-real-1152227556_1.webp" alt="RPG-7">
                 </div>
                 <div class="specs">
                     <div class="spec-item">
@@ -440,7 +464,11 @@
             <div class="product-card">
                 <div class="product-title">رشاش DShK الثقيل</div>
                 <div class="product-image">
-                    رشاش 12.7mm<br>مضاد للطائرات
+                    <!-- ============================================ -->
+                    <!-- AQUÍ VA LA IMAGEN DEL DShK -->
+                    <!-- Reemplazar con: <img src="dshk.jpg" alt="DShK"> -->
+                    <!-- ============================================ -->
+                    <img src="https://t3.ftcdn.net/jpg/01/81/04/26/360_F_181042682_y1vBRctKv1bHBfQTLBOJRDfct26RSbGH.jpg" alt="DShK">
                 </div>
                 <div class="specs">
                     <div class="spec-item">
@@ -481,7 +509,11 @@
             <div class="product-card">
                 <div class="product-title">معدات IED (بدائية)</div>
                 <div class="product-image">
-                    عبوات ناسفة<br>تعليمات مفصلة
+                    <!-- ============================================ -->
+                    <!-- AQUÍ VA LA IMAGEN DE IED KIT -->
+                    <!-- Reemplazar con: <img src="ied.jpg" alt="IED Kit"> -->
+                    <!-- ============================================ -->
+                    <img src="https://as2.ftcdn.net/jpg/00/79/03/71/1000_F_79037175_oOiWitWXBkOpFbpWhTWoQqGVVdxIlgyP.jpg" alt="IED Kit">
                 </div>
                 <div class="specs">
                     <div class="spec-item">
@@ -522,7 +554,11 @@
             <div class="product-card">
                 <div class="product-title">بندقية قنص دراغونوف</div>
                 <div class="product-image">
-                    SVD Dragunov<br>نصف آلية
+                    <!-- ============================================ -->
+                    <!-- AQUÍ VA LA IMAGEN DEL DRAGUNOV -->
+                    <!-- Reemplazar con: <img src="dragunov.jpg" alt="Dragunov"> -->
+                    <!-- ============================================ -->
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/SVD_Dragunov.jpg/1280px-SVD_Dragunov.jpg" alt="Dragunov">
                 </div>
                 <div class="specs">
                     <div class="spec-item">
@@ -563,7 +599,11 @@
             <div class="product-card">
                 <div class="product-title">باقة ذخيرة شاملة</div>
                 <div class="product-image">
-                    جميع العيارات<br>جودة عالية
+                    <!-- ============================================ -->
+                    <!-- AQUÍ VA LA IMAGEN DE MUNICIÓN -->
+                    <!-- Reemplazar con: <img src="ammo.jpg" alt="Ammunition"> -->
+                    <!-- ============================================ -->
+                    <img src="https://img.freepik.com/fotos-premium/balas-cartuchos-municiones_740964-31.jpg" alt="Ammunition">
                 </div>
                 <div class="specs">
                     <div class="spec-item">
@@ -762,49 +802,27 @@
             });
         });
         
-        // Efecto de texto árabe parpadeante en fondo
-        const arabicPhrases = [
-            "الله أكبر",
-            "الجهاد",
-            "النصر",
-            "الشهادة"
-        ];
-        
-        setInterval(() => {
-            const container = document.querySelector('.container');
-            const floatingText = document.createElement('div');
-            floatingText.textContent = arabicPhrases[Math.floor(Math.random() * arabicPhrases.length)];
-            floatingText.style.cssText = `
-                position: absolute;
-                top: ${Math.random() * 100}%;
-                left: ${Math.random() * 100}%;
-                color: rgba(139, 0, 0, 0.1);
-                font-size: ${20 + Math.random() * 30}px;
-                font-family: 'Traditional Arabic';
-                pointer-events: none;
-                z-index: 0;
-                transform: rotate(${Math.random() * 360}deg);
-                animation: float 10s linear infinite;
-            `;
+        // Efecto de zoom en imágenes al pasar mouse
+        document.querySelectorAll('.product-image img').forEach(img => {
+            img.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.05)';
+            });
             
-            container.appendChild(floatingText);
-            
-            setTimeout(() => {
-                floatingText.remove();
-            }, 10000);
-        }, 2000);
+            img.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+            });
+        });
         
-        // Añadir estilo para animación flotante
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes float {
-                0% { opacity: 0; transform: translateY(0) rotate(0deg); }
-                10% { opacity: 0.1; }
-                90% { opacity: 0.1; }
-                100% { opacity: 0; transform: translateY(-100px) rotate(360deg); }
-            }
-        `;
-        document.head.appendChild(style);
+        // Cargar imágenes con efecto de fade
+        window.addEventListener('load', function() {
+            document.querySelectorAll('.product-image img').forEach(img => {
+                img.style.opacity = '0';
+                setTimeout(() => {
+                    img.style.transition = 'opacity 0.5s ease';
+                    img.style.opacity = '1';
+                }, 100);
+            });
+        });
     </script>
 </body>
 </html>
